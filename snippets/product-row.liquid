@@ -1,0 +1,46 @@
+{%- comment -%}
+  renders product row as related product
+  usage
+    {%- render 'product-row', product: product -%}
+{%- endcomment -%}
+{%- liquid
+  if product.selected_or_first_available_variant.featured_media != null
+    assign media = product.selected_or_first_available_variant.featured_media
+    else
+      for media in product.media
+        assign media = media
+        break
+      endfor
+  endif
+
+  if media != blank
+    capture image_alt
+      echo media.preview_image.alt | default: product.title
+    endcapture
+  endif
+-%}
+<div class="product-row">
+  <div class="product-row_image">
+    {%- if media != blank -%}
+      {{- media.preview_image | image_url: width: 840 | image_tag: class: 'object-fit object-fit--cover object-fit--absolute', alt: image_alt, loading: loading_attr, widths: '540, 840', sizes: '(max-width: 767px) 540vw, 840vw' -}}
+      {%- else -%}
+        {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    {%- endif -%}
+  </div>
+  <div class="product-row_descr-wrap">
+    <strong class="product-row_heading text-size--large --word-break">
+      <a href="{{- product.url -}}" class="--hover-underline">
+        {{- product.title -}}
+      </a>
+    </strong>
+    <strong class="product-row_price text-size--small">
+      {%- render 'product-price', product: product, use_variant: false -%}
+    </strong>
+    <a href="{{- product.url -}}" class="button button--link product-row_btn">
+      {{- 'product.products.btn_label' | t -}}
+      <i class="button_icn">
+        {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'right-arrow' -%}
+      </i>
+    </a>
+  </div>
+</div>

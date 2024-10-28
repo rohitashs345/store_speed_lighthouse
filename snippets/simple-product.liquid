@@ -1,0 +1,53 @@
+{%- comment -%}
+  renders simple product with featured image, title and price
+  usage
+    {%- render 'simple-product', product: product, prefix_class: section_prefix_class -%}
+{%- endcomment -%}
+{%- liquid
+  capture loading_attr
+    echo 'lazy'
+  endcapture
+
+  capture product_clean_url
+    if product.url contains '?'
+      assign parts = product.url | split: '?'
+      echo parts[0]
+      else
+        echo product.url
+    endif
+  endcapture
+  
+  capture first_image
+    if product.selected_or_first_available_variant.featured_media != null
+      echo 'true'
+      else
+        for media in product.media
+          echo 'true'
+          break
+        endfor
+    endif
+  endcapture
+
+  capture product_title
+    if product.title != blank
+      echo product.title
+      else
+        echo 'product.title' | t
+    endif
+  endcapture
+-%}
+<a class="simple-product mty {{ prefix_class }}_simple-product" {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="false"{% endif %}>
+  <div class="simple-product_image --media-size-{{ media_size }}" style="--media-ratio: 1;">
+    {%- if first_image != blank -%}
+      {%- render 'product-featured-image', product: product, loading: loading_attr, size: 'small' -%}
+      {%- else -%}
+        {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    {%- endif -%}
+  </div>
+  <strong class="simple-product_title text-size--medium --fw-medium mty">
+    {{- product_title -}}
+  </strong>
+  <div class="simple-product_price-wrap mty --fw-medium">
+    {%- render 'product-price', product: product, use_variant: false, show_unit_price: true -%}
+  </div>
+</a>

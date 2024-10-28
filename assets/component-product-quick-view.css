@@ -1,0 +1,42 @@
+.product-common_row{
+  --mb-space: var(--block-spacing);
+  margin-bottom: var(--mb-space);
+}
+
+.product-common_product-variant_options-wrap--quick-view{
+  margin-bottom: 10px;
+}
+
+.modal-component--quick-view .product-variant-option_label--simple{
+  padding: 5px 25px;
+}
+
+.modal-component--quick-view .quick-gap{
+  margin-top: 14px;
+}
+
+.modal-component--quick-view .product-common_btn-whatsapp{
+  --ixi-padding-y: 1rem;
+}
+
+.modal-component--quick-view .product-common_btn-whatsapp .btn-icn-ixi_wrapper{
+  padding: 10px;
+}
+
+.modal-component--quick-view .modal-component_body{
+  padding-top: 40px;
+}
+
+.modal-component--quick-view .--hide-subtotal .quantity-input_subtotal-wrap{
+  display: none;
+}
+
+.modal-component--quick-view .sale-price,
+.modal-component--quick-view .product-common_image{
+  display: block;
+}
+
+.modal-component--quick-view .product-common_product-variant_options-wrap,
+.modal-component--quick-view .product-variant_fieldset {
+  margin-bottom: 14px;
+}

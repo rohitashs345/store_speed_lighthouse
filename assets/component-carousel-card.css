@@ -1,0 +1,136 @@
+.carousel-card{
+  --q-align-value: var(--mobile-q-align);
+  --q-justify-value: var(--mobile-justify-align);
+}
+
+.carousel-card,
+.carousel-card .container,
+.carousel-height,
+.carousel-card .align-holder{
+  height: 100%;
+}
+
+.carousel-card_wrapper{
+  box-shadow: 0 4px 34px var(--section-hotspot-glow-rgba-full);
+  border-radius: var(--section-radius);
+  margin-top: var(--make-transparent-offset, 0);
+  padding: 30px 50px;
+}
+
+.carousel-card--no-box{
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.carousel-card_description{
+  --mt-top: 20px;
+}
+
+.carousel-card_btn{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  --mt-top: 30px;
+}
+
+.carousel-card_bg-wrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.carousel-card .align-holder_wrapper{
+  max-width: var(--max-content, 100%);
+}
+
+.carousel-card_logo{
+  margin: 0 auto 22px;
+  max-width: 180px;
+}
+
+.--small-mob-image{
+  min-height: 350px;
+}
+
+.--medium-mob-image{
+  min-height: 450px;
+}
+
+.--vh-mob-image{
+  min-height: 550px;
+}
+
+@media (min-width: 576px){
+  .--small-mob-image{
+    min-height: 400px;
+  }
+
+  .--medium-mob-image{
+    min-height: 500px;
+  }
+
+  .--vh-mob-image{
+    min-height: 700px;
+  }
+}
+
+@media (min-width: 768px){
+  .carousel-card{
+    --q-align-value: var(--desktop-q-align);
+    --q-justify-value: var(--desktop-justify-align);
+  }
+
+  .--small-image{
+    min-height: 420px;
+  }
+
+  .--medium-image{
+    min-height: 550px;
+  }
+
+  .--vh-image{
+    min-height: 700px;
+  }
+
+  .carousel-card_logo{
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 992px){
+  .carousel-card .align-holder_wrapper--no-padding{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .--small-image{
+    min-height: 470px;
+  }
+
+  .--medium-image{
+    min-height: 600px;
+  }
+
+  .--vh-image{
+    min-height: 800px;
+  }
+}
+
+@media (min-width:1200px){
+  .--small-image{
+    min-height: 500px;
+  }
+
+  .--medium-image{
+    min-height: 650px;
+  }
+
+  .--vh-image{
+    min-height: 900px;
+  }
+}

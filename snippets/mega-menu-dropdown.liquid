@@ -1,0 +1,150 @@
+{%- comment -%}
+  renders mega menu on custom link item
+  usage
+    {%- render 'mega-menu-dropdown', block: block, index: forloop.index -%}
+{%- endcomment -%}
+{%- liquid
+  assign link_handle = block.settings.heading | replace: ' ', '' | escape
+  
+  capture banners_exists
+    if block.settings.banner_i != blank or block.settings.banner_ii != blank or block.settings.banner_iii != blank
+      echo 'true'
+    endif
+  endcapture
+
+  capture marquee_direction
+    if block.settings.marquee_direction == 'marquee_forward'
+      echo 'forward'
+      else
+        echo 'backward'
+    endif
+  endcapture
+
+  capture image_exist_ii
+    if block.settings.banner_i == blank or block.settings.banner_iii == blank or block.settings.banner_ii == blank
+      echo '--banner-full'
+    endif
+  endcapture
+-%}
+<li class="custom-links_item mega-menu_item" {{ block.shopify_attributes }}>
+  <strong id="{{- link_handle -}}-{{- index -}}-heading" class="visually-hidden" style="background-color: white; color: black;">
+    {{- block.settings.heading -}}
+  </strong>
+  <dropdown-component data-dropdown-level="1">
+    <button
+      type="button"
+      class="dropdown-component_opener mega-menu_opener {{ link_label_fw }}"
+      aria-expanded="false"
+      aria-controls="{{- link_handle -}}-{{- index -}}"
+      aria-describedby="{{- link_handle -}}-{{- index -}}-heading"
+    >
+      {{- block.settings.heading -}}
+    </button>
+    <div class="dropdown-component_wrapper mega-menu_component-wrapper" id="{{- link_handle -}}-{{- index -}}">
+      {%- if banners_exists == 'true' -%}
+        <div class="mega-menu_col mega-menu_col--banners">
+          {%- liquid
+            if block.settings.banner_i != blank
+              render 'mega-menu-banner', image: block.settings.banner_i, url: block.settings.banner_link_i, open_new_window: block.settings.open_new_window_i, index: 1
+            endif
+          -%}
+          {%- if block.settings.banner_ii != blank or block.settings.banner_iii != blank -%}
+            <div class="mega-menu-two-images {{ image_exist_ii }}">
+              {%- liquid
+                if block.settings.banner_ii != blank
+                  render 'mega-menu-banner', image: block.settings.banner_ii, url: block.settings.banner_link_ii, open_new_window: block.settings.open_new_window_ii, index: 2
+                endif
+    
+                if block.settings.banner_iii != blank
+                  render 'mega-menu-banner', image: block.settings.banner_iii, url: block.settings.banner_link_iii, open_new_window: block.settings.open_new_window_iii, index: 3
+                endif
+              -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="mega-menu_col mega-menu_col--collections">
+        <div class="mega-menu_listing-wrap widget--styles">
+          <ul class="list-unstyled items-list mega-menu_items-list" style="--fw-menu-items: {{ block.settings.link_weight }};">
+            {%- if block.settings.mega_collections != blank -%}
+              {%- for collection in block.settings.mega_collections -%}
+                <li class="items-list_item">
+                  <a class="items-list_link" href="{{- collection.url -}}">
+                    <strong class="items-list_title">
+                      {{- collection.title | escape -}}
+                    </strong>
+                  </a>
+                </li>
+              {%- endfor -%}
+              {%- else -%}
+              {%- for dummy in (1..3) -%}
+                <li class="items-list_item">
+                  <a class="items-list_link" aria-disabled="true">
+                    <strong class="items-list_title">
+                      {{- 'collection.title_uppercase' | t -}}
+                    </strong>
+                  </a>
+                </li>
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </div>
+        <div class="mega-menu_scroller-wrap">
+          <marquee-component data-rotation="up" data-direction="{{ marquee_direction }}" data-pause-on-hover="{{ block.settings.marquee_on_hover }}" data-speed="{{ block.settings.marquee_speed }}">
+            <div class="marquee-component">
+              {%- if block.settings.mega_collections != blank -%}
+                {%- for collection in block.settings.mega_collections -%}
+                  <div class="marquee-component_col mega-menu_scroll-image">
+                    <a href="{{- collection.url -}}" class="mega-menu_gallery-link --media-size-square" style="--media-ratio: 1;">
+                      {%- if collection.featured_image != blank -%}
+                        {%- liquid
+                          capture image_alt
+                            if collection.featured_image.alt != blank
+                              echo collection.featured_image.alt
+                              else
+                                echo collection.title | escape
+                            endif
+                          endcapture
+                        -%}
+                        <img
+                          srcset="{%- if collection.featured_image.width >= 440 -%}{{ collection.featured_image | image_url: width: 440 }} 440w,{%- endif -%}
+                                  {{ collection.featured_image | image_url }} {{ collection.featured_image.width }}w"
+                          sizes="(min-width: 750px) calc(100vw - 22rem), 440px"
+                          src="{{- collection.featured_image | image_url: width: 440 -}}"
+                          alt="{{- image_alt -}}"
+                          loading="lazy"
+                          width="440"
+                          height="{{- 440 | divided_by: collection.featured_image.aspect_ratio | round -}}"
+                          class="object-fit object-fit--absolute"
+                        >
+                        {%- else -%}
+                          {{- 'collection-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+                      {%- endif -%}
+                    </a>
+                  </div>
+                {%- endfor -%}
+                {%- else -%}
+                  {%- for dummy in (1..3) -%}
+                    {%- liquid
+                      capture placeholder_image
+                        if forloop.index > 3
+                          echo 'collection-apparel-1'
+                          else
+                            echo 'collection-apparel-' | append: forloop.index
+                        endif
+                      endcapture
+                    -%}
+                    <div class="marquee-component_col mega-menu_scroll-image">
+                      <a class="mega-menu_gallery-link --media-size-square" style="--media-ratio: 1;" aria-disabled="true">
+                        {{- placeholder_image | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+                      </a>
+                    </div>
+                  {%- endfor -%}
+              {%- endif -%}
+            </div>
+          </marquee-component>
+        </div>
+      </div>
+    </div>
+  </dropdown-component>
+</li>

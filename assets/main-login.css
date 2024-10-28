@@ -1,0 +1,235 @@
+.main-login{
+  --section-padding-top: 0;
+  --section-padding-bottom: 0;
+  position: relative;
+}
+
+.main-login_wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.main-login_column{
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 50%;
+}
+
+.main-login_column--image{
+  display: none;
+}
+
+.main-login_img{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.main-login_btn-wrapper{
+  --mt-top: 20px;
+}
+
+.main-login_heading-head{
+  margin-bottom: 29px;
+}
+
+.main-login_form-align{
+  padding-top: 44px;
+  padding-bottom: 44px;
+  max-width: 595px;
+  position: relative;
+}
+
+.main-login_form-btn{
+  width: 100%;
+  display: block;
+}
+
+.main-login_form-btn.button--link,
+.main-login_pass-btn.button--link{
+  --button-padding-x: 0;
+}
+
+.main-login_pass-btn .button_icn,
+.main-login_form-btn .button_icn,
+.main-login_role-icn{
+  vertical-align: -0.4em;
+  margin-right: 8px;
+}
+
+.main-login_form-btn .button_icn,
+.main-login_pass-btn--back .button_icn,
+.main-login_btn--back .button_icn{
+  vertical-align: -0.15em;
+}
+
+.transit{
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+  opacity: 0;
+  max-height: 0;
+  display: none;
+}
+
+.transit--in{
+  opacity: 1;
+  max-height: 9999px;
+  animation-name: opac-in;
+  display: block;
+  opacity: 1;
+}
+
+.transit--in:focus{
+  outline: 2px solid currentColor !important;
+}
+
+.transit--out{
+  opacity: 0;
+  max-height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -999;
+}
+
+.main-login_error-wrapper,
+.main-login_success-wrapper,
+.main-login_results-wrap{
+  color: var(--section-error-color);
+  font-size: 14px;
+  margin-top: 10px;
+  outline: none;
+}
+
+.main-login_error-wrapper{
+  text-align: right;
+}
+
+.main-login_success-wrapper{
+  color: var(--section-success-color);
+}
+
+.main-login_results-wrap:empty{
+  display: none;
+}
+
+.main-login_logo-heading{
+  --mt-bottom: 24px;
+  --logo-width: var(--logo-mobile-width);
+  max-width: var(--logo-width);
+  display: inline-block;
+  vertical-align: top;
+}
+
+.main-login_shop-msg{
+  margin-top: 24px;
+}
+
+.main-login_pass-icn{
+  color: var(--section-foreground-color);
+  display: block;
+  margin-top: 40px;
+  margin-bottom: 23px;
+  line-height: 1;
+}
+
+.main-login_description{
+  color: var(--section-error-color);
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.main-login_form-group + .main-login_form-group{
+  margin-top: 27px;
+}
+
+.main-login_foot-wrapper{
+  --mt-top: 47px;
+}
+
+.main-login_cancel-btn.button--link{
+  margin-top: 27px;
+}
+
+.main-login_forget-btn.button--link,
+.main-login_register-link.button--link,
+.main-login_cancel-btn.button--link{
+  --button-font-size: inherit;
+  --button-font-family: inherit;
+  --button-padding-y: 0;
+  --button-padding-x: 0;
+  --button-font-weight: inherit;
+  --button-background: transparent;
+  --button-text: var(--section-links-color);
+  --button-border-color: transparent;
+  --button-hover-background: transparent;
+  --button-hover-text: var(--section-active-hover-color);
+  --button-hover-border-color: transparent;
+  text-decoration: underline;
+}
+
+.main-login .form__message{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding: 3px 0;
+}
+
+.main-login .error-message_wrapper{
+  margin-bottom: 60px;
+}
+
+.main-login .errors ul{
+  padding-left: 30px;
+  list-style: none;
+  margin-bottom: 25px;
+}
+
+.error-message-wrapper{
+  margin-bottom: 7px;
+}
+
+.main-login_form-input-lable{
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+}
+
+.main-login .ico-error{
+  color: var(--section-error-color);
+}
+
+@media(min-width: 768px){
+  .main-login_column--image{
+    display: block;
+  }
+
+  .main-login .container-fluid{
+    --cp-spacer-left: 0;
+    --cp-spacer-right: 0;
+  }
+
+  .main-login_form-align{
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .main-login_logo-heading{
+    --logo-width: var(--logo-desktop-width);
+  }
+
+  .main-login_column--form{
+    min-height: calc(100vh - 93px);
+  }
+}
+
+@media (min-width: 992px){
+  .main-login_heading-head{
+    margin-bottom: 48px;
+  }
+
+  .main-login_btn-wrapper{
+    --mt-top: 32px;
+  }
+}

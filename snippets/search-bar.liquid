@@ -1,0 +1,96 @@
+{%- comment -%}
+  renders search bar on page templates
+  usage
+    {%- render 'search-bar', predictive: true -%}
+{%- endcomment -%}
+<div class="search-bar {{ search_opened_logo_hide }} search-container-{{- section.id -}}">
+  <form action="{{- routes.search_url -}}" method="get" role="search">
+    <div class="search-bar_form-group">
+      <div class="search-bar_search-box">
+        <label for="search-bar-input-{{ section.id }}" class="visually-hidden">
+          {{- 'search.label' | t -}}
+        </label>
+        <input
+          type="search"
+          name="q"
+          title="{{- 'search.label' | t -}}"
+          autocomplete="off"
+          id="search-bar-input-{{ section.id }}"
+          value="{%- if search_value != blank -%}{{- search_value -}}{%- endif -%}"
+          placeholder="{{- 'search.placeholder' | t -}}"
+        >
+        {%- if predictive -%}
+          <predictive-button data-query="query,product,collection,page,article" data-parent=".search-container-{{- section.id -}}" data-predict-container=".predictive-container--{{ section.id }}">
+        {%- endif -%}
+          <button class="btn-icn-ixi search-bar_label">
+            <i class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 16, height: 16, use_icon: true, icon_reference: 'search' -%}
+              <span class="visually-hidden">
+                {{- 'search.label' | t -}}
+              </span>
+            </i>
+          </button>
+        {%- if predictive -%}
+          </predictive-button>
+          <span class="loader search-bar_loader hidden" data-loader="">
+            {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'loader' -%}
+            <span class="visually-hidden">
+              {{- 'accessibility.loader' | t -}}
+            </span>
+          </span>
+        {%- endif -%}
+        {%- if reset_btn != false -%}
+          <reset-input-button data-component=".page-header_search-dropdown" {% if predictive %}data-predict-container=".predictive-container--{{ section.id }}"{% endif %} {% if open_search_state %}data-disable-close="true"{% endif %} data-parent=".search-container-{{- section.id -}}">
+            <button type="button" class="btn-icn-ixi search-bar_reset-btn">
+              <i class="btn-icn-ixi_wrapper">
+                {%- render 'icons-data', width: 13, height: 13, use_icon: true, icon_reference: 'cross' -%}
+                <span class="visually-hidden">
+                  {{- 'search.reset' | t -}}
+                </span>
+              </i>
+            </button>
+          </reset-input-button>
+        {%- endif -%}
+    </div>
+    </div>
+    {%- if predictive -%}
+      <div class="predictive-container {% unless predictive_collection != blank or predictive_collection.all_products_count > 0 %}hidden{% endunless %} predictive-container--{{ section.id }}">
+        <div class="predictive-container_wrapper widget--styles">
+          <div class="predictive-container_col predictive-container_col--results" data-render-predict-results="">
+            {%- if predictive_collection != blank or predictive_collection.all_products_count > 0 -%}
+              {{- 'component-simple-product.css' | asset_url | stylesheet_tag -}}
+              <div class="predictive-collection">
+                <strong class="predictive-collection_title mty {{ heading_size }} {{ heading_weight }}">
+                  {%- liquid
+                    if predictive_heading != blank
+                      echo predictive_heading
+                      else
+                        echo 'search.heading' | t
+                    endif
+                  -%}
+                </strong>
+                <div class="grid predictive-collection_grid">
+                  {%- for product in section.settings.predictive_collection.products limit: 6 -%}
+                    <div class="grid_col">
+                      {%- render 'simple-product', product: product, prefix_class: 'predictive-collection', media_size: 'square' -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+              {%- else -%}
+                <div class="predictive-container_empty-content --align-left">
+                  <i class="predictive-container_icn">
+                    {%- render 'icons-data', width: 38, height: 38, use_icon: true, icon_reference: 'empty-folder' -%}
+                  </i>
+                  <div class="predictive-container_empty-descr text-size--large mty">
+                    <p>{{- 'search.no_results' | t -}}</p>
+                  </div>
+                </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+    <input type="hidden" name="options[prefix]" value="last">
+  </form>
+</div>

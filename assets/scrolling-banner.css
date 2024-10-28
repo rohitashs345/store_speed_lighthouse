@@ -1,0 +1,62 @@
+.scrolling-banner .marquee-component_col{
+  padding: 3px 20px;
+}
+
+.scrolling-banner .marquee-component_col{
+  display: flex;
+}
+
+.scrolling-banner_column{
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  align-items: center;
+  gap: 37px;
+  padding: 11px 0px;
+}
+
+.scrolling-banner .container-fluid{
+  --cp-spacer-left: 0;
+  --cp-spacer-right: 0;
+}
+
+.scrolling-banner_image-wrap{
+  width: 38px;
+  height: 38px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrolling-banner_image-wrap img{
+  border-radius: inherit;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scrolling-banner_text-wrap{
+  flex-grow: 1;
+}
+
+.scrolling-banner_heading{
+  display: block;
+}
+
+a.scrolling-banner_column{
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.scrolling-banner_space:after{
+  content: "-";
+  display: block;
+  font-weight: bold;
+  color: var(--section-foreground-color);
+  font-size: 2rem;
+}
+
+.--stencil-text{
+  -webkit-text-fill-color: var(--section-background-color);
+  -webkit-text-stroke: 1px var(--section-heading-color);
+}

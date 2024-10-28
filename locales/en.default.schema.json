@@ -1,0 +1,2189 @@
+{
+  "settings_schema": {
+    "social_media": {
+      "name": "Social media",
+      "settings": {
+        "header": {
+          "content": "Social accounts"
+        },
+        "social_twitter_link": {
+          "label": "Twitter",
+          "info": "https://twitter.com/shopify"
+        },
+        "social_facebook_link": {
+          "label": "Facebook",
+          "info": "https://facebook.com/shopify"
+        },
+        "social_pinterest_link": {
+          "label": "Pinterest",
+          "info": "https://pinterest.com/shopify"
+        },
+        "social_instagram_link": {
+          "label": "Instagram",
+          "info": "http://instagram.com/shopify"
+        },
+        "social_tiktok_link": {
+          "label": "TikTok",
+          "info": "https://tiktok.com/@shopify"
+        },
+        "social_tumblr_link": {
+          "label": "Tumblr",
+          "info": "https://shopify.tumblr.com"
+        },
+        "social_snapchat_link": {
+          "label": "Snapchat",
+          "info": "https://www.snapchat.com/add/shopify"
+        },
+        "social_youtube_link": {
+          "label": "YouTube",
+          "info": "https://www.youtube.com/shopify"
+        },
+        "social_vimeo_link": {
+          "label": "Vimeo",
+          "info": "https://vimeo.com/shopify"
+        },
+        "social_linkedin_link": {
+          "label": "Linkedin",
+          "info": "https://www.linkedin.com/company/shopify"
+        }
+      }
+    },
+    "color_schemes": {
+      "name": "Color schemes",
+      "settings": {
+        "definition": {
+          "general": {
+            "content": "General"
+          },
+          "text": {
+            "label": "Text"
+          },
+          "heading": {
+            "label": "Headings"
+          },
+          "links": {
+            "label": "Links"
+          },
+          "background": {
+            "content": "Background",
+            "label": "Background"
+          },
+          "buttons": {
+            "content": "Buttons"
+          },
+          "primary": {
+            "content": "Primary button"
+          },
+          "primary_bg": {
+            "label": "Background"
+          },
+          "primary_text": {
+            "label": "Text"
+          },
+          "primary_bdr": {
+            "label": "Border"
+          },
+          "secondary": {
+            "content": "Secondary button"
+          },
+          "secondary_bg": {
+            "label": "Background"
+          },
+          "secondary_text": {
+            "label": "Text"
+          },
+          "secondary_bdr": {
+            "label": "Border"
+          },
+          "additional": {
+            "content": "Additional"
+          },
+          "border": {
+            "label": "Border"
+          },
+          "form_controls": {
+            "content": "Form controls"
+          },
+          "input_bg": {
+            "label": "Background"
+          },
+          "input_text": {
+            "label": "Text"
+          },
+          "input_bdr": {
+            "label": "Border"
+          },
+          "form_success": {
+            "label": "Success"
+          },
+          "form_warning": {
+            "label": "Warning"
+          },
+          "form_error": {
+            "label": "Error"
+          },
+          "alter_clr": {
+            "label": "Alternative"
+          },
+          "hover_active": {
+            "label": "Active / hover"
+          },
+          "element_focus": {
+            "label": "Focus / outline"
+          },
+          "widget": {
+            "content": "Widget"
+          }
+        }
+      }
+    },
+    "layout": {
+      "name": "Layout",
+      "settings": {
+        "container_size": {
+          "label": "Page width"
+        },
+        "section_radius": {
+          "label": "Section default radius",
+          "info": "Used for section's outer and inner elements."
+        }
+      }
+    },
+    "general": {
+      "name": "General",
+      "settings": {
+        "favicon_image": {
+          "label": "Favicon image",
+          "info": "Will be scaled down to 32 x 32px"
+        },
+        "crncy_format": {
+          "content": "Currency format",
+          "info": "Cart and checkout prices always show currency codes. Example: $1.00 USD.",
+          "show_crncy_cod": "Show currency codes"
+        },
+        "clr_swatches": {
+          "content": "Product variants",
+          "label": "Variants view",
+          "options": {
+            "opt_1": {
+              "label": "None"
+            },
+            "opt_2": {
+              "label": "Native swatches"
+            },
+            "opt_3": {
+              "label": "Colors"
+            },
+            "opt_4": {
+              "label": "Images"
+            }
+          }
+        }
+      }
+    },
+    "typography": {
+      "name": "Typography",
+      "settings": {
+        "general": {
+          "content": "General"
+        },
+        "f_family": {
+          "label": "Font family"
+        },
+        "f_size": {
+          "label": "Font size scale"
+        },
+        "headings": {
+          "content": "Headings"
+        }
+      }
+    },
+    "buttons": {
+      "name": "Buttons",
+      "settings": {
+        "btn_txt": {
+          "label": "Button"
+        },
+        "bdr": {
+          "content": "Border"
+        },
+        "gift": {
+          "label": "Show recipient form for gift card products",
+          "info": "When enabled, gift card products can optionally be sent to a recipient with a personal message."
+        },
+        "thickness": {
+          "label": "Thickness"
+        },
+        "crnr_radius": {
+          "label": "Corner radius"
+        },
+        "button": {
+          "label": "Button label",
+          "link": {
+            "label": "Button link",
+            "name": "Link"
+          },
+          "type": {
+            "label": "Button type",
+            "opt_1": {
+              "label": "Primary"
+            },
+            "opt_2": {
+              "label": "Secondary"
+            }
+          }
+        }
+      }
+    },
+    "inputs": {
+      "name": "Forms",
+      "settings": {
+        "bdr": {
+          "content": "Border"
+        },
+        "thickness": {
+          "label": "Thickness"
+        },
+        "crnr_radius": {
+          "label": "Corner radius"
+        }
+      }
+    },
+    "cart": {
+      "name": "Cart",
+      "settings": {
+        "view": {
+          "label": "Type",
+          "options": {
+            "opt_1": {
+              "label": "Drawer"
+            },
+            "opt_2": {
+              "label": "Page"
+            },
+            "opt_3": {
+              "label": "Popup notification"
+            }
+          }
+        },
+        "enable_crt_note": {
+          "label": "Enable cart notes"
+        },
+        "free_ship_msg": {
+          "content": "Free shipping bar",
+          "label": "Text",
+          "info": "Use ||amount|| to display progress towards free shipping.",
+          "help_para": "Follow our steps to enable free shipping [More info](https://docs.1o1development.com/themes/Swanky/Free%20shipping%20bar)."
+        },
+        "enable_free_ship_msg": {
+          "label": "Enable"
+        },
+        "min_spend": {
+          "label": "Minimum spend for free shipping",
+          "info": "Use round numbers. Exclude currency, symbols, and letters [More info](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/setting-up-shipping-rates#free-shipping-over-a-certain-value)."
+        },
+        "wlcm_msg": {
+          "content": "Welcome message",
+          "label": "Text"
+        },
+        "rel_prd_slideshow": {
+          "content": "Related products slideshow"
+        },
+        "rel_prd_slideshow_title": {
+          "label": "Related collection title"
+        },
+        "rel_prd_slideshow_collection": {
+          "label": "Related collection"
+        },
+        "rel_prd_slideshow_max_count": {
+          "label": "Related collection max products to show"
+        },
+        "cart_drawer": {
+          "content": "Cart drawer"
+        },
+        "enable_edit_variation": {
+          "label": "Enable line item variation update"
+        }
+      }
+    },
+    "gift_card": {
+      "name": "Gift card",
+      "settings": {
+        "desktop_width": {
+          "label": "Desktop width"
+        },
+        "mobile_width": {
+          "label": "Mobile width"
+        }
+      }
+    },
+    "compare": {
+      "name": "Compare",
+      "label": "Enable products comparison",
+      "settings": {
+      }
+    }
+  },
+  "alignments": {
+    "text": {
+      "label": "Text alignment",
+      "desktop": {
+        "label": "Desktop text alignment"
+      },
+      "mobile": {
+        "label": "Mobile text alignment"
+      }
+    },
+    "heading": {
+      "label": "Heading alignment"
+    },
+    "content": {
+      "label": "Content alignment",
+      "desktop": {
+        "label": "Desktop content alignment"
+      }
+    }
+  },
+  "link": {
+    "label": "Link"
+  },
+  "sizes": {
+    "heading": {
+      "label": "Heading size",
+      "options": {
+        "opt_1": {
+          "label": "Extra extra large"
+        },
+        "opt_2": {
+          "label": "Extra large"
+        },
+        "opt_3": {
+          "label": "Large"
+        },
+        "opt_4": {
+          "label": "Medium"
+        },
+        "opt_5": {
+          "label": "Small"
+        },
+        "opt_6": {
+          "label": "Extra small"
+        },
+        "opt_7": {
+          "label": "Extra extra small"
+        }
+      }
+    },
+    "text": {
+      "label": "Text size",
+      "options": {
+        "opt_1": {
+          "label": "Small"
+        },
+        "opt_2": {
+          "label": "Medium"
+        },
+        "opt_3": {
+          "label": "Large"
+        },
+        "opt_4": {
+          "label": "Extra large"
+        }
+      }
+    },
+    "description_text": {
+      "label": "Description text size"
+    },
+    "caption": {
+      "label": "Caption text size"
+    },
+    "title": {
+      "label": "Title text size"
+    }
+  },
+  "weight": {
+    "label": "Font weight",
+    "heading": {
+      "label": "Heading font weight",
+      "options": {
+        "opt_1": {
+          "label": "Bold"
+        },
+        "opt_2": {
+          "label": "Medium"
+        },
+        "opt_3": {
+          "label": "Normal"
+        },
+        "opt_4": {
+          "label": "Light"
+        },
+        "opt_5": {
+          "label": "Semi bold"
+        }
+      }
+    },
+    "description_text": {
+      "label": "Description font weight"
+    },
+    "subheading": {
+      "label": "Subheading font weight"
+    },
+    "caption": {
+      "label": "Caption font weight"
+    },
+    "title": {
+      "label": "Title font weight"
+    }
+  },
+  "heading": {
+    "name": "Heading",
+    "label": "Heading"
+  },
+  "subheading": {
+    "name": "Subheading",
+    "label": "Subheading"
+  },
+  "caption": {
+    "name": "Caption",
+    "label": "Caption",
+    "content": "Caption"
+  },
+  "text": {
+    "name": "Text",
+    "label": "Text"
+  },
+  "description_text": {
+    "name": "Description",
+    "label": "Description"
+  },
+  "color_scheme": {
+    "label": "Color scheme"
+  },
+  "target_blank": {
+    "label": "Open in new window"
+  },
+  "grid": {
+    "content": "Grid settings",
+    "remove_grid_spacing": {
+      "label": "Remove grid spacings"
+    },
+    "desktop": {
+      "rows": {
+        "label": "Desktop rows"
+      },
+      "columns": {
+        "label": "Desktop columns"
+      }
+    },
+    "mobile": {
+      "info_small": "On extra small screens, two columns will merge into one for better display.",
+      "info_small_sec": "On extra small screens, two columns will merge into one for better display. This option works specifically for the grid view.",
+      "columns": {
+        "label": "Mobile columns",
+        "options": {
+          "opt_1": {
+            "label": "1 column"
+          },
+          "opt_2": {
+            "label": "2 columns"
+          }
+        },
+        "query": {
+          "label": "Mobile columns css query",
+          "info": "The query works using 'Mobile first'."
+        }
+      }
+    }
+  },
+  "media": {
+    "label": "Media size",
+    "options": {
+      "opt_1": {
+        "label": "Adapt"
+      },
+      "opt_2": {
+        "label": "Square"
+      },
+      "opt_3": {
+        "label": "Portrait"
+      },
+      "opt_4": {
+        "label": "Landscape"
+      },
+      "opt_5": {
+        "label": "Small"
+      },
+      "opt_6": {
+        "label": "Medium"
+      },
+      "opt_7": {
+        "label": "Large"
+      },
+      "positions": {
+        "label": "Desktop media position",
+        "options": {
+          "first": {
+            "label": "Media first"
+          },
+          "second": {
+            "label": "Media second"
+          }
+        }
+      }
+    }
+  },
+  "bg_overlay": {
+    "label": "Background overlay"
+  },
+  "height": {
+    "label": "Desktop banner height",
+    "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)",
+    "mobile": {
+      "label": "Mobile banner height"
+    },
+    "options": {
+      "opt_1": {
+        "label": "Small"
+      },
+      "opt_2": {
+        "label": "Medium"
+      },
+      "opt_3": {
+        "label": "Large"
+      },
+      "opt_4": {
+        "label": "Match window height"
+      }
+    }
+  },
+  "video": {
+    "name": "Video",
+    "label": "Video",
+    "loop": {
+      "label": "Play video on loop"
+    },
+    "cover": {
+      "label": "Cover image"
+    },
+    "alt": {
+      "label": "Video alt text"
+    },
+    "url": {
+      "label": "URL"
+    },
+    "header": {
+      "label": "Shopify-hosted video",
+      "info": "Shows when no image is selected."
+    },
+    "header-embed": {
+      "label": "Or embed video from URL",
+      "info": "Shows when no Shopify-hosted video is selected."
+    }
+  },
+  "image": {
+    "label": "Image",
+    "mobile": {
+      "label": "Mobile image"
+    },
+    "width": {
+      "label": "Image width",
+      "options": {
+        "opt_1": {
+          "label": "Adapt to image"
+        },
+        "opt_2": {
+          "label": "One-third width of column"
+        },
+        "opt_3": {
+          "label": "Half width of column"
+        },
+        "opt_4": {
+          "label": "Full width of column"
+        }
+      },
+      "desktop": {
+        "label": "Desktop width"
+      },
+      "mobile": {
+        "label": "Mobile width"
+      },
+      "full": {
+        "label": "Make image full width"
+      }
+    }
+  },
+  "layout": {
+    "content": "Layout"
+  },
+  "bottom_margin": {
+    "label": "Bottom margin"
+  },
+  "menu": {
+    "label": "Menu",
+    "font_weight": {
+      "label": "Menu links font weight"
+    }
+  },
+  "spacing": {
+    "content": "Section padding",
+    "settings": {
+      "top": {
+        "label": "Top"
+      },
+      "bottom": {
+        "label": "Bottom"
+      }
+    }
+  },
+  "breadcrumb": {
+    "content": "Breadcrumb",
+    "label": "Enable"
+  },
+  "top_bdr": {
+    "label": "Show top border"
+  },
+  "bottom_bdr": {
+    "label": "Show bottom border"
+  },
+  "positions": {
+    "label": "Position",
+    "content_alignment": {
+      "label": "Desktop content position"
+    },
+    "options": {
+      "top": "Top",
+      "center": "Center",
+      "bottom": "Bottom",
+      "bottom_left": "Bottom left",
+      "bottom_right": "Bottom right",
+      "bottom_center": "Bottom center",
+      "top_left": "Top left",
+      "top_center": "Top center",
+      "top_right": "Top right",
+      "middle": "Middle",
+      "left": "Left",
+      "right": "Right"
+    }
+  },
+  "filters": {
+    "label": "Enable filters",
+    "info": "Customize filters with the Search & Discovery app [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery/filters)",
+    "sort": {
+      "label": "Enable sort"
+    }
+  },
+  "pagination": {
+    "label": "Pagination",
+    "info": "Choose how additional pages are navigated.",
+    "options": {
+      "opt_1": {
+        "label": "Paginated"
+      },
+      "opt_2": {
+        "label": "Click to load"
+      },
+      "opt_3": {
+        "label": "Infinite"
+      }
+    }
+  },
+  "slideshow": {
+    "content": "Slideshow settings",
+    "label": "Enable",
+    "auto_play": {
+      "label": "Auto-play"
+    },
+    "show_arrows": {
+      "label": "Show next/previous arrows"
+    },
+    "show_nav": {
+      "label": "Show pagination"
+    },
+    "interval": {
+      "label": "Change slides every",
+      "info": "This will only work if auto-play is enabled."
+    }
+  },
+  "countdown_timer": {
+    "content": "Countdown timer",
+    "label": "Enable",
+    "message": {
+      "label": "Message",
+      "info": "This shows when the end date elapses and 'Show message' option is selected."
+    },
+    "end_date": {
+      "label": "End date",
+      "info": "The end date must be set to a future date and include the following format: YYYY/MM/DD."
+    },
+    "on_end": {
+      "label": "Behavior when end date elapses",
+      "options": {
+        "opt_1": {
+          "label": "Hide"
+        },
+        "opt_2": {
+          "label": "Show message"
+        }
+      }
+    }
+  },
+  "custom_liquid": {
+    "name": "Custom liquid",
+    "label": "Custom liquid",
+    "info": "Add app snippets or other Liquid code to create advanced customizations."
+  },
+  "collapsible_row": {
+    "name": "Collapsible row",
+    "default_open": {
+      "label": "Default open"
+    }
+  },
+  "collection": {
+    "enable_admin_description": {
+      "label": "Show collection description from the admin instead"
+    },
+    "featured_image": {
+      "label": "Show featured image"
+    }
+  },
+  "localization_drops": {
+    "label": "Enable",
+    "language": {
+      "content": "Language selector",
+      "label": "Enable language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    "country": {
+      "content": "Country/Region selector",
+      "label": "Enable country/region selector",
+      "info": "To add a country/region, go to your [market settings.](/admin/settings/markets)"
+    }
+  },
+  "product": {
+    "card": {
+      "content": "Product card",
+      "quick_view": {
+        "content": "Quick view popup",
+        "label": "Enable"
+      },
+      "btns_position": {
+        "label": "Buttons position"
+      }
+    },
+    "media": {
+      "view": {
+        "label": "Gallery view",
+        "options": {
+          "opt_1": {
+            "label": "Thumbnails"
+          },
+          "opt_2": {
+            "label": "Slider"
+          }
+        }
+      }
+    },
+    "rating": {
+      "label": "Show product rating",
+      "info": "To display a rating, add a product rating app. [Learn more](https://docs.1o1development.com/themes/Swanky/Product%20Reviews%20App)"
+    },
+    "vendor": {
+      "label": "Show vendor"
+    },
+    "discount": {
+      "label": "Show discount"
+    },
+    "compare": {
+      "label": "Show compare"
+    },
+    "swatches": {
+      "label": "Swatches view"
+    },
+    "price": {
+      "label": "Show price"
+    },
+    "tags": {
+      "label": "Show tags"
+    },
+    "details": {
+      "label": "Show detail button"
+    },
+    "atc": {
+      "label": "Enable add to cart button"
+    },
+    "stock": {
+      "label": "Show stock"
+    },
+    "share": {
+      "label": "Enable share button"
+    },
+    "variation": {
+      "label": "Show variations"
+    },
+    "sku": {
+      "label": "Show SKU"
+    },
+    "subtotal": {
+      "label": "Show subtotal"
+    }
+  },
+  "site_logo": {
+    "content": "Logo",
+    "info": "For best results, use an image with a 16:2 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+  },
+  "sticky": {
+    "options": {
+      "opt_1": {
+        "label": "None"
+      },
+      "opt_2": {
+        "label": "Always"
+      },
+      "opt_3": {
+        "label": "On scroll up"
+      },
+      "opt_4": {
+        "label": "On scroll"
+      }
+    }
+  },
+  "collection_list": {
+    "label": "Collections",
+    "sigular": {
+      "label": "Collection"
+    },
+    "show_title": {
+      "label": "Show title"
+    },
+    "image": {
+      "label": "Custom image"
+    }
+  },
+  "main_collections": {
+    "name": "Main collections",
+    "settings": {
+      "sort_by": {
+        "label": "Sort collections by:",
+        "options": {
+          "opt_1": {
+            "label": "Alphabetically, A-Z"
+          },
+          "opt_2": {
+            "label": "Alphabetically, Z-A"
+          },
+          "opt_3": {
+            "label": "Date, new to old"
+          },
+          "opt_4": {
+            "label": "Date, old to new"
+          },
+          "opt_5": {
+            "label": "Product count, high to low"
+          },
+          "opt_6": {
+            "label": "Product count, low to high"
+          }
+        }
+      },
+      "card": {
+        "content": "Card settings",
+        "heading":{
+          "alignment": {
+            "label": "Heading alignment"
+          }
+        }
+      }
+    }
+  },
+  "sections": {
+    "full_width": {
+      "label": "Make section full width"
+    },
+    "view_layout": {
+      "label": "Behavior",
+      "options": {
+        "opt_1": {
+          "label": "Scroll"
+        },
+        "opt_2": {
+          "label": "Grid"
+        },
+        "opt_3": {
+          "label": "Slideshow"
+        }
+      }
+    },
+    "head": {
+      "content": "Header",
+      "size": {
+        "label": "Max content size"
+      }
+    },
+    "testimonails": {
+      "name": "Testimonial",
+      "settings": {
+        "card": {
+          "label": "Testimonials Card"
+        }
+      }
+    },
+    "multicolumn": {
+      "name": "Multicolumn",
+      "settings": {
+        "column_card": {
+          "content": "Column card settings"
+        }
+      },
+      "blocks": {
+        "column": {
+          "name": "Column"
+        },
+        "information": {
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    },
+    "image_banner": {
+      "name": "Image banner",
+      "settings": {
+        "animations": {
+          "parallax": {
+            "label": "Enable image parallax effect"
+          }
+        },
+        "image": {
+          "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        },
+        "video": {
+          "info": "Shows when no image is selected."
+        },
+        "embed_video": {
+          "info": "Shows when no Shopify-hosted video is selected."
+        }
+      }
+    },
+    "video_list": {
+      "name": "Videos list",
+      "settings": {
+        "image": {
+          "info": "For best results, use an image with a 4:2 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        },
+        "heading_size": {
+          "label": "Text size"
+        },
+        "alt_text": {
+          "label": "Video alt text",
+          "info": "Describe the video for customers using screen readers. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/themes\/theme-structure\/theme-features#video-block)"
+        },
+        "default_text": {
+          "label": "Caption",
+          "weight": {
+            "label": "Caption font weight"
+          },
+          "position": {
+            "label": "Caption position"
+          }
+        }
+      }
+    },
+    "logo_list": {
+      "name": "Logo list",
+      "blocks": {
+        "logo": {
+          "name": "Logo",
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 4:2 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    },
+    "email_signup": {
+      "name": "Newsletter",
+      "settings": {
+        "icon": {
+          "label": "Icon",
+          "info": "For best results, use an image with a 1:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        },
+        "additional": {
+          "content": "Additional box",
+          "banner": {
+            "label": "Banner",
+            "info": "For best results, use an image with a 7:3 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+          },
+          "socials": {
+            "label": "Show social media icons"
+          }
+        }
+      }
+    },
+    "carousel_section": {
+      "name": "Carousel",
+      "settings": {
+        "height": {
+          "desktop_height": {
+            "label": "Desktop minimum height"
+          },
+          "mobile_height": {
+            "label": "Mobile minimum height"
+          }
+        },
+        "slide_type": {
+          "name": "Type",
+          "opt_1": {
+            "label": "Fade"
+          },
+          "opt_2": {
+            "label": "Slide"
+          }
+        }
+      },
+      "blocks": {
+        "slide": {
+          "name": "Slide",
+          "settings": {
+            "container": {
+              "content": "Container"
+            },
+            "enable_container": {
+              "label": "Enable Container"
+            },
+            "first_button": {
+              "content": "First button"
+            },
+            "second_button": {
+              "content": "Second button"
+            },
+            "image": {
+              "label": "Background image",
+              "mobile": {
+                "label": "Mobile background image"
+              },
+              "info": "For best results, use an image with a 16:9 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    },
+    "image_gallery": {
+      "name": "Image gallery",
+      "settings": {
+        "gallery_view": {
+          "label": "Gallery view",
+          "opt_1": {
+            "label": "Plain"
+          },
+          "opt_2": {
+            "label": "Wave"
+          }
+        }
+      },
+      "blocks": {
+        "image": {
+          "info": "For best results, use an image with a 7:10 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        }
+      }
+    },
+    "promotion_banners": {
+      "name": "Promotion banners",
+      "settings": {
+        "d_row_height": {
+          "label": "Desktop row height"
+        },
+        "m_row_height": {
+          "label": "Mobile row height"
+        },
+        "text_alignment": {
+          "desktop": {
+            "label": "Text alignment"
+          }
+        }
+      },
+      "blocks": {
+        "banner": {
+          "name": "Banner",
+          "content": "These settings will only apply to Desktop.",
+          "settings": {
+            "cols": {
+              "label": "Columns"
+            },
+            "rows": {
+              "label": "Rows"
+            },
+            "tag_position": {
+              "label": "Discount tag position",
+              "options": {
+                "opt_1": {
+                  "label": "Left"
+                },
+                "opt_2": {
+                  "label": "Right"
+                }
+              }
+            },
+            "tag_width": {
+              "label": "Discount tag width"
+            },
+            "discount_text": {
+              "discount_bg": {
+                "label": "Discount background"
+              },
+              "discount_text": {
+                "label": "Discount text"
+              },
+              "heading": {
+                "heading": "Discount heading",
+                "weight": "Discount heading font weight",
+                "size": "Discount heading size"
+              },
+              "subheading": {
+                "heading": "Discount subheading",
+                "weight": "Discount subheading font weight",
+                "size": "Discount subheading size"
+              },
+              "show_discount": {
+                "label": "Hide discount tag on desktop"
+              },
+              "hide_discount_tag": {
+                "label": "Hide discount tag on mobile"
+              }
+            },
+            "caption": {
+              "background": {
+                "label": "Caption background"
+              },
+              "text": {
+                "label": "Caption text"
+              }
+            }
+          }
+        },
+        "banner_with_caption": {
+          "name": "Banner with caption",
+          "settings": {
+            "cols": {
+              "label": "Columns"
+            },
+            "rows": {
+              "label": "Rows"
+            },
+            "caption_alignment": {
+              "label": "Caption alignment",
+              "opt_1": "Justify",
+              "opt_2": "Middle"
+            },
+            "image_overlay": {
+              "label": "Image overlay"
+            },
+            "overlay_blend": {
+              "label": "Blend overlay"
+            }
+          }
+        },
+        "information": {
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 6:9 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        },
+        "link": {
+          "name": "Link",
+          "settings": {
+            "url": {
+              "label": "Link"
+            }
+          }
+        }
+      }
+    },
+    "collapsible_with_media": {
+      "name": "Collapsible content with media",
+      "settings": {
+        "collapse_row": {
+          "content": "Collapsible row settings"
+        },
+        "v_alignment": {
+          "info": "Only applies when image is uploaded"
+        },
+        "image": {
+          "info": "For best results, use an image with a 1:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        },
+        "collapsible_head":{
+          "label": "Collapsible heading",
+          "name": "Collapsible heading weight",
+          "content": "Collapsible heading size"
+        }
+      },
+      "blocks": {
+        "collapsible_row": {
+          "name": "Collapsible row",
+          "settings": {
+            "check_default_open": {
+              "label": "Default open"
+            }
+          }
+        },
+        "image": {
+          "name": "Image",
+          "settings": {
+            "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+          }
+        },
+        "video": {
+          "name": "Video",
+          "settings": {
+            "alt_text": {
+              "label": "Video alt text",
+              "info": "Describe the video for customers using screen readers. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/themes\/theme-structure\/theme-features#video-block)"
+            },
+            "image": {
+              "info": "For best results, use an image with a 4:2 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    },
+    "richtext": {
+      "name": "Rich text",
+      "blocks": {
+      }
+    },
+    "collection_with_content": {
+      "name": "Collection list with content",
+      "settings": {
+        "block_order": {
+          "label": "Desktop content position",
+          "options": {
+            "opt_1": {
+              "label": "content first"
+            },
+            "opt_2": {
+              "label": "content second"
+            }
+          }
+        }
+      },
+      "blocks": {
+        "collection": {
+          "name": "Collection",
+          "label": "Collection",
+          "settings": {
+            "image": {
+              "label": "Custom image",
+              "info": "For best results, use an image with a 3:2 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    },
+    "featured_blog": {
+      "name": "Featured blog",
+      "settings": {
+        "blog": {
+          "label": "Blog"
+        },
+        "view_more_button": {
+          "label": "Enable \"View all\" if blog has more articles than shown",
+          "button_label": {
+            "label": "Button label"
+          }
+        },
+        "blog_card": {
+          "content": "Blog settings",
+          "featured_image": {
+            "label": "Show featured image"
+          },
+          "tags": {
+            "label": "Show tags"
+          },
+          "date": {
+            "label": "Show date"
+          },
+          "author": {
+            "label": "Show author"
+          },
+          "excerpt": {
+            "label": "Show excerpt"
+          },
+          "comments_count": {
+            "label": "Show comments count"
+          }
+        }
+      }
+    },
+    "media_with_content": {
+      "name": "Media with content",
+      "settings": {
+      },
+      "blocks": {
+        "image": {
+          "settings": {
+            "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+          }
+        }
+      }
+    },
+    "product_showcase": {
+      "name": "Product showcase",
+      "settings": {
+        "lookbook": {
+          "content": "Showcase product"
+        },
+        "product": {
+          "label": "Product",
+          "info": "Works only if no hotspots are added; otherwise, products show from hotspot blocks."
+        }
+      },
+      "blocks": {
+        "hotspot": {
+          "name": "Hotspot",
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 4:3 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            },
+            "position": {
+              "content": "Position",
+              "label": "Desktop Content position",
+              "top": {
+                "label": "Top"
+              },
+              "left": {
+                "label": "Left"
+              },
+              "options": {
+                "opt_1": {
+                  "label": "Top center"
+                },
+                "opt_2": {
+                  "label": "Center left"
+                },
+                "opt_3": {
+                  "label": "Center right"
+                },
+                "opt_4": {
+                  "label": "Bottom center"
+                }
+              }
+            },
+            "mobile_position": {
+              "content": "Position",
+              "label": "Mobile Content position",
+              "options": {
+                "opt_1": {
+                  "label": "Top center"
+                },
+                "opt_2": {
+                  "label": "Center left"
+                },
+                "opt_3": {
+                  "label": "Center right"
+                },
+                "opt_4": {
+                  "label": "Bottom center"
+                }
+              }
+            },
+            "spots": {
+              "content_1": "Hotspot first",
+              "content_2": "Hotspot second",
+              "enable": {
+                "label": "Enable"
+              }
+            }
+          }
+        }
+      }
+    },
+    "scrolling_banner": {
+      "name": "Scrolling banner",
+      "blocks": {
+        "banner": {
+          "name": "Text",
+          "settings": {
+            "url": {
+              "label": "Link"
+            },
+            "image": {
+              "info": "For best results, use an image with a 1:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        },
+        "stencil": {
+          "name": "Stencil text",
+          "setting": {
+            "info": "Text can appear as a stencil outline. May not work in all browsers."
+          }
+        }
+      }
+    },
+    "flash_spotlight": {
+      "name": "Flash spotlight",
+      "scrolling_banner": {
+        "label": "Scrolling banner"
+      },
+      "blocks": {
+        "banner": {
+          "name": "Text",
+          "settings": {
+            "url": {
+              "label": "Link"
+            },
+            "image": {
+              "info": "For best results, use an image with a 1:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        },
+        "stencil": {
+          "name": "Stencil text",
+          "setting": {
+            "info": "Text can appear as a stencil outline. May not work in all browsers."
+          }
+        }
+      }
+    },
+    "main_blog": {
+      "name": "Main blog",
+      "settings": {
+        "blog_card": {
+          "content": "Blog settings",
+          "featured_image": {
+            "label": "Show featured image"
+          },
+          "tags": {
+            "label": "Show tags"
+          },
+          "date": {
+            "label": "Show date"
+          },
+          "author": {
+            "label": "Show author"
+          },
+          "excerpt": {
+            "label": "Show excerpt"
+          },
+          "comments_count": {
+            "label": "Show comments count"
+          }
+        }
+      }
+    },
+    "main_article": {
+      "name": "Blog post",
+      "settings": {
+        "pagination": {
+          "label": "Show next/previous"
+        }
+      },
+      "blocks": {
+        "featured_image": {
+          "name": "Featured image",
+          "settings": {
+            "content": "For best results, use an image with a 8:7 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+          }
+        },
+        "title": {
+          "name": "Title",
+          "settings": {
+          }
+        },
+        "tags": {
+          "name": "Tags and share",
+          "label": "Show tags"
+        },
+        "meta": {
+          "name": "Meta",
+          "settings": {
+            "date": {
+              "label": "Show date"
+            },
+            "author": {
+              "label": "Show author"
+            },
+            "comments_count": {
+              "label": "Show comments count"
+            },
+            "share": {
+              "label": "Enable share button",
+              "info": "If you include a link in social media posts, the page’s featured image will be shown as the preview image. [Learn more](https://help.shopify.com/manual/online-store/images/showing-social-media-thumbnail-images). A store title and description are included with the preview image. [Learn more](https://help.shopify.com/manual/promoting-marketing/seo/adding-keywords#set-a-title-and-description-for-your-online-store)."
+            }
+          }
+        },
+        "content": {
+          "name": "Content"
+        }
+      }
+    },
+    "before_after_content": {
+      "name": "Before/After with content",
+      "settings": {
+        "cursor": {
+          "content": "Cursor",
+          "position": {
+            "label": "Initial position"
+          }
+        },
+        "image": {
+          "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        }
+      },
+      "blocks": {
+        "before": {
+          "name": "Before"
+        },
+        "after": {
+          "name": "After"
+        }
+      }
+    },
+    "main_products_grid": {
+      "name": "Collection products grid",
+      "settings": {
+        "header": {
+          "content": "Header"
+        },
+        "description": {
+          "label": "Show description",
+          "position": {
+            "none": "None"
+          }
+        }
+      }
+    },
+    "main_product": {
+      "name": "Main product",
+      "settings": {
+      }
+    },
+    "featured_product": {
+      "name": "Featured product",
+      "settings": {
+      }
+    },
+    "product_blocks": {
+      "vendor": {
+        "name": "Vendor"
+      },
+      "title": {
+        "name": "Title"
+      },
+      "content": {
+        "name": "Content"
+      },
+      "features_table": {
+        "name": "Features",
+        "settings": {
+          "head": {
+            "content": "Head"
+          },
+          "rows": {
+            "row_1": {
+              "content": "Row 1"
+            },
+            "row_2": {
+              "content": "Row 2"
+            },
+            "row_3": {
+              "content": "Row 3"
+            },
+            "row_4": {
+              "content": "Row 4"
+            },
+            "row_5": {
+              "content": "Row 5"
+            },
+            "row_6": {
+              "content": "Row 6"
+            },
+            "row_7": {
+              "content": "Row 7"
+            },
+            "row_8": {
+              "content": "Row 8"
+            },
+            "row_9": {
+              "content": "Row 9"
+            },
+            "row_10": {
+              "content": "Row 10"
+            }
+          }
+        }
+      },
+      "stock": {
+        "name": "Stock"
+      },
+      "price": {
+        "name": "Price",
+        "settings": {
+          "share": {
+            "label": "Enable share"
+          }
+        }
+      },
+      "sku": {
+        "name": "Sku"
+      },
+      "variants_chart": {
+        "name": "Variants",
+        "settings": {
+          "show_chart": {
+            "label": "Show size chart",
+            "info": "Only shows when 'Size' option is added into variants.",
+            "image": {
+              "label": "Size chart image",
+              "info": "For best results, use an image with a 16:9 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      },
+      "quantity_input": {
+        "name": "Quantity input",
+        "settings": {
+          "subtotal": {
+            "label": "Show subtotal"
+          }
+        }
+      },
+      "buttons": {
+        "name": "Buttons",
+        "dynamic": {
+          "label": "Show dynamic checkout buttons",
+          "info": "Using the payment methods available on your store, customers see their preferred option, like PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+        },
+        "gift": {
+          "label": "Show recipient form for gift card products",
+          "info": "When enabled, gift card products can optionally be sent to a recipient with a personal message."
+        },
+        "whatsapp": {
+          "content": "Whatsapp",
+          "label": "Show whatsapp button",
+          "number": {
+            "label": "Whatsapp number"
+          },
+          "url_in_message": {
+            "label": "Show url in message"
+          },
+          "message": {
+            "label": "Custom message",
+            "info": "Use ||product_url|| to display the URL of the product."
+          }
+        }
+      },
+      "pickup": {
+        "name": "Pickup"
+      },
+      "reviews": {
+        "name": "Review quote",
+        "settings": {
+          "image": {
+            "info": "For best results, use an image with a 16:9 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+          },
+          "author": {
+            "label": "Author name"
+          },
+          "quote_text": {
+            "label": "Quote"
+          },
+          "rating": {
+            "label": "Rating",
+            "options": {
+              "none": {
+                "label": "None"
+              },
+              "opt_1": {
+                "label": "1 star"
+              },
+              "opt_2": {
+                "label": "2 stars"
+              },
+              "opt_3": {
+                "label": "3 stars"
+              },
+              "opt_4": {
+                "label": "4 stars"
+              },
+              "opt_5": {
+                "label": "5 stars"
+              }
+            }
+          }
+        }
+      },
+      "complementary": {
+        "name": "Complementary products",
+        "content": "To select complementary products, add the Search & Discovery app. [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery/product-recommendations).",
+        "settings": {
+          "bundle": {
+            "content": "Complementary as bundle",
+            "info": "If Enabled, products will be shown to bottom.",
+            "label": "Enable",
+            "max_header_size": {
+              "label": "Max header size"
+            }
+          }
+        }
+      },
+      "mb_margin": {
+        "label": "Bottom margin"
+      }
+    },
+    "before_login": {
+      "settings": {
+        "banner": {
+          "label": "Banner image",
+          "info": "For best results, use an image with a 8:7 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        }
+      }
+    },
+    "main_cart": {
+      "name": "Main cart",
+      "settings": {
+        "pay_icons": {
+          "label": "Show payment icons"
+        }
+      },
+      "blocks": {
+        "icon_description": {
+          "name": "Icon with description",
+          "settings": {
+            "icon": {
+              "info": "For best results, use an image with a 1:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        },
+        "banner": {
+          "name": "Banner",
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 6:7 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    },
+    "main_register": {
+      "name": "Main register",
+      "settings": {}
+    },
+    "main_login": {
+      "name": "Main login",
+      "settings": {
+        "shop_login_button": {
+          "label": "Enable sign in with shop"
+        }
+      }
+    },
+    "main_reset_password": {
+      "name": "Main reset password",
+      "settings": {
+      }
+    },
+    "main_activate_account": {
+      "name": "Activate account"
+    },
+    "password": {
+      "main": {
+        "name": "Main password"
+      },
+      "header": {
+        "name": "Password header",
+        "settings": {
+        }
+      },
+      "footer": {
+        "name": "Password footer",
+        "settings": {}
+      }
+    },
+    "main_account": {
+      "name": "Main account",
+      "settings": {
+      }
+    },
+    "main_order": {
+      "name": "Main order",
+      "settings": {
+      }
+    },
+    "main_addresses": {
+      "name": "Main addresses",
+      "settings": {
+      }
+    },
+    "main_404": {
+      "name": "Main 404",
+      "settings": {
+        "image": {
+          "label": "404 image",
+          "info": "For best results, use an image with a 9:12 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        },
+        "left_image": {
+          "label": "Desktop left image",
+          "info": "For best results, use an image with a 9:11 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        },
+        "right_image": {
+          "label": "Desktop right image",
+          "info": "For best results, use an image with a 9:11 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+        }
+      }
+    },
+    "main_page": {
+      "name": "Page",
+      "settings": {}
+    },
+    "recommendations": {
+      "name": "Product recommendations",
+      "settings": {}
+    },
+    "discount_popup": {
+      "name": "Discount pop-up",
+      "settings": {
+        "button": {
+          "label": "Button"
+        },
+        "popup_bg": {
+          "Label": "Popup Background"
+        }
+      },
+      "blocks": {
+        "image": {
+          "name": "Image",
+          "hide": {
+            "label": "Hide image on mobile"
+          }
+        },
+        "form": {
+          "name": "Form"
+        }
+      }
+    },
+    "age_verifier": {
+      "name": "Age verification pop-up",
+      "settings": {
+        "buttons": {
+          "accept": {
+          "content": "Accept button"
+          },
+          "reject": {
+            "content": "Reject button"
+          },
+          "layout": {
+            "content": "Layout"
+          },
+          "style": {
+            "label": "Style"
+          }
+        }
+      },
+      "blocks": {
+        "image": {
+          "name": "Image",
+          "hide": {
+            "label": "Hide image on mobile"
+          }
+        },
+        "text": {
+          "name": "Text"
+        }
+      }
+    },
+    "contact_form": {
+      "name": "Contact form",
+      "settings": {
+        "form_heading":{
+          "label": "Form heading"
+        },
+        "form_description":{
+          "label": "Form description"
+        }
+      },
+      "blocks": {
+        "location": {
+          "name": "Location",
+          "working_hours": {
+            "name": "Working hours"
+          },
+          "phone_hours": {
+            "name": "Phone hours"
+          },
+          "image": {
+            "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+          }
+        }
+      }
+    },
+    "announcement_bar": {
+      "name": "Announcement bar",
+      "settings": {
+        "show_home_only": {
+          "label": "Show only on homepage"
+        },
+        "show_social_list": {
+          "label": "Show social media links",
+          "info": "To display your social media accounts, link them in your [theme settings](/editor?context=theme&category=social%20media)"
+        }
+      },
+      "blocks": {
+        "text": {
+          "name": "Announcement"
+        }
+      }
+    },
+    "header": {
+      "name": "Header",
+      "settings": {
+        "make_transparent": {
+          "label": "Overlay header over homepage"
+        },
+        "main_menu": {
+          "content": "Main menu",
+          "collapsed": {
+            "label": "Enable desktop drawer",
+            "text": {
+              "label": "Desktop drawer label",
+              "weight": {
+                "label": "Desktop drawer label font weight"
+              }
+            },
+            "banner": {
+              "label": "Desktop drawer banner image",
+              "info": "For best results, use an image with a 16:8 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)",
+              "link": {
+                "label": "Desktop drawer banner link"
+              }
+            }
+          },
+          "color_scheme": {
+            "label": "Menu drawer color scheme"
+          }
+        },
+        "mega_menu": {
+          "label": "Mega Menu",
+          "color": "Mega menu drawer color scheme"
+        },
+        "show_cart": {
+          "label": "Show cart"
+        },
+        "show_customer": {
+          "label": "Show account"
+        },
+        "show_store_locator": {
+          "label": "Show store locator popup"
+        },
+        "search": {
+          "content": "Search",
+          "label": "Enable",
+          "predictive": {
+            "label": "Predictive suggestions"
+          }
+        },
+        "sticky": {
+          "label": "Sticky header"
+        }
+      },
+      "blocks": {
+        "custom_link": {
+          "name": "Custom link",
+          "label": "Label",
+          "info": "Enables only if mega menu is disabled",
+          "settings": {
+            "mega_menu": {
+              "content": "Mega menu",
+              "label": "Enable",
+              "banners": {
+                "info": "For best results, use an image with a 1:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)",
+                "one": {
+                  "content": "First banner"
+                },
+                "two": {
+                  "content": "Second banner"
+                },
+                "three": {
+                  "content": "Third banner"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "footer_top": {
+      "name": "Footer top",
+      "settings": {
+        "footer_logo": "Logo",
+        "follow_on_shop": {
+          "label": "Show follow on shop",
+          "info": "To allow customers to follow your store on the Shop app from your storefront, Shop Pay must be enabled. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/themes\/customizing-themes\/follow-on-shop)"
+        },
+        "show_social_list": {
+          "label": "Show social media links",
+          "info": "To display your social media accounts, link them in your [theme settings](/editor?context=theme&category=social%20media)."
+        }
+      },
+      "blocks": {
+        "menu": {
+          "name": "Menu",
+          "label": "Menu",
+          "info": "Displays only top-level menu items."
+        }
+      }
+    },
+    "footer": {
+      "name": "Footer",
+      "settings": {
+        "pay_icons": {
+          "label": "Show payment icons"
+        }
+      }
+    },
+    "store_locator": {
+      "name": "Store locations pop-up",
+      "settings": {
+      },
+      "blocks": {
+        "store": {
+          "name": "Store",
+          "settings": {
+            "open": {
+              "label": "Default open"
+            },
+            "map": {
+              "label": "Map embed iframe",
+              "info": "Get embed code [Learn more](https://docs.1o1development.com/themes/Swanky/Store%20locations%20pop-up)"
+            }
+          }
+        }
+      }
+    },
+    "collection_list": {
+      "name": "Collection list",
+      "settings": {
+        "collection_card": {
+          "content": "Collection card",
+          "content_position": {
+            "label": "Content position",
+            "info": "This works for fewer blocks"
+          }
+        }
+      },
+      "blocks": {
+        "collection": {
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 14:15 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            },
+            "caption": {
+              "background": {
+                "label": "Caption background"
+              },
+              "text": {
+                "label": "Caption text"
+              }
+            }
+          }
+        }
+      }
+    },
+    "main_search": {
+      "name": "Main search",
+      "settings": {}
+    },
+    "featured_collection": {
+      "name": "Featured collection",
+      "settings": {
+        "view_more": {
+          "label": "Enable \"View all\" if collection has more products than shown"
+        },
+        "banner": {
+          "content": "Banners settings",
+          "para": "Enabled only if slideshow is disabled.",
+          "index": {
+            "label": "Banners position",
+            "info": "To display banners, choose a position. Ensure this number is lower than the 'Max products to show' value."
+          }
+        },
+        "products_to_show": {
+          "label": "Max products to show"
+        }
+      },
+      "blocks": {
+        "banner": {
+          "name": "Banner",
+          "settings": {
+            "image": {
+              "info": "For best results, use an image with a 16:8 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            },
+            "scroll_text": {
+              "label": "Scrolling text"
+            }
+          }
+        }
+      }
+    },
+    "info_spotlight": {
+      "name": "Info spotlight"
+    },
+    "media_grid": {
+      "name": "Media Grid",
+      "settings": {},
+      "blocks": {
+        "gird_column": {
+          "name": "Grid column",
+          "settings": {
+            "image_first": {
+              "label": "Image first"
+            },
+            "image_placement": {
+              "label": "Image placement",
+              "image_top": {
+                "label": "Top"
+              },
+              "image_bottom": {
+                "label": "Bottom"
+              }
+            },
+            "image": {
+              "info": "For best results, use an image with a 4:1 aspect ratio. [Learn more](https:\/\/help.shopify.com\/manual\/shopify-admin\/productivity-tools\/image-editor#understanding-image-aspect-ratio)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "scroll": {
+    "content": "Scroll settings",
+    "label": "Enable",
+    "settings": {
+      "speed": {
+        "label": "Speed"
+      },
+      "on_hover": {
+        "label": "Pause on hover"
+      },
+      "direction": {
+        "label": "Direction",
+        "options": {
+          "opt_1": {
+            "label": "Right-to-left"
+          },
+          "opt_2": {
+            "label": "Left-to-right"
+          },
+          "opt_3": {
+            "label": "Bottom-to-top"
+          },
+          "opt_4": {
+            "label": "Top-to-bottom"
+          }
+        }
+      }
+    }
+  }
+}

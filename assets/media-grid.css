@@ -1,0 +1,17 @@
+.media-grid{
+  --q-align-value: var(--mobile-q-align);
+}
+
+.media-grid .heading-head{
+  width: 100%;
+  margin-bottom: calc(48px / 1.6);
+}
+
+@media (min-width: 768px){
+  .media-grid{
+    --q-align-value: var(--desktop-q-align);
+  }
+  .media-grid .heading-head{
+    margin-bottom: 48px;
+ }
+}

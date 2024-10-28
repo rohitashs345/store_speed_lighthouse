@@ -1,0 +1,35 @@
+{%- comment -%}
+  renders products media image
+  usage
+    {%- render 'product-media-image', product: product, media: media, loading: loading_attr -%}
+{%- endcomment -%}
+{%- liquid
+  capture image_alt
+    if media.preview_image.alt != blank
+      echo media.preview_image.alt | escape
+      else
+        echo product.title | escape
+    endif
+  endcapture
+-%}
+{%- capture media_img_tag -%}
+  <img
+    srcset="{%- if media.preview_image.width >= 550 -%}{{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
+            {%- if media.preview_image.width >= 1100 -%}{{ media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+            {%- if media.preview_image.width >= 1445 -%}{{ media.preview_image | image_url: width: 1445 }} 1445w,{%- endif -%}
+            {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
+            {%- if media.preview_image.width >= 2048 -%}{{ media.preview_image | image_url: width: 2048 }} 2048w,{%- endif -%}
+            {%- if media.preview_image.width >= 2200 -%}{{ media.preview_image | image_url: width: 2200 }} 2200w,{%- endif -%}
+            {%- if media.preview_image.width >= 2890 -%}{{ media.preview_image | image_url: width: 2890 }} 2890w,{%- endif -%}
+            {%- if media.preview_image.width >= 4096 -%}{{ media.preview_image | image_url: width: 4096 }} 4096w,{%- endif -%}
+            {{ media.preview_image | image_url }} {{ media.preview_image.width }}w"
+    sizes="(min-width: 750px) calc(100vw - 22rem), 1445px"
+    src="{{- media.preview_image | image_url: width: 1445 -}}"
+    alt="{{- image_alt -}}"
+    loading="{{ loading }}"
+    width="1445"
+    height="{{- 1445 | divided_by: media.preview_image.aspect_ratio | round -}}"
+    class="object-fit object-fit--absolute"
+  >
+{%- endcapture -%}
+{{- media_img_tag -}}

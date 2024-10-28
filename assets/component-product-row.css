@@ -1,0 +1,17 @@
+.product-row{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.product-row_image{
+  width: 80px;
+  height: 80px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.product-row_heading > a{
+  text-decoration: none;
+  transition: color 0.3s ease;
+}

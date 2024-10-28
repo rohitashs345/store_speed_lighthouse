@@ -1,0 +1,83 @@
+{%- comment -%}
+  renders product price
+  usage
+    {%- render 'product-price', product: product, use_variant: true, show_unit_price: false -%}
+{%- endcomment -%}
+{%- liquid
+  assign target = product
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1999
+
+  assign onsale = false
+  if compare_at_price > price
+    assign onsale = true
+  endif
+
+  assign money_price = price | money
+  if settings.show_currency_code
+    assign money_price = price | money_with_currency
+  endif
+
+  if target == product and product.price_varies
+    assign money_price = money_price | prepend: 'From '
+  endif
+-%}
+<strong class="product-price">
+  <span class="product-price_pricing --word-break">
+    {%- if onsale -%}
+      {%- unless product.price_varies == false and product.compare_at_price_varies -%}
+        {%- comment -%} On sale - Regular price {%- endcomment -%}
+        <span class="visually-hidden" style="background-color: var(--section-background-color); color: var(--section-foreground-color);">
+          {{- 'product.regular_price' | t -}}
+        </span>
+        <s class="regular-price">
+          {%- if settings.show_currency_code -%}
+            {{- compare_at_price | money_with_currency -}}
+          {%- else -%}
+            {{- compare_at_price | money -}}
+          {%- endif -%}
+        </s>
+      {%- endunless -%}
+      <span class="visually-hidden">
+        {{- 'product.sale_price' | t -}}
+      </span>
+      <span class="sale-price main-price">
+        {{- money_price -}}
+      </span>
+    {%- else -%}
+      {%- comment -%} Regular price {%- endcomment -%}
+      <span class="visually-hidden" style="background-color: var(--section-background-color); color: var(--section-foreground-color);">
+        {{- 'product.regular_price' | t -}}
+      </span>
+      <span class="regular-price main-price">
+        {{- money_price -}}
+      </span>
+    {%- endif -%}
+  </span>
+  {%- if show_unit_price -%}
+    {%- unless product.selected_or_first_available_variant.unit_price_measurement == nil -%}
+      <span class="product-price_unit-pricing --word-break">
+        <span class="visually-hidden" style="background-color: var(--section-background-color); color: var(--section-foreground-color);">
+          {{- 'product.unit_price' | t -}}
+        </span>
+        <span class="unit-price">
+          <span>
+            {{- product.selected_or_first_available_variant.unit_price | money -}}
+          </span>
+          <span aria-hidden="true">/</span>
+          <span class="visually-hidden" style="background-color: var(--section-background-color); color: var(--section-foreground-color);">&nbsp;{{- 'product.unit_price_separator' | t -}}&nbsp;</span>
+          <span>
+            {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+              {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+            {%- endif -%}
+            {{- product.selected_or_first_available_variant.unit_price_measurement.reference_unit -}}
+          </span>
+        </span>
+      </span>
+    {%- endunless -%}
+  {%- endif -%}
+</strong>

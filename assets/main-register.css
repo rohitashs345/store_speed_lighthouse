@@ -1,0 +1,241 @@
+.main-register{
+  --section-padding-top: 0;
+  --section-padding-bottom: 0;
+  position: relative;
+}
+
+.main-register_wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.main-register_column{
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 50%;
+}
+
+.main-register_column--image{
+  display: none;
+}
+
+.main-register_img{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.main-register_column--form{
+  min-height: calc(100vh - 93px);
+  display: flex;
+}
+
+.main-register_btn-wrapper{
+  --mt-top: 32px;
+}
+
+.main-register_heading-head{
+  margin-bottom: 29px;
+}
+
+.main-register_form-align{
+  padding-top: 44px;
+  padding-bottom: 44px;
+  max-width: 595px;
+  position: relative;
+}
+
+.main-register_form-btn{
+  width: 100%;
+  display: block;
+}
+
+.main-register_form-btn.button--link,
+.main-register_pass-btn.button--link{
+  --button-padding-x: 0;
+}
+
+.main-register_pass-btn .button_icn,
+.main-register_form-btn .button_icn,
+.main-register_role-icn{
+  vertical-align: -0.4em;
+  margin-right: 8px;
+}
+
+.main-register_form-btn .button_icn,
+.main-register_pass-btn--back .button_icn,
+.main-register_btn--back .button_icn{
+  vertical-align: -0.15em;
+}
+
+.transit{
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.transit--in{
+  opacity: 1;
+  transform: scaleX(1);
+  max-height: 9999px;
+}
+
+.transit--in:focus{
+  outline: 2px solid currentColor !important;
+}
+
+.transit--out{
+  opacity: 0;
+  transform: scaleX(0);
+  max-height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -999;
+}
+
+.main-register_error-wrapper,
+.main-register_success-wrapper,
+.main-register_results-wrap{
+  color: var(--section-error-color);
+  font-size: 14px;
+  margin-top: 12px;
+  outline: none;
+}
+
+.main-register_error-wrapper{
+  text-align: right;
+}
+
+.main-register_success-wrapper{
+  color: var(--section-success-color);
+}
+
+.main-register_results-wrap:empty{
+  display: none;
+}
+
+.main-register_logo-heading{
+  --mt-bottom: 24px;
+  --logo-width: var(--logo-mobile-width);
+  max-width: var(--logo-width);
+  display: inline-block;
+  vertical-align: top;
+}
+
+.main-register_shop-msg{
+  margin-top: 24px;
+}
+
+.main-register_pass-icn{
+  color: var(--section-foreground-color);
+  display: block;
+  margin-top: 40px;
+  margin-bottom: 23px;
+  line-height: 1;
+}
+
+.main-register_description{
+  color: var(--section-error-color);
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.main-register_form-group + .main-register_form-group{
+  margin-top: 27px;
+}
+
+.main-register_foot-wrapper{
+  font-weight: 500;
+  --mt-top: 47px;
+}
+
+.main-register_cancel-btn.button--link{
+  margin-top: 27px;
+}
+
+.main-register_forget-btn.button--link,
+.main-register_register-link.button--link,
+.main-register_cancel-btn.button--link{
+  --button-font-size: inherit;
+  --button-font-family: inherit;
+  --button-padding-y: 0;
+  --button-padding-x: 0;
+  --button-font-weight: inherit;
+  --button-background: transparent;
+  --button-text: var(--section-links-color);
+  --button-border-color: transparent;
+  --button-hover-background: transparent;
+  --button-hover-text: var(--section-active-hover-color);
+  --button-hover-border-color: transparent;
+  text-decoration: underline;
+}
+
+.main-register .form__message{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding: 3px 0;
+}
+
+.main-register .errors-list{
+  margin-top: 9px;
+  padding-left: 30px;
+  margin-bottom: 25px;
+}
+
+.errors-list .errors-list_link{
+  text-decoration: none;
+}
+
+.main-register .error-message_wrapper{
+  margin-bottom: 60px;
+}
+
+.main-register .errors ul{
+  padding-left: 30px;
+  list-style: none;
+}
+
+.error-message-wrapper{
+  margin-bottom: 7px;
+}
+
+.main-register_heading-head{
+  margin-bottom: 48px;
+}
+
+.main-register_form-input-lable{
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+}
+
+@media(min-width: 768px){
+  .main-register_column--image{
+    display: block;
+  }
+
+  .main-register_heading{
+    --heading-size-factor: 0.7;
+  }
+
+  .main-register .container-fluid{
+    --cp-spacer-left: 0;
+    --cp-spacer-right: 0;
+  }
+
+  .main-register_form-align{
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .main-register_logo-heading{
+    --logo-width: var(--logo-desktop-width);
+  }
+}
+
+@media(min-width: 992px){
+  .main-register_heading{
+    --heading-size-factor: 1;
+  }
+}

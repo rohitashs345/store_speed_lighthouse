@@ -1,0 +1,167 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gift-card {
+  max-width: 592px;
+  width: 100%;
+  border-radius: 16px;
+  padding: 35px 20px;
+  text-align: center;
+  font-family: var(--body-font-family, 'Open Sans', sans-serif);
+  margin: 30px auto;
+}
+
+.site-logo {
+  margin-bottom: 55px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  width: var(--logo-width);
+}
+
+.gift-card .brand-name {
+  margin-bottom: 55px;
+}
+
+.site-logo img {
+  width: 100%;
+}
+
+.gift-card__title {
+  letter-spacing: -0.03em;
+}
+
+.gift-card__title.mty {
+  --mt-bottom: 19px;
+}
+
+.gift-card__price {
+  margin-bottom: 9px;
+  margin-bottom: -14px;
+}
+
+.gift-card__price strong {
+  font-weight: 500;
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+}
+
+.gift-card__expire-date {
+  margin-top: 25px;
+  margin-bottom: -25px;
+}
+
+.gift-card__image-wrapper {
+  margin-bottom: 50px;
+}
+
+.gift-card__image-wrapper img,
+.gift-card__image-wrapper svg {
+  max-width: 100%;
+}
+
+.gift-card__qr-code img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gift-card__number {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 2.2rem;
+  line-height: 4rem;
+  color: var(--section-alternative-text);
+}
+
+.gift-card__buttons {
+  margin-bottom: 32px;
+}
+
+.gift-card__copy-success {
+  font-size: 1.2rem;
+  color: var(--section-success-color);
+  display: flex;
+  justify-content: center;
+}
+
+.gift-card__copy-success svg {
+  margin-right: 4px;
+}
+
+.gift-card__copy-button {
+  background: transparent;
+  border: 0;
+  padding: 0 10px;
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 4rem;
+  color: var(--section-links-color);
+  cursor: pointer;
+}
+
+.gift-card__copy-button:hover {
+  text-decoration: none;
+  background-color: transparent;
+  color: var(--section-active-hover-color);
+}
+
+.gift-card__copy-success {
+  display: block;
+}
+
+.btnWrap .button {
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+}
+
+.btnWrap .button + .button {
+  margin-top: 32px;
+}
+
+.mty {
+  margin-top: var(--mt-top, 0);
+  margin-bottom: var(--mt-bottom, 0);
+}
+
+.gift-card .site-logo {
+  --logo-width: var(--logo-mobile-width);
+  max-width: var(--logo-width);
+  width: 100%;
+}
+
+.gift-card .site-logo img {
+  vertical-align: top;
+}
+
+@media print {
+  .no-print,
+  .sticky-header-wrapper,
+  .utility-bar,
+  .announcement-bar,
+  .shopify-section-group-footer-group {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) {
+  .gift-card {
+    padding: 81px 72px 81px 73px;
+  }
+}
+
+@media (min-width: 768px) {
+  .gift-card .site-logo {
+    --logo-width: var(--logo-desktop-width);
+  }
+}

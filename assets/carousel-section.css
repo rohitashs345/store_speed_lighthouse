@@ -1,0 +1,65 @@
+.carousel_wrapper{
+  position: relative;
+}
+
+.carousel .splide-controls{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.carousel .splide__pagination{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.carousel .splide__pagination,
+.carousel .splide__pagination__page,
+.carousel .splide__pagination__page::before{
+  width: 100%;
+}
+
+.carousel .splide__pagination > li,
+.product-common_price-col{
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.carousel .splide__pagination__page{
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 24px;
+}
+
+.carousel .splide__pagination__page::before{
+  background-color: var(--section-border-color);
+  border-color: var(--section-border-color);
+}
+
+.carousel .splide__pagination__page:hover::before,
+.carousel .splide__pagination__page.is-active::before{
+  background-color: var(--section-warning-color);
+  border-color: var(--section-warning-color);
+}
+
+@media (min-width: 992px){
+  .carousel .splide__arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .carousel .splide__arrow--prev{
+    left: 20px;
+  }
+  
+  .carousel .splide__arrow--next{
+    right: 20px;
+  }
+
+  .carousel .splide-controls{
+    margin-top: -8px;
+    margin-bottom: -8px;
+  }
+}

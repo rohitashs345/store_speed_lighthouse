@@ -1,0 +1,35 @@
+{%- comment -%}
+  renders products variant featured image
+  usage
+    {%- render 'product-variant-image', product: product, variant: variant, loading: 'lazy' -%}
+{%- endcomment -%}
+{%- liquid
+  capture image_alt
+    if variant.featured_image.alt != blank
+      echo variant.featured_image.alt | escape
+      else
+        echo variant.title | prepend: product.title
+    endif
+  endcapture
+-%}
+{%- capture media_img_tag -%}
+  <img
+    srcset="{%- if variant.featured_image.width >= 550 -%}{{ variant.featured_image | image_url: width: 550 }} 550w,{%- endif -%}
+            {%- if variant.featured_image.width >= 1100 -%}{{ variant.featured_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+            {%- if variant.featured_image.width >= 1445 -%}{{ variant.featured_image | image_url: width: 1445 }} 1445w,{%- endif -%}
+            {%- if variant.featured_image.width >= 1680 -%}{{ variant.featured_image | image_url: width: 1680 }} 1680w,{%- endif -%}
+            {%- if variant.featured_image.width >= 2048 -%}{{ variant.featured_image | image_url: width: 2048 }} 2048w,{%- endif -%}
+            {%- if variant.featured_image.width >= 2200 -%}{{ variant.featured_image | image_url: width: 2200 }} 2200w,{%- endif -%}
+            {%- if variant.featured_image.width >= 2890 -%}{{ variant.featured_image | image_url: width: 2890 }} 2890w,{%- endif -%}
+            {%- if variant.featured_image.width >= 4096 -%}{{ variant.featured_image | image_url: width: 4096 }} 4096w,{%- endif -%}
+            {{ variant.featured_image | image_url }} {{ variant.featured_image.width }}w"
+    sizes="(min-width: 750px) calc(100vw - 22rem), 1445px"
+    src="{{- variant.featured_image | image_url: width: 1445 -}}"
+    alt="{{- image_alt -}}"
+    loading="{{ loading }}"
+    width="1445"
+    height="{{- 1445 | divided_by: variant.featured_image.aspect_ratio | round -}}"
+    class="object-fit object-fit--absolute"
+  >
+{%- endcapture -%}
+{{- media_img_tag -}}

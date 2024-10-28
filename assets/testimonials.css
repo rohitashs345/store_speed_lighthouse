@@ -1,0 +1,9 @@
+.testimonials{
+  --q-align-value: var(--mobile-q-align);
+}
+
+@media (min-width: 768px){
+  .testimonials{
+    --q-align-value: var(--desktop-q-align);
+  }
+}

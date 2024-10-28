@@ -1,0 +1,37 @@
+{%- comment -%}
+  renders figure with hotspots
+  usage
+    {%- render 'figure-hotspot', figure: block, prefix_class: section_prefix_class, figure_index: forloop.index, position: '1st' -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign block_product_1 = figure.settings.block_product_1
+
+  capture product_title_1
+    if block_product_1.title != blank
+      echo block_product_1.title | escape
+    else
+      echo 'product.title' | t
+    endif
+  endcapture
+-%}
+<div class="hotspot_dropdown hotspot_dropdown--first" style="--position-top-first: {{ figure.settings.position_top_spot_first }}%; --position-left-first: {{ figure.settings.position_left_spot_first }}%;"
+  {{ figure.shopify_attributes }}>
+  <hotspot-switcher
+    data-ref-product="[data-id='product-ref-{{ section.id }}-{{ figure.id }}-1st']"
+    data-ref-parent="#{{ section.id }}"
+  >
+    <button
+      type="button"
+      class="hotspot_opener btn-icn-ixi"
+      {% if figure_index == 1 %}data-selected="true"{% else %}data-selected="false"{% endif %}
+    >
+      <i class="btn-icn-ixi_wrapper">
+        <span class="hotspot_opener--icn-open">
+          {%- render 'icons-data', width: 30, height: 30, use_icon: true, icon_reference: 'plus' -%}
+          <span class="visually-hidden">{{- product_title_1 -}}</span>
+        </span>
+      </i>
+    </button>
+  </hotspot-switcher>
+</div>

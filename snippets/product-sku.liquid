@@ -1,0 +1,13 @@
+{%- comment -%}
+  renders product sku
+  usage
+    {%- render 'product-sku', product: product, show_label: true -%}
+{%- endcomment -%}
+<strong class="product-sku {% if product.selected_or_first_available_variant.sku.size == 0 or product.selected_or_first_available_variant.sku == blank %}hidden{% endif %}">
+  <span class="product-sku_label h6 {% unless show_label %}visually-hidden{% endunless %}">
+    {{- 'product.sku_label' | t -}}:
+  </span>
+  <span class="product-sku_text --word-break">
+    {{- product.selected_or_first_available_variant.sku -}}
+  </span>
+</strong>

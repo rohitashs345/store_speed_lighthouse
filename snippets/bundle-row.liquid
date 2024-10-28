@@ -1,0 +1,319 @@
+{%- comment -%}
+  renders bundle product row
+  usage
+    {%- render 'bundle-row', product: recommendation, loading_attr: 'lazy' -%}
+{%- endcomment -%}
+{%- liquid
+  assign product_json_id = 'BundleJson-' | append: product.id
+  assign bundle_form_id = 'BundleAtcForm-' | append: product.id
+  assign media_template_attr = 'data-media-bundle-template-' | append: product.id | append: '-' | append: section.id
+  assign qty_bundle_render_attr = 'data-render-bundle-qty'
+  assign error_render_attr = 'data-render-bundle-error'
+  assign price_render_attr = 'data-render-price-n-unit'
+  assign price_render_attr_duplicated = 'data-render-bundle-price-duplicated'
+
+  if product.selected_or_first_available_variant.featured_media != null
+    assign first_image = product.selected_or_first_available_variant.featured_media
+    else
+      for media in product.media
+        assign first_image = media
+        break
+      endfor
+  endif
+
+  capture product_clean_url
+    if product.url contains '?'
+      assign parts = product.url | split: '?'
+      echo parts[0]
+      else
+        echo product.url
+    endif
+  endcapture
+
+  capture image_alt_first
+    if first_image.preview_image.alt != blank
+      echo first_image.preview_image.alt
+      else
+        echo product.title | escape 
+    endif
+  endcapture
+
+  assign check_against_inventory = true
+  if product.selected_or_first_available_variant.inventory_management != 'shopify' or  product.selected_or_first_available_variant.inventory_policy == 'continue'
+    assign check_against_inventory = false
+  endif
+  if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+    assign quantity_rule_soldout = true
+  endif
+  capture atc_button_label
+    if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+      echo 'product.atc_buttons.soldout' | t
+      else
+        echo 'product.atc_buttons.add_to_cart' | t
+    endif
+  endcapture
+-%}
+<div class="bundle-row {{ show_variant_disable }}" data-product-container="bundle-product-{{- product.id -}}">
+  <div class="bundle-row_col bundle-row_col--1">
+    <strong class="bundle-structure_head-title bundle-row_head-title --word-break">
+      {{- 'product.bundle_product.head.p_name' | t -}}
+    </strong>
+    <div class="bundle-row_title-wrap">
+      <div class="bundle-row_media-wrapper">
+        <div class="bundle-row_media" data-switch-wrapper="">
+          {%- if first_image != blank -%}
+            <a href="{{- product_clean_url -}}" class="--media-size-square --featured-image" style="--media-ratio: 1;" data-media-id="{{- first_image.id -}}">
+              {{- first_image.preview_image | image_url: width: 969 | image_tag: alt: image_alt_first, class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '600, 800', sizes: '(max-width: 767px) 50vw, 100vw' -}}
+            </a>
+            {%- else -%}
+              <a href="{{- product_clean_url -}}" class="--media-size-square --featured-image --placeholder-image" style="--media-ratio: 1;" data-media-id="{{- first_image.id -}}">
+                {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+                <span class="visually-hidden">
+                  {{- product.title -}}
+                </span>
+              </a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="bundle-row_text-wrap">
+        <h3 class="h6 mty bundle-row_heading text-size--large">
+          <a href="{{ product_clean_url }}" class="--hover-underline">
+            {{- product.title -}}
+          </a>
+        </h3>
+        {%- if product.description != blank -%}
+          <div class="bundle-row_description mty text-size--small">
+            <p>{{- product.description | strip_html | truncatewords: 15 -}}</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- if show_variation -%}
+    <div class="bundle-row_col bundle-row_col--2">
+      <strong class="bundle-structure_head-title bundle-row_head-title --word-break">
+        {{- 'product.bundle_product.head.o_name' | t -}}
+      </strong>
+      {%- unless product.has_only_default_variant -%}
+        <product-variants
+          data-json-selector="#{{- product_json_id -}}"
+          data-forms='["#{{ bundle_form_id }}"]'
+          data-renders='["[{{ price_render_attr }}]", "[{{ qty_bundle_render_attr }}]", "[{{ price_render_attr_duplicated }}]"]'
+          data-section-id="product-organizer"
+          data-product-url="{{- product_clean_url -}}"
+          data-update-url="false"
+          data-parent='true'
+          data-parent-selector="[data-product-container='bundle-product-{{- product.id -}}']"
+          data-media-template="[{{- media_template_attr -}}]"
+          {%- if show_swatches == 'images' -%}
+            data-swatch="image"
+          {%- endif -%}
+        >
+          {%- for option in product.options_with_values -%}
+            {%- liquid
+              unless show_swatches == 'none'
+                capture has_color_variant
+                  for value in option.values
+                    if show_swatches == 'swatches'
+                      if value.swatch.image
+                        echo 'true'
+                        break
+                        elsif value.swatch.color
+                          echo 'true'
+                          break
+                      endif
+                      else
+                        if option.name == 'color' or option.name == 'Color' or option.name == 'colour' or option.name == 'Colour'
+                          echo 'true'
+                          break
+                        endif
+                    endif
+                  endfor
+                endcapture
+              endunless
+            -%}
+            <fieldset class="{% if has_color_variant == 'true' %}product-variant_fieldset{% endif %}">
+              <legend class="product-variant_title h6 --word-break mty">
+                {{- option.name -}}:
+              </legend>
+              {% if has_color_variant == 'true' %}
+                <div class="product-variant_options-wrap --v-align-middle product-variant_options-wrap--clr-swatch">
+                  {%- render 'product-variant-options', product: product, option: option, product_form_id: bundle_form_id, show_swatches: show_swatches -%}
+                </div>
+                {%- else -%}
+                  <div class="product-variant_options-wrap product-common_product-variant_options-wrap --v-align-middle">
+                    {%- render 'product-variant-options', product: product, option: option, product_form_id: bundle_form_id, swatches: show_swatches -%}
+                  </div>
+              {%- endif -%}
+            </fieldset>
+          {%- endfor -%}
+        </product-variants>
+        {%- else -%}
+          -
+      {%- endunless -%}
+    </div>
+  {%- endif -%}
+  <div class="bundle-row_col bundle-row_col--3">
+    <strong class="bundle-structure_head-title bundle-row_head-title --word-break">
+      {{- 'product.bundle_product.head.q_name' | t -}}
+    </strong>
+    <div {{ qty_bundle_render_attr }}>
+      <quantity-input
+        class="quantity-input bundle-row_quantity-input --v-align-middle"
+        data-init-value="{{- product.selected_or_first_available_variant.quantity_rule.min -}}"
+        data-variant-price="{{- product.selected_or_first_available_variant.price | money_without_currency | replace: ',', '' | times: 100 -}}"
+        data-ref-input="[data-product-container]"
+        data-ref-subtotals="[data-product-container='bundle-product-{{- product.id -}}'] [data-qty-subtotal]"
+      >
+        <div class="quantity-input_fielder-wrap">
+          <button class="quantity-input_button btn-icn-ixi quantity-input_button-minus disabled" disabled name="minus" type="button">
+            <span class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 8, height: 8, use_icon: true, icon_reference: 'minus' -%}
+              <span class="visually-hidden">
+                {{- 'quantity.decrease' | t: product: product_title -}}
+              </span>
+            </span>
+          </button>
+          <input
+            type="number"
+            data-min="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
+            min="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+            {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+              data-max="{{- product.selected_or_first_available_variant.quantity_rule.max -}}"
+              max="{{- product.selected_or_first_available_variant.quantity_rule.max -}}"
+            {% endif %}
+            step="{{- product.selected_or_first_available_variant.quantity_rule.increment | default: 1 -}}"
+            value="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+            aria-label="{{- 'quantity.input_label' | t: product: product_title -}}"
+            title="Quantity-bundle-row-product-{{ product.id }}"
+          >
+          <button class="quantity-input_button btn-icn-ixi quantity-input_button-plus" name="plus" type="button">
+            <span class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 8, height: 8, use_icon: true, icon_reference: 'plus' -%}
+              <span class="visually-hidden">
+                {{- 'quantity.increase' | t: product: product_title -}}
+              </span>
+            </span>
+          </button>
+        </div>
+      </quantity-input>
+    </div>
+  </div>
+  <div class="bundle-row_col bundle-row_col--4">
+    <strong class="bundle-structure_head-title bundle-row_head-title --word-break">
+      {{- 'product.bundle_product.head.pr_name' | t -}}
+    </strong>
+    <div class="bunde-row_product-price" {{ price_render_attr }}>
+      {%- render 'product-price', product: product, use_variant: false, show_unit_price: true -%}
+    </div>
+  </div>
+  <div class="bundle-row_col bundle-row_col--5">
+    <strong class="bundle-structure_head-title bundle-row_head-title --word-break">
+      {{- 'product.bundle_product.head.t_name' | t -}}
+    </strong>
+    <div class="bundle-row_total-atc">
+      <div {{ price_render_attr_duplicated }}>
+        <span class="bundle-row_subtotal-price --word-break" data-qty-subtotal="">
+          {{- product.selected_or_first_available_variant.price | money -}}
+        </span>
+        {%- unless product.selected_or_first_available_variant.unit_price_measurement == nil -%}
+          <div class="bundle-row_unit-wrap">
+            {%- render 'product-unit-price', product: product -%}
+          </div>
+        {%- endunless -%}
+      </div>
+      <atc-submit-form
+        data-qty-selector-ref="[data-product-container]"
+        data-error-selector="[{{ error_render_attr }}]"
+        data-form="#{{ bundle_form_id }}"
+        data-parent='true'
+        data-parent-selector="[data-product-container='bundle-product-{{- product.id -}}']"
+        {% if settings.cart_view == 'drawer' %}
+          {% unless template == 'cart' %}
+            data-modal="true"
+            data-modal-ref='[data-modal-ref="modal-cart-drawer"][data-expanded="false"]'
+          {% endunless %}
+          {% else %}
+            {% unless template == 'cart' %}
+              data-redirect-to="{{- routes.cart_url -}}"
+            {% endunless %}
+        {% endif %}
+        data-sections='[
+          {
+            "id": "cart-head",
+            "selectors": ["[data-render-cart-bubble]", "[data-render-cart-text]"]
+          },
+          {
+            "id": "cart-showcase",
+            "selectors": ["[data-line-items-drawer-container]"]
+          }
+        ]'
+      >
+        {%- form 'product', product, data-productid: product.id, id: bundle_form_id, class: 'bundle-row_atc-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          <input
+            type="hidden"
+            name="id"
+            value="{{- product.selected_or_first_available_variant.id -}}"
+          >
+          <input
+            type="hidden"
+            name="quantity"
+            value="{{- product.selected_or_first_available_variant.quantity_rule.min -}}"
+          >
+          <button
+            type="submit"
+            class="button button--primary bundle-row_atc-btn"
+            {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+              disabled
+            {% endif %}
+          >
+            {{- atc_button_label -}}
+          </button>
+          <span class="loader bundle-product_loader --v-align-middle --justify-center hidden" data-loader="">
+            {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'loader' -%}
+            <span class="visually-hidden">
+              {{- 'accessibility.loader' | t -}}
+            </span>
+          </span>
+          <div class="bundle-row_error-container hidden" data-update-error="bundle-product-{{ product.id }}">
+            <span></span>
+          </div>
+        {%- endform -%}
+      </atc-submit-form>
+      <div class="product-common_error --fw-normal" {{ error_render_attr }}>
+        <span data-error=""></span>
+      </div>
+    </div>
+  </div>
+  <script id="{{- product_json_id -}}" type="application/json">
+    {{- product | json -}}
+  </script>
+  <template {{ media_template_attr }}>
+    {%- if first_image != blank -%}
+      <a href="{{- product_clean_url -}}" class="--media-size-square --featured-image" style="--media-ratio: 1;" data-media-id="{{- first_image.id -}}">
+        {{- first_image.preview_image | image_url: width: 969 | image_tag: alt: image_alt_first, class: 'object-fit object-fit--absolute', loading: loading, widths: '646, 969', sizes: '(max-width: 767px) 646vw, 969vw' -}}
+      </a>
+    {%- endif -%}
+    {%- for variant in product.variants -%}
+      {%- liquid
+        capture image_alt
+          if variant.featured_image.alt != blank
+            echo variant.featured_image.alt
+            else
+              echo variant.title | prepend: product.title 
+          endif
+        endcapture
+      -%}
+      <a href="{{- product_clean_url -}}" class="--media-size-square --template-image" style="--media-ratio: 1;"  data-media-id="{{ variant.featured_media.id }}">
+        {%- unless variant.featured_image == blank -%}
+          {{- variant.featured_image.src | image_url: width: 969 | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute', loading: loading, widths: '646, 969', sizes: '(max-width: 767px) 646vw, 969vw' -}}
+          {%- else -%}
+            {{- 'image' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+            <span class="visually-hidden">
+              {{- image_alt -}}
+            </span>
+        {%- endunless -%}
+      </a>
+    {%- endfor -%}
+  </template>
+</div>

@@ -1,0 +1,615 @@
+{{- 'components-testimonial-card.css' | asset_url | stylesheet_tag -}}
+{{- 'testimonials.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign section_prefix_class = 'testimonials'
+  assign section_scheme_class = section.settings.section_color_scheme | prepend: 'scheme scheme--'
+
+  capture section_heading_size
+  case section.settings.section_heading_size
+    when 'heading_xx_large'
+      echo 'h1'
+    when 'heading_x_large'
+      echo 'h2'
+    when 'heading_large'
+      echo 'h3'
+    when 'heading_medium'
+      echo 'h4'
+    else
+      echo 'h'
+  endcase
+endcapture
+
+capture section_heading_weight
+  case section.settings.section_heading_weight
+    when 'bold'
+      echo '--fw-bold'
+    when 'semi_bold'
+      echo '--fw-semi-bold'
+    when 'medium'
+      echo '--fw-medium'
+    when 'normal'
+      echo '--fw-normal'
+  endcase
+endcapture
+
+capture section_description_weight
+  case section.settings.section_description_weight
+    when 'bold'
+      echo '--fw-bold'
+    when 'semi_bold'
+      echo '--fw-semi-bold'
+    when 'medium'
+      echo '--fw-medium'
+    when 'normal'
+      echo '--fw-normal'
+  endcase
+endcapture
+
+capture max_header_size
+  echo settings.page_width | times: section.settings.max_header_size | divided_by: 100
+endcapture
+-%}
+{%- style -%}
+  .{{ section_prefix_class }}-{{ section.id }}{
+    --section-padding-top: {{ section.settings.section_top_padding }}px;
+    --section-padding-bottom: {{ section.settings.section_bottom_padding }}px;
+    --mobile-q-align: {{ section.settings.section_mobile_text_alignment }};
+    --desktop-q-align: {{ section.settings.section_text_alignment }};
+  }
+{%- endstyle -%}
+<div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }}">
+  <div class="container">
+    <div class="{{ section_prefix_class }}_wrapper">
+      {%- if section.settings.section_heading != blank or section.settings.section_description != blank -%}
+        <header class="heading-head inner-container --word-break --q-align" style="--max-content: {{ max_header_size }}px;">
+          {%- if section.settings.section_heading != blank -%}
+            <h2 class="{{ section_prefix_class }}_heading --h-anchor-none {{ section_heading_size }} {{ section_heading_weight }} mty">
+              {{- section.settings.section_heading -}}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.section_description != blank -%}
+            <div class="{{ section_prefix_class }}_description --word-break text-size--{{ section.settings.description_text_size }} {{ section_description_weight }} mty">
+              <p>{{- section.settings.section_description -}}</p>
+            </div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+      <div class="{{ section_prefix_class }}_slider-wrap">
+        <splide-slider
+          data-drag='true'
+          data-autoplay='{{- section.settings.auto_play -}}'
+          data-rewind="true"
+          data-gap='20px'
+          data-per-move="1"
+          data-arrows='{{- section.settings.show_navigation -}}'
+          data-pagination='{{ section.settings.show_pagination }}'
+          data-per-page='1'
+          data-interval="{{- section.settings.change_slides_every | times: 1000 -}}"
+          data-breakpoints='{"responsive": {"768": {"perPage": 2}}}'
+          {% if request.design_mode == false %}
+            data-type="loop"
+            {% else %}
+              data-type="slide"
+          {% endif %}
+        >
+          <div class="splide reviews-slider">
+            <div class="splide__track">
+              <div class="splide__list">
+                {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                    {%- when 'review' -%}
+                      {%- liquid
+                        capture image_alt
+                          if block.settings.image != blank
+                            if block.settings.image.alt != blank
+                              echo block.settings.image.alt
+                              else
+                                echo 'index_image.alt' | t: index: forloop.index
+                            endif
+                          endif
+                        endcapture
+
+                        capture block_heading_weight
+                          case section.settings.block_heading_weight
+                            when 'bold'
+                              echo '--fw-bold'
+                            when 'semi_bold'
+                              echo '--fw-semi-bold'
+                            when 'medium'
+                              echo '--fw-medium'
+                            when 'normal'
+                              echo '--fw-normal'
+                          endcase
+                        endcapture
+
+                        capture block_quote_size
+                        case section.settings.block_quote_size
+                          when 'heading_large'
+                            echo 'h3'
+                          when 'heading_medium'
+                            echo 'h4'
+                          when 'heading_small'
+                            echo 'h5'
+                          when 'heading_xs_small'
+                            echo 'h6'
+                          else
+                            echo 'h'
+                        endcase
+                      endcapture
+                      
+                      capture block_quote_weight
+                        case section.settings.block_quote_weight
+                          when 'bold'
+                            echo '--fw-bold'
+                          when 'semi_bold'
+                            echo '--fw-semi-bold'
+                          when 'medium'
+                            echo '--fw-medium'
+                          when 'normal'
+                            echo '--fw-normal'
+                        endcase
+                      endcapture
+                      -%}
+                      <div class="splide__slide" {{ block.shopify_attributes }}>
+                        <blockquote class="testimonial-card mty --v-align-start">
+                          <div class="testimonial-card_image {% if block.settings.image == blank %}testimonial-card_image--placeholder{% endif %}">
+                            {%- if block.settings.image != blank -%}
+                              {{- block.settings.image | image_url: width: 1350 | image_tag: loading: 'lazy', widths: '992, 1350', sizes: '(max-width: 767px) 992vw, (min-width: 768px) 1350vw, 1350vw', alt: image_alt -}}
+                              {%- else -%}
+                                {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+                            {%- endif -%}
+                          </div>
+                          <div class="testimonial-card_descr-wrap">
+                            {%- if block.settings.quote_text != blank -%}
+                              <q class="testimonial-card_text --word-break text-size--{{ section.settings.block_heading_size }} {{ block_heading_weight }}">
+                                {{- block.settings.quote_text -}}
+                              </q>
+                            {%- endif -%}
+                            {%- unless block.settings.rating == 'none' -%}
+                              <ul class="list-unstyled rating-list">
+                                {%- assign rate_limit = block.settings.rating | times: 1 -%}
+                                {%- for rate in (1..rate_limit) -%}
+                                  <li class="rating-list_item">
+                                    {%- render 'icons-data', width: 17, height: 17, use_icon: true, icon_reference: 'star' -%}
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endunless -%}
+                            {%- if block.settings.heading != blank -%}
+                              <cite class="testimonial-card_cite --word-break mty {{ block_quote_size }} {{ block_quote_weight }}">- {{ block.settings.heading }}</cite>
+                            {%- endif -%}
+                          </div>
+                        </blockquote>
+                      </div>
+                  {%- endcase -%}
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- if section.settings.show_navigation or section.settings.show_pagination -%}
+              <div class="splide-controls --justify-center">
+                {%- if section.settings.show_navigation -%}
+                  <button class="splide__arrow splide__arrow--prev btn-icn-ixi">
+                    <span class="btn-icn-ixi_wrapper">
+                      <span class="visually-hidden">{{- 'accessibility.slider.previous' | t -}}</span>
+                      {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'left-arrow' -%}
+                    </span>
+                  </button>
+                {%- endif -%}
+                <ul class="splide__pagination" role="tablist" aria-label="{{- 'accessibility.slider.pagination_label' | t -}}"></ul>
+                {%- if section.settings.show_navigation -%}
+                  <button class="splide__arrow splide__arrow--next btn-icn-ixi">
+                    <span class="btn-icn-ixi_wrapper">
+                      <span class="visually-hidden">{{- 'accessibility.slider.next' | t -}}</span>
+                      {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'right-arrow' -%}
+                    </span>
+                  </button>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </splide-slider>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.testimonails.name",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer",
+      "custom.overlay"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.head.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "t:heading.label",
+      "default": "Testimonials"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_size",
+      "label": "t:sizes.heading.label",
+      "options": [
+        {
+          "value": "heading_xx_large",
+          "label": "t:sizes.heading.options.opt_1.label"
+        },
+        {
+          "value": "heading_x_large",
+          "label": "t:sizes.heading.options.opt_2.label"
+        },
+        {
+          "value": "heading_large",
+          "label": "t:sizes.heading.options.opt_3.label"
+        },
+        {
+          "value": "heading_medium",
+          "label": "t:sizes.heading.options.opt_4.label"
+        }
+      ],
+      "default": "heading_large"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_weight",
+      "label": "t:weight.heading.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "richtext",
+      "id": "section_description",
+      "label": "t:description_text.label"
+    },
+    {
+      "type": "select",
+      "id": "description_text_size",
+      "label": "t:sizes.description_text.label",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sizes.text.options.opt_1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sizes.text.options.opt_2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sizes.text.options.opt_3.label"
+        },
+        {
+          "value": "xlarge",
+          "label": "t:sizes.text.options.opt_4.label"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "section_description_weight",
+      "label": "t:weight.description_text.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "max_header_size",
+      "label": "t:sections.head.size.label",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.testimonails.settings.card.label"
+    },
+    {
+      "type": "select",
+      "id": "block_heading_size",
+      "label": "t:sizes.text.label",
+      "options": [
+        {
+          "value": "xlarge",
+          "label": "t:sizes.text.options.opt_4.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sizes.text.options.opt_3.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sizes.text.options.opt_2.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sizes.text.options.opt_1.label"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "block_heading_weight",
+      "label": "t:weight.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "block_quote_size",
+      "label": "t:sizes.heading.label",
+      "options": [
+        {
+          "value": "heading_large",
+          "label": "t:sizes.heading.options.opt_3.label"
+        },
+        {
+          "value": "heading_medium",
+          "label": "t:sizes.heading.options.opt_4.label"
+        },
+        {
+          "value": "heading_small",
+          "label": "t:sizes.heading.options.opt_5.label"
+        },
+        {
+          "value": "heading_xs_small",
+          "label": "t:sizes.heading.options.opt_6.label"
+        }
+      ],
+      "default": "heading_xs_small"
+    },
+    {
+      "type": "select",
+      "id": "block_quote_weight",
+      "label": "t:weight.heading.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "t:layout.content"
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_text_alignment",
+      "label": "t:alignments.text.desktop.label",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_mobile_text_alignment",
+      "label": "t:alignments.text.mobile.label",
+      "default": "center"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "default": "scheme1",
+      "label": "t:color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:slideshow.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_play",
+      "label": "t:slideshow.auto_play.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "t:slideshow.show_arrows.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "t:slideshow.show_nav.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_every",
+      "label": "t:slideshow.interval.label",
+      "min": 2,
+      "max": 9,
+      "step": 1,
+      "default": 5,
+      "unit": "s",
+      "info": "t:slideshow.interval.info"
+    },
+    {
+      "type": "header",
+      "content": "t:spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "section_top_padding",
+      "label": "t:spacing.settings.top.label",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_bottom_padding",
+      "label": "t:spacing.settings.bottom.label",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 60,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "t:sections.product_blocks.reviews.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:image.label",
+          "info": "t:sections.product_blocks.reviews.settings.image.info"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.product_blocks.reviews.settings.author.label",
+          "default": "Author name"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "quote_text",
+          "label": "t:sections.product_blocks.reviews.settings.quote_text.label",
+          "default": "Excellent quality and fast shipping. Would definitely buy again."
+        },
+        {
+          "type": "select",
+          "id": "rating",
+          "label": "t:sections.product_blocks.reviews.settings.rating.label",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.product_blocks.reviews.settings.rating.options.none.label"
+            },
+            {
+              "value": "1",
+              "label": "t:sections.product_blocks.reviews.settings.rating.options.opt_1.label"
+            },
+            {
+              "value": "2",
+              "label": "t:sections.product_blocks.reviews.settings.rating.options.opt_2.label"
+            },
+            {
+              "value": "3",
+              "label": "t:sections.product_blocks.reviews.settings.rating.options.opt_3.label"
+            },
+            {
+              "value": "4",
+              "label": "t:sections.product_blocks.reviews.settings.rating.options.opt_4.label"
+            },
+            {
+              "value": "5",
+              "label": "t:sections.product_blocks.reviews.settings.rating.options.opt_5.label"
+            }
+          ],
+          "default": "5"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.testimonails.name",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

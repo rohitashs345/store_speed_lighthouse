@@ -1,0 +1,37 @@
+.newsletter-form_label{
+  margin-bottom: 9px;
+  display: block;
+  font-weight: 500;
+}
+
+.newsletter-form_group-wrap{
+  position: relative;
+  font-size: 1.6rem;
+}
+
+.newsletter-form_group-wrap input{
+  --outline-width: 2px;
+}
+
+.btn-icn-ixi.newsletter-form_btn{
+  --ixi-bdr-width: 0;
+  --ixi-bg-color: var(--section-input-background-color);
+  --ixi-text-color: var(--section-input-text-color);
+  --ixi-text-hover-color: var(--section-input-text-color);
+  --ixi-bg-hover-color: var(--section-input-background-color);
+  --ixi-radius: calc(var(--section-radius) * 99);
+  --btn-outer-padding-x: 0;
+  --btn-outer-padding-y: 0;
+  --ixi-padding-x: 0;
+  --ixi-padding-y: 0;
+  margin-top: -1px;
+  position: absolute;
+  top: 50%;
+  right: 23px;
+  transform: translateY(-50%);
+  transition: 0.3s ease;
+}
+
+.btn-icn-ixi.newsletter-form_btn:hover {
+  transform: translate(7px, -50%);
+}

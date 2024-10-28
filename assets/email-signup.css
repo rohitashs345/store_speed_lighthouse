@@ -1,0 +1,108 @@
+.email-signup{
+  --q-align-value: var(--mobile-q-align);
+  --q-justify-value: var(--mobile-justify-align);
+}
+
+.email-signup_description{
+  --mt-top: 20px;
+}
+
+.email-signup_icn-image,
+.email-signup .heading-head{
+  margin-bottom: 25px;
+}
+
+.email-signup_icn-image{
+  display: block;
+}
+
+.email-signup.email-signup--full-size,
+.email-signup:not(.email-signup--full-size) .email-signup_wrapper{
+  --link-color: var(--section-links-color);
+  --link-hover-color: var(--section-active-hover-color);
+  --border-color: var(--section-border-color);
+  --headings-color: var(--section-heading-color);
+  color: var(--section-foreground-color);
+  background-color: var(--section-background-color);
+}
+
+.email-signup:not(.email-signup--full-size) .email-signup_wrapper{
+  padding: 25px;
+  border-radius: var(--section-radius);
+}
+
+.email-signup_col--description {
+  padding-top: 29px;
+  padding-bottom: 29px;
+  flex-grow: 1;
+}
+
+.email-signup_col--box{
+  flex-shrink: 0;
+}
+
+.email-signup_socials-wrap{
+  margin-top: 24px;
+}
+
+.email-signup_socials-wrap,
+.email-signup_form{
+  display: flex;
+}
+
+.email-signup_socials-wrap,
+.email-signup_form-wrap--centered,
+.email-signup_col--box,
+.email-signup_form-wrap{
+  width: 100%;
+}
+
+.email-signup_form-wrap--centered{
+  max-width: 500px;
+}
+
+.email-signup_heading a{
+  color: var(--link-color) !important;
+}
+
+.email-signup_heading:hover a{
+  color: var(--link-hover-color) !important;
+}
+
+.email-signup_socials-list .list-social_link:focus-visible{
+  outline: 1px solid var(--section-focus-outline-color);
+}
+
+@media (min-width: 768px) {
+  .email-signup{
+    --q-align-value: var(--desktop-q-align);
+    --q-justify-value: var(--desktop-justify-align);
+  }
+
+  .email-signup .heading-head,
+  .email-signup_icn-image{
+    margin-bottom: 41px;
+  }
+
+  .email-signup .box-aside {
+    padding: 28px;
+  }
+}
+
+@media (min-width: 992px) {
+  .email-signup_wrapper {
+    display: flex;
+    gap: 25px;
+  } 
+
+  .email-signup_col--box{
+    width: 56.85%;
+  }
+} 
+
+@media (min-width: 1200px) {
+  .email-signup_col--description{
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+}

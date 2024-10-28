@@ -1,0 +1,207 @@
+{{- 'store-locator-modal.css' | asset_url | stylesheet_tag -}}
+{%- render 'store-locator-modal' -%}
+{% schema %}
+{
+  "name": "t:sections.store_locator.name",
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.overlay"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:site_logo.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:image.label",
+      "info": "t:site_logo.info"
+    },
+    {
+      "type": "range",
+      "id": "logo_desktop_width",
+      "label": "t:image.width.desktop.label",
+      "min": 100,
+      "max": 200,
+      "step": 1,
+      "default": 133,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "logo_mobile_width",
+      "label": "t:image.width.mobile.label",
+      "min": 90,
+      "max": 150,
+      "step": 1,
+      "default": 133,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:heading.label",
+      "default": "Store locations"
+    },
+    {
+      "type": "color_scheme",
+      "id": "store_locator_color_scheme",
+      "default": "scheme2",
+      "label": "t:color_scheme.label"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "t:sections.store_locator.blocks.store.name",
+      "type": "store",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:heading.label",
+          "default": "Store heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "t:sizes.heading.label",
+          "options": [
+            {
+              "value": "heading_small",
+              "label": "t:sizes.heading.options.opt_5.label"
+            },
+            {
+              "value": "heading_x_small",
+              "label": "t:sizes.heading.options.opt_6.label"
+            }
+          ],
+          "default": "heading_x_small"
+        },
+        {
+          "type": "select",
+          "id": "heading_weight",
+          "label": "t:weight.heading.label",
+          "options": [
+            {
+              "value": "bold",
+              "label": "t:weight.heading.options.opt_1.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:weight.heading.options.opt_2.label"
+            },
+            {
+              "value": "normal",
+              "label": "t:weight.heading.options.opt_3.label"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "richtext",
+          "id": "description_text",
+          "label": "t:description_text.label",
+          "default": "<p>Store description</p>"
+        },
+        {
+          "type": "select",
+          "id": "description_text_size",
+          "label": "t:sizes.description_text.label",
+          "options": [
+            {
+              "value": "small",
+              "label": "t:sizes.text.options.opt_1.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sizes.text.options.opt_2.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sizes.text.options.opt_3.label"
+            },
+            {
+              "value": "xlarge",
+              "label": "t:sizes.text.options.opt_4.label"
+            }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "description_weight",
+          "label": "t:weight.description_text.label",
+          "options": [
+            {
+              "value": "bold",
+              "label": "t:weight.heading.options.opt_1.label"
+            },
+            {
+              "value": "semi_bold",
+              "label": "t:weight.heading.options.opt_5.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:weight.heading.options.opt_2.label"
+            },
+            {
+              "value": "normal",
+              "label": "t:weight.heading.options.opt_3.label"
+            }
+          ],
+          "default": "normal"
+        },
+        {
+          "type": "textarea",
+          "id": "map_iframe",
+          "label": "t:sections.store_locator.blocks.store.settings.map.label",
+          "info": "t:sections.store_locator.blocks.store.settings.map.info"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:settings_schema.buttons.settings.button.label",
+          "default": "Get Directions"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "t:settings_schema.buttons.settings.button.link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_window",
+          "label": "t:target_blank.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.store_locator.name",
+      "blocks": [
+        {
+          "type": "store",
+          "settings": {
+          }
+        },
+        {
+          "type": "store",
+          "settings": {
+          }
+        },
+        {
+          "type": "store",
+          "settings": {
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

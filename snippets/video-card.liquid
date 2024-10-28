@@ -1,0 +1,138 @@
+{%- comment -%}
+  renders video card
+  usage
+    {%- render 'video-card', card: card, prefix_class: section_prefix_class, index: forloop.index -%}
+{%- endcomment -%}
+{%- liquid
+  capture placeholder_image
+    if index > 3
+      echo 'hero-apparel-1'
+      else
+        echo 'hero-apparel-' | append: index
+    endif
+  endcapture
+
+  capture video_id
+    echo card.settings.upload_video.id | default: card.settings.video_url.id
+  endcapture
+
+  capture video_alt
+    echo card.settings.default_text | default: card.settings.upload_video.alt
+  endcapture
+
+  assign poster = card.settings.cover_image | default: card.settings.upload_video.preview_image
+
+  capture enable_loop_attr
+    if card.settings.enable_video_looping
+      echo '&loop=1&playlist=' | append: video_id
+    endif
+  endcapture
+
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture title_alt
+    if card.settings.alt_text != blank
+      echo card.settings.alt_text
+      else
+        echo card.settings.default_text | default: card.settings.upload_video.alt
+    endif
+  endcapture
+
+  capture button_text
+    if card.settings.alt_text != blank
+      echo card.settings.alt_text
+      else
+        if video_alt != blank
+          echo video_alt
+          else
+            echo 'sections.video.video_alt_html' | t: caption: index
+        endif 
+    endif
+  endcapture
+
+  capture card_media_size
+    if card_media_option == 'adapt'
+      echo poster.aspect_ratio | default: '1'
+      else
+        echo '1'
+    endif
+  endcapture
+-%}
+<article class="video-card --align-center {% if poster == blank %}--media-size--blank --media-size-{{ card_media_option }} {% else %}--media-size-{{ card_media_option }}{% endif %}" style="--media-ratio: {{ card_media_size }};">
+  <deferred-media class="deferred-media video-card_media" style="--media-ratio: {{ card_media_size }};" data-media-id="{{ section.id }}-{{ index }}-{{ video_id }}">
+    <button data-id="Deferred-Poster-Modal-{{ section.id }}-{{ index }}-{{ video_id }}" class="deferred-media__poster" type="button">
+      <span class="deferred-media__poster-icn --v-align-middle --justify-center">
+        {%- render 'icons-data', width: 25, height: 27, use_icon: true, icon_reference: 'play' -%}
+      </span>
+      <strong class="video-card_heading visually-hidden">
+        {{- button_text -}}
+      </strong>
+      {%- if poster != blank -%}
+        {%- liquid
+          capture image_alt
+            if poster.alt != blank
+              echo poster.alt
+              else
+                echo button_text| escape
+            endif
+          endcapture
+        -%}
+        {{- poster | image_url: width: 1380 | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '690, 1380, 2760', sizes: '(max-width: 767px) 75vw, (min-width: 768px) 1380px, (min-width: 1300px) 2760px', alt: image_alt -}}
+        {%- else -%}
+          {{- placeholder_image | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      {%- endif -%}
+      {%- if card.settings.default_text != blank -%}
+        {%- liquid
+          capture default_text_weight
+            case card.settings.default_text_weight
+              when 'bold'
+                echo '--fw-bold'
+              when 'semi_bold'
+                echo '--fw-semi-bold'
+              when 'medium'
+                echo '--fw-medium'
+              when 'normal'
+                echo '--fw-normal'
+            endcase
+          endcapture
+        -%}
+        <span class="video-card_caption align-holder--{{ card.settings.default_text_position }}">
+          <span class="widget--styles video-card_caption-align-wrap align-holder_wrapper">
+            <strong class="video-card_caption-title h5 mty {{ default_text_weight }}">
+              {{- card.settings.default_text -}}
+            </strong>
+          </span>
+        </span>
+      {%- endif -%}
+    </button>
+    <template>
+      {%- if card.settings.upload_video != blank -%}
+        {{- card.settings.upload_video | video_tag: image_size: "2760px", autoplay: true, loop: card.settings.enable_video_looping, controls: true, muted: false, class: 'object-fit object-fit--absolute' -}}
+        {%- else -%}
+          {%- if card.settings.video_url.type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=1{{ enable_loop_attr }}"
+              class="js-youtube object-fit object-fit--absolute"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              title="{{- title_alt -}}"
+            ></iframe>
+          {%- else -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ video_id }}?autoplay=1{{ enable_loop_attr }}"
+              class="js-vimeo object-fit object-fit--absolute"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              title="{{- title_alt -}}"
+            ></iframe>
+          {%- endif -%}
+      {%- endif -%}
+    </template>
+  </deferred-media>
+</article>

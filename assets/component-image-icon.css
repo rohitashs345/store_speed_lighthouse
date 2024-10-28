@@ -1,0 +1,41 @@
+.image-icn{
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+.image-icn_image,
+.image-icn_title{
+  display: block;
+}
+
+.image-icn_image{
+  position: relative;
+  width: 44px;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.image-icn_image svg{
+  width: 100%;
+  height: auto;
+}
+
+.image-icn{
+  gap: 22px;
+}
+
+.image-icn_title{
+  --headings-font-weight: 600;
+}
+
+.image-icn_description{
+  font-size: 1.4rem;
+  line-height: 2.6rem;
+  font-weight: 400;
+  margin-top: 8px;
+}
+
+.image-icn_description p > a{
+  --link-hover-color: var(--section-widget-active-hover-color);
+  --link-color: var(--section-widget-links-color);
+}

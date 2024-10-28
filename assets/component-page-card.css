@@ -1,0 +1,30 @@
+.page-card{
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow .3s ease;
+  border-radius: var(--section-radius);
+}
+
+.page-card .search-page_tag{
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  border-radius:var(--input-corner-radius);
+  background-color: var(--section-background-color);
+  color: var(--section-foreground-color);
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+.page-card_heading{
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  color: inherit;
+}

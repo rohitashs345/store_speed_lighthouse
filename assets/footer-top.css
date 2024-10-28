@@ -1,0 +1,137 @@
+.footer-top_logo{
+  display: inline-block;
+  position: relative;
+  padding-left: 32px;
+  padding-right: 39px;
+  margin-bottom: 24px;
+}
+
+.footer-top_logo::before,
+.footer-top_logo::after{
+  position: absolute;
+  content: "";
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  background-color: var(--section-border-color);
+}
+
+.footer-top_logo::before{
+  left: -999px;
+  right: 100%;
+}
+
+.footer-top_logo::after{
+  left: 100%;
+  right: -9999px;
+}
+
+.footer-top_description{
+  margin-bottom: 31px;
+}
+
+.footer-top_socials-list,
+.footer-top_socials-wrap{
+  display: flex;
+}
+
+.footer-top_socials-list,
+.footer-top_socials-wrap{
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-top_navlist-wrapper{
+  flex-direction: column;
+  --grid-basis: 100%
+}
+
+.footer-top_socials-list .list-social_link{
+  transition: color 0.3s ease;
+  padding: 5px;
+}
+
+.footer-top_socials-list a.list-social_link{
+  line-height: 0;
+}
+
+.footer-top_text-wrapper{
+  margin-bottom: 35px;
+}
+
+.footer-top_navlist-wrapper,
+.footer-top_text-wrapper{
+  width: 100%;
+}
+
+.footer-top_navlist-link-text{
+  text-decoration: none;
+  font-size: 2rem;
+  line-height: 2.6rem;
+  transition: color 0.3s ease;
+}
+
+.footer-top_navlist-link + .footer-top_navlist-link{
+  margin-top: 15px;
+}
+
+.footer-top_menu-heading{
+  margin-bottom: 14px;
+}
+
+.--desktop-img{
+  display: none;
+}
+
+.--mobile-img,
+.footer-top_socials-list .list-social_link{
+  display: block;
+}
+
+@media (min-width:576px){
+  .footer-top_navlist-wrapper{
+    flex-direction: unset;
+    flex-wrap: wrap;
+    --grid-basis: 33.333%
+  }
+
+  .menu-strip_col{
+    width: 47%;
+  }
+
+  .footer-top{
+    --desktop-columns-count: 3;
+  }
+}
+
+@media(min-width: 1200px){
+  .footer-top_logo{
+    margin-bottom: 44px;
+  }
+
+  .footer-top_description-wrapper{
+    display: flex;
+  }
+
+  .footer-top_navlist-wrapper{
+    width: 53%;
+  }
+
+  .footer-top_text-wrapper{
+    width: 43%;
+    margin-bottom: 0;
+  }
+
+  .footer-top_description-wrapper{
+    gap: 97px;
+  }
+
+  .--desktop-img{
+    display: block;
+  }
+
+  .--mobile-img{
+    display: none;
+  }
+}

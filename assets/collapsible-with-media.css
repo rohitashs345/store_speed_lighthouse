@@ -1,0 +1,114 @@
+.collapsible-with-media{
+  --q-align-value: var(--mobile-q-align);
+}
+
+.collapsible-with-media_image-wrap,
+.collapsible-with-media_col-image{
+  width: 100%;
+}
+
+.collapsible-with-media_image-wrap{
+  position: relative;
+  border-radius: var(--section-radius);
+  overflow: hidden;
+}
+
+.collapsible-with-media_image-wrap svg{
+  border-radius: inherit;
+}
+
+.collapsible-with-media .splide__slide{
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.collapsible-with-media .splide-controls{
+  --ixi-text-color: var(--section-secondary-text-color);
+  --ixi-bg-color: var(--section-secondary-bg);
+  --ixi-bdr-clr: var(--section-secondary-border-color);
+  --ixi-bdr-hover-clr: var(--section-secondary-border-color);
+  --ixi-text-hover-color: var(--section-secondary-bg);
+  --ixi-bg-hover-color: var(--section-secondary-text-color);
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.collapsible-with-media_col-image{
+  flex-shrink: 0;
+}
+
+.collapsible-with-media_col-image,
+.collapsible-with-media .heading-head{
+  margin-bottom: 25px;
+}
+
+.collapsible-with-media_col-description{
+  flex-grow: 1;
+}
+
+.collapsible-with-media_heading{
+  --mt-bottom: 16px;
+}
+
+.collapsible-with-media .--row-reverse{
+  flex-direction: row-reverse;
+}
+
+.collapsible-with-media_caption{
+  display: block;
+}
+
+@media (min-width: 768px){
+  .collapsible-with-media{
+    --q-align-value: var(--desktop-q-align);
+  }
+
+  .collapsible-with-media_wrapper{
+    display: flex;
+    gap: 40px;
+    flex-direction: row;
+  }
+
+  .collapsible-with-media_col-image{
+    width: 50%;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .collapsible-with-media .splide-controls{
+    min-height: 1px;
+  }
+
+  .collapsible-with-media .splide-controls,
+  .collapsible-with-media .splide__arrow{
+    margin-top: 0;
+  }
+
+  .collapsible-with-media .splide__arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .collapsible-with-media .splide__slide{
+    padding-left: 54px;
+    padding-right: 54px;
+  }
+
+  .collapsible-with-media .splide__arrow--prev{
+    left: 0;
+  }
+
+  .collapsible-with-media .splide__arrow--next{
+    right: 0;
+  }
+
+}
+
+@media (min-width: 1350px) {
+  .collapsible-with-media_col-image{
+    width: 40%;
+    margin-bottom: 0;
+  }
+}

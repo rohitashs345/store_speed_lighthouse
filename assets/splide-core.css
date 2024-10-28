@@ -1,0 +1,218 @@
+@-webkit-keyframes splide-loading {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes splide-loading {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+.splide__track--draggable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.splide__track--fade > .splide__list > .splide__slide {
+  margin: 0 !important;
+  opacity: 1;
+  z-index: 1;
+}
+
+.splide__track--fade > .splide__list > .splide__slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.splide--rtl {
+  direction: rtl;
+}
+
+.splide__track--ttb > .splide__list {
+  display: block;
+}
+
+.splide__container {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.splide__list {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.splide.is-initialized:not(.is-active) .splide__list {
+  display: block;
+}
+
+.splide__progress__bar {
+  width: 0;
+}
+
+.splide {
+  position: relative;
+  visibility: hidden;
+}
+
+.splide.is-initialized,
+.splide.is-rendered {
+  visibility: visible;
+}
+
+.splide__slide {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  list-style-type: none !important;
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.splide__slide img {
+  vertical-align: bottom;
+}
+
+.splide__spinner {
+  -webkit-animation: splide-loading 1s linear infinite;
+  animation: splide-loading 1s linear infinite;
+  border: 2px solid #999;
+  border-left-color: transparent;
+  border-radius: 50%;
+  bottom: 0;
+  contain: strict;
+  display: inline-block;
+  height: 20px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
+}
+
+.splide__sr {
+  clip: rect(0 0 0 0);
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.splide__toggle.is-active .splide__toggle__play,
+.splide__toggle__pause {
+  display: none;
+}
+
+.splide__toggle.is-active .splide__toggle__pause {
+  display: inline;
+}
+
+.splide__track {
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+.splide__arrow {
+  border: 0;
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.splide-controls{
+  --ixi-bdr-width: 1px;
+  --btn-outer-padding-x: 0;
+  --btn-outer-padding-y: 0;
+  --ixi-padding-x: 9px;
+  --ixi-padding-y: 9px;
+  --ixi-text-color: var(--section-primary-text-color);
+  --ixi-bg-color: var(--section-primary-bg);
+  --ixi-bdr-hover-clr: var(--section-primary-border-color);
+  --ixi-text-hover-color: var(--section-primary-bg);
+  --ixi-bg-hover-color: var(--section-primary-text-color);
+  --ixi-radius: var(--section-radius);
+  display: flex;
+  margin-top: 42px;
+  align-items: center;
+  gap: 10px;
+}
+
+.splide__pagination {
+  padding: 0;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+}
+
+.splide__pagination li {
+  display: inline-block;
+  line-height: 0;
+  list-style-type: none;
+}
+
+.splide__pagination__page{
+  border: 0;
+  border-radius: calc(var(--section-radius) * 100);
+  padding: 9px;
+  position: relative;
+  display: flex;
+  background-color: transparent;
+}
+
+.splide__pagination__page::before{
+  content: '';
+  border-radius: inherit;
+  display: block;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--section-primary-border-color);
+  transition: background-color 0.3s ease;
+  pointer-events: auto;
+}
+
+.splide__pagination__page.is-active::before,
+.splide__pagination__page:hover::before{
+  background-color: var(--section-primary-border-color);
+}
+
+.container-fluid .splide-controls{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (min-width: 768px){
+  .splide-controls{
+    gap: 20px;
+  }
+}

@@ -1,0 +1,137 @@
+{%- comment -%}
+  renders column card on page templates
+  usage
+    {%- render 'column-card', card: block, prefix_class: section_prefix_class -%}
+{%- endcomment -%}
+{%- liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture card_heading_size
+    case section.settings.card_heading_size
+      when 'heading_medium'
+        echo 'h4'
+      when 'heading_small'
+        echo 'h5'
+      when 'heading_x_small'
+        echo 'h6'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture card_description_weight
+    case section.settings.card_description_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture card_heading_weight
+    case section.settings.card_heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture image_alt
+    if card.settings.image.alt != blank
+      echo card.settings.image.alt
+      else
+        echo card.settings.heading | escape
+    endif
+  endcapture
+
+-%}
+<article class="column-card {{ prefix_class }}_column-card --align-left">
+  <div class="column-card_top-wrap">
+    {%- if card.settings.image != blank -%}
+      {%- case section.settings.card_media_width -%}
+        {% when 'one-third' %}
+          {%- unless section.settings.card_media_size == 'adapt' -%}
+            <div class="column-card_image column-card_image--one-third column-card_image--tag-full --media-size-{{ section.settings.card_media_size }}"  style="--media-ratio: {{ card.settings.image.aspect_ratio | default: 1 }};">
+              {{- card.settings.image | image_url: width: 620 | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute',  loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 50vw, 75vw' -}}
+            </div>
+              {% else %}
+            <div class="column-card_image column-card_image--one-third column-card_image--tag-full">
+              {{- card.settings.image | image_url: width: 620 | image_tag: alt: image_alt,  loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 50vw, 75vw' -}}
+            </div>
+          {% endunless %}
+        {% when 'half' %}
+          {%- unless section.settings.card_media_size == 'adapt' -%}
+            <div class="column-card_image column-card_image--half column-card_image--tag-full --media-size-{{ section.settings.card_media_size }}" style="--media-ratio: {{ card.settings.image.aspect_ratio | default: 1 }};">
+              {{- card.settings.image | image_url: width: 620 | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 50vw, 75vw' -}}
+            </div>
+            {% else %}
+            <div class="column-card_image column-card_image--half column-card_image--tag-full">
+              {{- card.settings.image | image_url: width: 620 | image_tag: alt: image_alt,  loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 50vw, 75vw' -}}
+            </div>
+          {% endunless %}
+        {% when 'full' %}
+          {%- unless section.settings.card_media_size == 'adapt' -%}
+            <div class="column-card_image column-card_image--full column-card_image--tag-full --media-size-{{ section.settings.card_media_size }}" style="--media-ratio: {{ card.settings.image.aspect_ratio | default: 1 }};">
+              {{- card.settings.image | image_url: width: 620 | image_tag: alt: image_alt, 
+                class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 50vw, 75vw' -}}
+            </div>
+            {% else %}
+              <div class="column-card_image column-card_image--full column-card_image--tag-full">
+                {{- card.settings.image | image_url: width: 620 | image_tag: alt: image_alt,  loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 50vw, 75vw' -}}
+              </div>
+          {% endunless %}
+        {% else %}
+          {%- capture d_width -%}
+            {{- section.settings.width -}}
+          {%- endcapture -%}
+          {%- capture d_size -%}
+            {{- section.settings.width | prepend: '(max-width: 767px) 50vw, 75vw' -}}
+          {%- endcapture -%}
+          {%- unless section.settings.card_media_size == 'adapt' -%}
+            <div class="column-card_image column-card_image--{{ section.settings.card_media_width }} column-card_image--tag-full --media-size-{{ section.settings.card_media_size }}" style="--media-ratio: {{ card.settings.image.aspect_ratio | default: 1 }};">
+              {{- card.settings.image | image_url: width: card.settings.image.width | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute', loading: loading_attr, widths: d_width, sizes: d_size -}}
+            </div>
+            {% else %}
+              <div class="column-card_image column-card_image--{{ section.settings.card_media_width }} column-card_image--tag-full">
+                {{- card.settings.image | image_url: width: card.settings.image.width | image_tag: alt: image_alt, loading: loading_attr, widths: d_width, sizes: d_size -}}
+              </div>
+          {% endunless %}
+      {% endcase %}
+    {%- endif -%}
+    {%- if card.settings.heading != blank -%}
+      <h3 class="{{ card_heading_size }} --h-anchor-none mty column-card_heading {{ card_heading_weight }} --word-break">
+        {{- card.settings.heading -}}
+      </h3>
+    {%- endif -%}
+    {%- if card.settings.description != blank -%}
+      <div class="mty column-card_description {{ card_description_weight }} text-size--{{ section.settings.card_description_size }} mty --word-break">
+        <p>{{- card.settings.description -}}</p>
+      </div>
+    {%- endif -%}
+  </div>
+  {%- if card.settings.button_label != blank -%}
+    <footer class="column-card_foot">
+      <a
+        {% if card.settings.url != blank %}href="{{- card.settings.url -}}" {% if card.settings.open_new_window %}target="_blank"{% endif %} {% else %} aria-disabled="true" {% endif %}
+        class="button button--{{ card.settings.type }}"
+      >
+        {{- card.settings.button_label -}}
+      </a>
+    </footer>
+  {%- endif -%}
+</article>

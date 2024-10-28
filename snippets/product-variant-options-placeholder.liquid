@@ -1,0 +1,37 @@
+{%- comment -%}
+  renders variants checkbox option on product templates
+  usage
+    {%- render 'product-variant-options-placeholder' -%}
+{%- endcomment -%}
+{%- liquid
+  if limit != null
+    assign count_limit = 0
+  endif
+-%}
+{%- for placeholder_swatch in (1..3) -%}
+  {%- liquid
+    capture placeholder_image
+      if forloop.index > 3
+        echo 'product-apparel-1'
+        else
+          echo 'product-apparel-' | append: forloop.index
+      endif
+    endcapture
+  -%}
+  <div class="product-variant-option">
+    <span class="product-variant-option_label --word-break --swatch-active product-variant-option_label--image-swatch">
+      <span class="product-variant-option_label-icn --swatch-image" aria-hidden="true">
+        {%- render 'icons-data', width: 14, height: 14, use_icon: true, icon_reference: 'disabled' -%}
+      </span>
+      {{- placeholder_image | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    </span>
+  </div>
+  {%- liquid
+    if limit != null
+      assign count_limit = count_limit | plus: 1
+      if count_limit == limit
+        break
+      endif
+    endif
+  -%}
+{%- endfor -%}

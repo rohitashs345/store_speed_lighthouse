@@ -1,0 +1,269 @@
+.mega-menu_banner{
+  padding-top: 50%;
+}
+
+.mega-menu_banner,
+.mega-menu_gallery-link,
+.mega-menu_scroller-wrap::before,
+.items-list_link{
+  display: block;
+}
+
+.mega-menu_banner,
+.mega-menu_gallery-link,
+.mega-menu_scroller-wrap{
+  position: relative;
+}
+
+.mega-menu_banner,
+.mega-menu_gallery-link,
+.mega-menu-two-images,
+.mega-menu_col--banners{
+  width: 100%;
+}
+
+.mega-menu_banner,
+.mega-menu_gallery-link,
+.mega-menu_scroller-wrap marquee-component,
+.mega-menu_scroller-wrap::before{
+  height: 100%;
+}
+
+.mega-menu_scroller-wrap .marquee-component{
+  gap: 50px;
+}
+
+.mega-menu_scroller-wrap .marquee-component,
+.mega-menu-two-images,
+.mega-menu_component-wrapper{
+  flex-direction: column;
+}
+
+.mega-menu_opener{
+  background-color: transparent;
+  border: 0;
+  transition: color .3s ease;
+}
+
+.mega-menu_item .mega-menu_opener,
+.custom-links_item a{
+  color: var(--link-color)
+}
+
+.mega-menu_item .mega-menu_opener:hover,
+.custom-links_item:hover a{
+  color: var(--link-hover-color)
+}
+
+.custom-links_item,
+.mega-menu_opener{
+  font-size: 1.8rem;
+  line-height: 3rem;
+}
+
+.custom-links_item a{
+  text-decoration: none;
+}
+
+.mega-menu_col--banners,
+.mega-menu-two-images,
+.mega-menu_col--collections{
+  display: flex;
+}
+
+.mega-menu_col--collections{
+  gap: 20px;
+}
+
+.mega-menu_component-wrapper{
+  gap: 10px;
+  position: static;
+  transform: none;
+  max-height: 0;
+  opacity: 1;
+  height: 567px;
+}
+
+.mega-menu_scroller-wrap marquee-component,
+.mega-menu_items-list,
+.mega-menu_component-wrapper.dropdown--open{
+  max-height: 300px;
+}
+
+.mega-menu_component-wrapper.dropdown--open{
+  overflow-y: auto;
+}
+
+.mega-menu_scroller-wrap{
+  width: 32%;
+}
+
+.mega-menu_listing-wrap,
+.mega-menu_col--collections{
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.mega-menu_banner--first,
+.mega-menu-two-images{
+  max-width: 264px;
+}
+
+.mega-menu_banner--first:only-child{
+  max-width: none;
+}
+
+.mega-menu_items-list{
+  padding: 16px;
+  overflow: auto;
+}
+
+.mega-menu_scroller-wrap::before{
+  content: "";
+  border-left: 2px solid var(--section-border-color);
+  position: absolute;
+  top: 0;
+  left: -10px;
+}
+
+.items-list_item{
+  border-bottom: 1px solid var(--section-widget-border-color);
+}
+
+.items-list_item:last-child{
+  border-bottom: none;
+}
+
+.items-list_title{
+  font-size: 1.6rem;
+  line-height: 2.8rem;
+}
+
+.items-list_link{
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.mega-menu_scroll-image:nth-child(even) .mega-menu_gallery-link{
+  transform: rotate(4.1deg);
+}
+
+.mega-menu_scroll-image.marquee-component_col{
+  padding-left: 33px;
+  padding-right: 33px;
+}
+
+.mega-menu_gallery-link{
+  --focus-outline-offset: 1px;
+}
+
+.mega-menu_banner{
+  --focus-outline-offset: -5px;
+}
+
+.mega-menu_banner:focus-visible img{
+  padding: 8px;
+}
+
+.custom-links_item a{
+  padding-left: 6px;
+}
+
+.mega-menu-two-images.--banner-full{
+  max-width: 100%;
+}
+
+@media (min-width: 576px){
+  .items-list_title{
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+  }
+
+  .items-list_link{
+    padding-bottom: 24px;
+    padding-top: 27px;
+  }
+}
+
+@media(min-width: 992px){
+  .mega-menu_scroller-wrap marquee-component{
+    max-height: none;
+  }
+
+  .mega-menu_items-list{
+    max-height: 500px;
+  }
+  
+  .mega-menu_component-wrapper.dropdown--open{
+    max-height: calc(100vh - 170px);
+  }
+
+  .mega-menu_component-wrapper{
+    display: flex;
+    flex-direction: unset;
+  }
+
+  .mega-menu_banner{
+    padding-top: 10%;
+  }
+
+  .items-list_title{
+    font-size: 2.2rem;
+    line-height: 3.2rem;
+  }
+
+  .mega-menu_col--banners{
+    width: 34%;
+  }
+  
+  .mega-menu_scroller-wrap{
+    width: 30%;
+  }
+
+  .mega-menu_items-list{
+    padding: 20px;
+  }
+  
+  .mega-menu_component-wrapper{
+    position: absolute;
+    transform: translate(-50%);
+  }
+
+  .page-header .mega-menu_opener,
+  .page-header .custom-links_item a{
+    color: var(--header-link-color);
+  }
+
+  .page-header .mega-menu_opener:hover,
+  .page-header .custom-links_item:hover a{
+    color: var(--header-link-hover-color);
+  }
+}
+
+@media(min-width: 1200px){
+  .mega-menu_col--banners{
+    width: 30%;
+  }
+  
+  .mega-menu_scroller-wrap{
+    width: 26%;
+  }
+
+  .mega-menu_items-list{
+    padding: 45px 50px;
+  }
+}
+
+@media(min-width: 1600px){
+  .mega-menu_col--banners{
+    width: 28%;
+  }
+  
+  .mega-menu_scroller-wrap{
+    width: 24%;
+  }
+
+  .mega-menu_items-list{
+    padding: 65px 71px;
+  }
+}

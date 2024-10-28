@@ -1,0 +1,89 @@
+.hotspot_dropdown{
+  position: absolute;
+  left: var(--hot-ps-left, 50%);
+  top: var(--hot-ps-top, 50%);
+}
+
+.hotspot_dropdown--first{
+  --hot-ps-top: var(--position-top-first);
+  --hot-ps-left: var(--position-left-first);
+}
+
+.hotspot_opener.btn-icn-ixi{
+  --btn-outer-padding-x: 7px;
+  --btn-outer-padding-y: 7px;
+  --ixi-bdr-width: 0;
+  --ixi-bg-color: var(--section-widget-background-color);
+  --ixi-text-color: var(--section-widget-foreground-color);
+  --ixi-padding-x: 0;
+  --ixi-padding-y: 0;
+  --ixi-bg-hover-color: var(--section-widget-foreground-color);
+  --ixi-text-hover-color: var(--section-widget-background-color);
+}
+
+.hotspot_opener.btn-icn-ixi:hover{
+  --btn-bdr: 0;
+}
+
+.hotspot_opener:hover svg{
+  background-color: var(--section-secondary-text-color);
+  color: var(--section-secondary-bg);
+}
+
+.hotspot_opener svg{
+  border-radius: inherit;
+  padding: 8px;
+}
+
+.hotspot.mty._hotspot{
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.hotspot_opener i{
+  animation: glow-effect 1.2s ease-out;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 0 0 var(--section-hotspot-glow-rgba-nill);
+  display: block;
+}
+
+.hotspot_opener[data-selected="true"] i{
+  animation-name: glow-effect-active;
+}
+
+.hotspot_opener:focus-visible i,
+.hotspot_opener[data-selected="true"] i{
+  animation-duration: 0.8s;
+}
+
+.hotspot_opener:hover i{
+  animation: none;
+}
+
+@keyframes glow-effect{
+  0%{
+    box-shadow: 0 0 0 0 var(--section-hotspot-glow-rgba-nill);
+  }
+
+  50%{
+    box-shadow: 0 0 0 3px var(--section-hotspot-glow-rgba-full);
+  }
+
+  100%{
+    box-shadow: 0 0 0 3px var(--section-hotspot-glow-rgba-nill);
+  }
+}
+
+@keyframes glow-effect-active{
+  0%{
+    box-shadow: 0 0 0 0 var(--section-hotspot-glow-rgba-nill);
+  }
+
+  50%{
+    box-shadow: 0 0 0 6px var(--section-hotspot-glow-rgba-full);
+  }
+
+  100%{
+    box-shadow: 0 0 0 6px var(--section-hotspot-glow-rgba-nill);
+  }
+}

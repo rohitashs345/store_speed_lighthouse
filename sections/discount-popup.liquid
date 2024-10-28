@@ -1,0 +1,252 @@
+{{- 'discount-modal.css' | asset_url | stylesheet_tag -}}
+{{- 'component-discount-form.css' | asset_url | stylesheet_tag -}}
+{%- render 'discount-modal' -%}
+ 
+{% schema %}
+{
+  "name": "t:sections.discount_popup.name",
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.overlay"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.discount_popup.settings.button.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "t:settings_schema.buttons.settings.button.label",
+      "default": "Grab my Discount"
+    },
+    {
+      "type": "header",
+      "content": "t:layout.content"
+    },
+    {
+      "type": "select",
+      "id": "age_position",
+      "label": "t:positions.label",
+      "options": [
+        {
+          "value": "centered",
+          "label": "t:positions.options.center"
+        },
+        {
+          "value": "bt-left",
+          "label": "t:positions.options.bottom_left"
+        },
+        {
+          "value": "bt-right",
+          "label": "t:positions.options.bottom_right"
+        }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "text_alignment",
+      "id": "age_text_alignment",
+      "label": "t:alignments.content.label",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.age_verifier.settings.buttons.style.label"
+    },
+    {
+      "type": "color",
+      "id": "Popup_bg",
+      "label": "t:sections.discount_popup.settings.popup_bg.Label",
+      "default": "#FFBA6A"
+    },
+    {
+      "type": "color_scheme",
+      "id": "age_color_scheme",
+      "default": "scheme3",
+      "label": "t:color_scheme.label"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "t:sections.discount_popup.blocks.image.name",
+      "type": "image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:image.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_image_on_mobile",
+          "label": "t:sections.discount_popup.blocks.image.hide.label",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "block_spacing",
+          "label": "t:sections.product_blocks.mb_margin.label",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "default": 20,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "name": "t:heading.name",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:heading.label",
+          "default": "Hold On"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "t:sizes.heading.label",
+          "options": [
+            {
+              "value": "heading_x_large",
+              "label": "t:sizes.heading.options.opt_2.label"
+            },
+            {
+              "value": "heading_large",
+              "label": "t:sizes.heading.options.opt_3.label"
+            },
+            {
+              "value": "heading_medium",
+              "label": "t:sizes.heading.options.opt_4.label"
+            }
+          ],
+          "default": "heading_large"
+        },
+        {
+          "type": "select",
+          "id": "heading_weight",
+          "label": "t:weight.heading.label",
+          "options": [
+            {
+              "value": "bold",
+              "label": "t:weight.heading.options.opt_1.label"
+            },
+            {
+              "value": "semi_bold",
+              "label": "t:weight.heading.options.opt_5.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:weight.heading.options.opt_2.label"
+            },
+            {
+              "value": "normal",
+              "label": "t:weight.heading.options.opt_3.label"
+            }
+          ],
+          "default": "bold"
+        },
+        {
+          "type": "range",
+          "id": "block_spacing",
+          "label": "t:sections.product_blocks.mb_margin.label",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "default": 15,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "name": "t:text.name",
+      "type": "text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "t:description_text.label",
+          "default": "<p>Take Free Shipping For Your Order!</p>"
+        },
+        {
+          "type": "select",
+          "id": "block_text_size_heading",
+          "label": "t:sizes.description_text.label",
+          "options": [
+            {
+              "value": "heading_medium",
+              "label": "t:sizes.heading.options.opt_4.label"
+            },
+            {
+              "value": "heading_small",
+              "label": "t:sizes.heading.options.opt_5.label"
+            },
+            {
+              "value": "heading_x_small",
+              "label": "t:sizes.heading.options.opt_6.label"
+            }
+          ],
+          "default": "heading_x_small"
+        },
+        {
+          "type": "select",
+          "id": "description_weight",
+          "label": "t:weight.description_text.label",
+          "options": [
+            {
+              "value": "bold",
+              "label": "t:weight.heading.options.opt_1.label"
+            },
+            {
+              "value": "semi_bold",
+              "label": "t:weight.heading.options.opt_5.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:weight.heading.options.opt_2.label"
+            },
+            {
+              "value": "normal",
+              "label": "t:weight.heading.options.opt_3.label"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "range",
+          "id": "block_spacing",
+          "label": "t:sections.product_blocks.mb_margin.label",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "default": 34,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.discount_popup.blocks.form.name",
+      "type": "form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "block_spacing",
+          "label": "t:sections.product_blocks.mb_margin.label",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "default": 50,
+          "unit": "px"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

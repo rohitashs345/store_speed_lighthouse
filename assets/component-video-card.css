@@ -1,0 +1,50 @@
+.video-card_caption{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.video-card_caption-title{
+  padding: 7px 10px;
+  display: block;
+}
+
+.video-card_caption-align-wrap{
+  max-width: 37%;
+  padding: 0;
+}
+
+@media (min-width: 768px){
+  .video-card_caption{
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
+  .video-card_caption-title{
+    padding: 14px 20px;
+  }
+
+  .video-card_caption-align-wrap{
+    max-width: 44%;
+  }
+}
+
+@media (max-width: 991px){
+  .video-card_caption-title{
+    --heading-size-factor: 0.8;
+  }
+}
+
+@media (max-width: 767px){
+  .video-card_caption-title{
+    --heading-size-factor: 0.5;
+  }
+}

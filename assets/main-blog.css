@@ -1,0 +1,40 @@
+.main-blog {
+  --desktop-columns-count: 1;
+}
+
+.main-blog .heading-head {
+  width: 100%;
+  max-width: 712px;
+  margin: 0 auto 48px;
+}
+
+.main-blog_grid .grid_col {
+  display: flex;
+}
+
+.main-blog_description {
+  --mt-top: 12px;
+}
+
+.main-blog_empty-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main-blog {
+    --desktop-columns-count: 3;
+  }
+}
+
+@media (min-width: 1200px) {
+  .main-blog {
+    --desktop-columns-count: var(--columns-count);
+  }
+
+  .main-blog_grid {
+    --cp-spacer-left: 23px;
+    --cp-spacer-right: 23px;
+  }
+}

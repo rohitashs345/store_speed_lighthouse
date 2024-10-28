@@ -1,0 +1,386 @@
+{{- 'footer-top.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign section_prefix_class = 'footer-top'
+  assign footer_color_scheme = section.settings.footer_color_scheme | prepend: 'scheme scheme--'
+
+  capture description_weight
+    case section.settings.description_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture section_heading_weight
+    case section.settings.section_heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture section_heading_size
+    case section.settings.section_heading_size
+      when 'heading_small'
+        echo 'h5'
+      when 'heading_x_small'
+        echo 'h6'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture follow_exists
+    if shop.features.follow_on_shop? and section.settings.follow_on_shops
+      echo 'true'
+    endif
+  endcapture
+
+  capture enable_social_list
+    if settings.social_instagram_link != blank
+      echo 'true'
+      elsif settings.social_linkedin_link != blank
+        echo 'true'
+      elsif settings.social_facebook_link != blank
+        echo 'true'
+      elsif settings.social_youtube_link != blank
+        echo 'true'
+      elsif settings.social_twitter_link != blank
+        echo 'true'
+      elsif settings.social_snapchat_link != blank
+        echo 'true'
+      elsif settings.social_pinterest_link != blank
+        echo 'true'
+      elsif  settings.social_tiktok_link != blank
+        echo 'true'
+      elsif settings.social_tumblr_link != blank
+        echo 'true'
+      elsif settings.social_vimeo_link != blank
+        echo 'true'
+      else
+        echo 'false'
+    endif
+  endcapture
+
+  capture social_exists
+    if enable_social_list == 'true' and section.settings.show_social_links
+      echo 'true'
+    endif
+  endcapture
+-%}
+{%- style -%}
+  .{{ section_prefix_class }}-{{ section.id }}{
+    --section-padding-top: 19px;
+    --section-padding-bottom: 50px;
+    --section-radius: 0;
+    --logo-desktop-width: {{ section.settings.logo_desktop_width }}px;
+    --logo-mobile-width: {{ section.settings.logo_mobile_width }}px;
+  }
+{%- endstyle -%}
+<div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ footer_color_scheme }}">
+  <div class="container">
+    <div class="{{ section_prefix_class }}_wrapper">
+      <div class="{{ section_prefix_class }}_logo-col">
+        <div class="logo {{ section_prefix_class }}_logo">
+          {%- if request.page_type == 'index' -%}
+            <h3 class="logo_heading h2 mty">
+          {%- endif -%}
+              <a href="{{ routes.root_url }}" class="logo_link --word-break">
+                {%- liquid
+                  assign logo_alt = section.settings.logo.alt | default: shop.name | escape
+                  capture logo_height
+                    assign height = section.settings.logo_desktop_width | divided_by: section.settings.logo.aspect_ratio
+                    echo height | round
+                  endcapture
+                  capture logo_mob_height
+                    assign height = section.settings.logo_mobile_width | divided_by: section.settings.logo.aspect_ratio
+                    echo height | round
+                  endcapture
+                -%}
+                {%- if section.settings.logo != blank -%}
+                  {%- capture d_sizes -%}
+                    (max-width: {{ section.settings.logo_desktop_width | times: 2 }}px) 50vw, {{ section.settings.logo_desktop_width }}px
+                  {%- endcapture -%}
+                  {%- capture m_sizes -%}
+                    (max-width: {{ section.settings.logo_mobile_width | times: 2 }}px) 50vw, {{ section.settings.logo_mobile_width }}px
+                  {%- endcapture -%}
+                  {%- capture d_widths -%}
+                    {{ section.settings.logo_desktop_width }}, {{ section.settings.logo_desktop_width | times: 1.5 | round }}, {{ section.settings.logo_desktop_width | times: 2 }}
+                  {%- endcapture -%}
+                  {%- capture m_widths -%}
+                    {{ section.settings.logo_mobile_width }}, {{ section.settings.logo_mobile_width | times: 1.5 | round }}, {{ section.settings.logo_mobile_width | times: 2 }}
+                  {%- endcapture -%}
+                  {{- section.settings.logo | image_url: width: 532 | image_tag: class: '--desktop-img', widths: d_widths, height: logo_height, width: section.settings.logo_desktop_width, alt: logo_alt, sizes: d_sizes, preload: true -}}
+                  {{- section.settings.logo | image_url: width: 532 | image_tag: class: '--mobile-img', widths: m_widths, height: logo_mob_height, width: section.settings.logo_mobile_width, alt: logo_alt, sizes: m_sizes, preload: true -}}
+                  {%- else -%}
+                    {{- shop.name -}}
+                {%- endif -%}
+              </a>
+          {%- if request.page_type == 'index' -%}
+            </h3>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="{{ section_prefix_class }}_description-wrapper">
+        <div class="{{ section_prefix_class }}_text-wrapper">
+          {%- if section.settings.description != blank -%}
+            <div class="{{ section_prefix_class }}_description text-size--{{ section.settings.description_text_size }} {{ description_weight }} mty ">
+              {{- section.settings.description -}}
+            </div>
+          {%- endif -%}
+          {%- if social_exists == 'true' or follow_exists == 'true' -%}
+            <div class="{{ section_prefix_class }}_socials-wrap --q-align-justify">
+              {%- if social_exists == 'true' -%}
+                {%- render 'social-icons' | prefix_class: section_prefix_class | social_icons_enable: true -%}
+              {%- endif -%}
+              {%- if follow_exists == 'true' -%}
+                <div class="{{ section_prefix_class }}_follow-link">
+                  {% # theme-check-disable %}
+                    {{- shop | login_button: action: 'follow' -}}
+                  {% # theme-check-enable %}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="{{ section_prefix_class }}_navlist-wrapper menu-strip grid">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'menu' -%}
+                <div class="menu-strip_col {{ section_prefix_class }}_menu-strip grid_col" {{ block.shopify_attributes }}>
+                  {%- if block.settings.heading != blank -%}
+                    <h3 class="menu-strip_heading {{ section_prefix_class }}_menu-heading --h-anchor-none {{ section_heading_size }} {{ section_heading_weight }} mty">
+                      {{- block.settings.heading -}}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.menu.links != blank -%}
+                    <ul class="list-unstyled {{ section_prefix_class }}_navlist">
+                      {%- for link in block.settings.menu.links -%}
+                        <li class="{{ section_prefix_class }}_navlist-link">
+                          <a class="{{ section_prefix_class }}_navlist-link-text --word-break" href="{{ link.url }}">{{- link.title | escape -}}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul> 
+                  {%- endif -%}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.footer_top.name",
+  "tag": "aside",
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:site_logo.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:image.label",
+      "info": "t:site_logo.info"
+    },
+    {
+      "type": "range",
+      "id": "logo_desktop_width",
+      "label": "t:image.width.desktop.label",
+      "min": 100,
+      "max": 500,
+      "step": 5,
+      "default": 480,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "logo_mobile_width",
+      "label": "t:image.width.mobile.label",
+      "min": 90,
+      "max": 150,
+      "step": 1,
+      "default": 133,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_size",
+      "label": "t:sizes.heading.label",
+      "options": [
+        {
+          "value": "heading_small",
+          "label": "t:sizes.heading.options.opt_5.label"
+        },
+        {
+          "value": "heading_x_small",
+          "label": "t:sizes.heading.options.opt_6.label"
+        }
+      ],
+      "default": "heading_small"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_weight",
+      "label": "t:weight.heading.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "semi_bold"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "t:description_text.label",
+      "default": "Welcome to Swanky where style meets convenience. Explore our curated collection of fashion-forward essentials delivered straight to you."
+    },
+    {
+      "type": "select",
+      "id": "description_text_size",
+      "label": "t:sizes.description_text.label",
+      "options": [
+        {
+          "value": "xlarge",
+          "label": "t:sizes.text.options.opt_4.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sizes.text.options.opt_3.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sizes.text.options.opt_2.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sizes.text.options.opt_1.label"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "description_weight",
+      "label": "t:weight.description_text.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links",
+      "label": "t:sections.footer_top.settings.show_social_list.label",
+      "info": "t:sections.footer_top.settings.show_social_list.info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "follow_on_shops",
+      "label": "t:sections.footer_top.settings.follow_on_shop.label",
+      "info": "t:sections.footer_top.settings.follow_on_shop.info",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "footer_color_scheme",
+      "default": "scheme1",
+      "label": "t:color_scheme.label"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "t:sections.footer_top.blocks.menu.name",
+      "type": "menu",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "t:heading.label",
+          "default": "Quick links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "t:sections.footer_top.blocks.menu.label",
+          "info": "t:sections.footer_top.blocks.menu.info",
+          "default": "footer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.footer_top.name",
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Quick links"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Quick links"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Quick links"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

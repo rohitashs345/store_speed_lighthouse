@@ -1,0 +1,58 @@
+{%- comment -%}
+  renders figure box with product featured image
+  usage
+    {%- render 'figure-box', figure: media, product: product, prefix_class: section_prefix_class -%}
+{%- endcomment -%}
+
+{%- liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture card_media_size
+    if section.settings.section_media_size == 'adapt'
+        echo figure.preview_image.aspect_ratio | default: '1'
+    else 
+        echo '1'
+    endif
+ endcapture
+-%}
+<div class="fig-box-wrapper mty {{ prefix_class }}_fig-box">
+  <a {% if product_url != blank %}href="{{- product_url -}}"{% else %}aria-disabled="true"{% endif %} class="figure-box --media-size-square" style="--media-ratio: {{ card_media_size }};">
+    {%- if figure != blank -%}
+      {%- liquid
+        capture image_alt
+          if figure.preview_image.alt != blank
+            echo figure.preview_image.alt
+            else
+              echo index_image.alt | escape
+          endif
+        endcapture
+      -%}
+      {{ figure.preview_image | image_url: width: 430 | image_tag: class: 'object-fit object-fit--cover object-fit--absolute', alt: image_alt, loading: loading_attr, widths: '430, 860', sizes: '(max-width: 767px) 430px, 860px' }}
+      {%- else -%}
+        {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    {%- endif -%}
+    <span class="visually-hidden">
+      {{ 'index_image.alt' | t: index: index }}
+    </span>
+  </a>
+  <div class="fig-box-content --align-left">
+    {%- if product.title != blank -%}
+      <a class="fig-box_product-title h5 --fw-semi-bold --word-break" {% if product_url != blank %}href="{{- product_url -}}"{% else %}aria-disabled="true"{% endif %} >
+        {{ product.title }}
+      </a>
+      {%- else -%}
+        <div class="fig-box_product-title h5 --fw-semi-bold --word-break">
+          {{ 'product.title' | t }}
+        </div>
+    {%- endif -%}
+    <strong class="fig-box_items-text h4 --fw-medium fig-box_text--price">
+      {%- render 'product-price', product: product, use_variant: false, show_unit_price: true -%}
+    </strong>
+  </div>
+</div>

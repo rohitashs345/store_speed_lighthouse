@@ -1,0 +1,92 @@
+{%- comment -%}
+  renders media grid card on page templates
+  usage
+    {%- render 'media-grid-card', card: block, prefix_class: section_prefix_class -%}
+{%- endcomment -%}
+{%- liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture block_heading_size
+    case card.settings.block_heading_size
+      when 'heading_xx_large'
+        echo 'h1'
+      when 'heading_x_large'
+        echo 'h2'
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture block_heading_weight
+    case card.settings.block_heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture block_description_weight
+    case card.settings.block_description_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture image_alt
+    echo 'media_grid.image_alt' | t
+  endcapture
+-%}
+
+<div class="grid-card {{ image_placement }}">
+  {%- if card.settings.image_first != blank -%}
+    <div class="grid-card_image --media-size-square" style="--media-ratio: 1;"> 
+      {{- card.settings.image_first | image_url: width: 1524 | image_tag: alt: image_alt,
+        class: 'object-fit object-fit--absolute',  loading: loading_attr, widths: '1016, 1524', sizes: '(max-width: 767px) 1016vw, 1524vw' -}}
+    </div>
+    {%- else -%}
+      <div class="grid-card_image --media-size-square" style="--media-ratio: 1;">
+        {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      </div>
+  {%- endif -%}
+  <div class="grid-card_content --align-left">
+    {%- if card.settings.block_heading != blank -%}
+      <h2 class="mty {{ block_heading_size }} --h-anchor-none {{ block_heading_weight }} grid-card_heading">
+        {{- card.settings.block_heading -}}
+      </h2>
+    {%- endif -%}
+    {%- if card.settings.block_description != blank -%}
+      <div class="text-size--{{ card.settings.block_text_size }} {{ block_description_weight }} grid-card_description">
+        {{- card.settings.block_description -}}
+      </div>
+    {%- endif -%}
+  </div>
+  {%- if card.settings.button_label != blank -%}
+    <a
+      {% if card.settings.url != blank -%}href="{{ card.settings.url }}" {% if card.settings.open_new_window %}target="_blank"{% endif %} {% else %} aria-disabled="true" {% endif %}
+      class="button button--{{ card.settings.type }} grid-card_btn"
+    >
+      {{- card.settings.button_label -}}
+    </a>
+  {%- endif -%}
+</div>

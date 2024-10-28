@@ -1,0 +1,80 @@
+.banner-with-caption-card{
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--section-radius);
+}
+
+a.banner-with-caption-card{
+  --focus-outline-offset: 1px;
+  display: block;
+  text-decoration: none;
+}
+
+.banner-with-caption-card_header,
+.banner-with-caption-card_btn-position{
+  position: absolute;
+  z-index: 1;
+  max-width: 80%;
+  overflow-y: auto;
+}
+
+.banner-with-caption-card_btn-position{
+  max-height: 40%;
+}
+
+.banner-with-caption-card_header{
+  max-height: calc(100% - 112px);
+}
+
+.banner-with-caption-card_button{
+  --button-corner-radius: calc(var(--section-radius) + 90px);
+  --button-padding-y: 1.6rem;
+  --button-padding-x: 2.1rem;
+}
+
+.banner-with-caption-card .--caption-top-left{
+  top: 20px;
+  left: 30px;
+}
+
+.banner-with-caption-card .--content-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+}
+
+.banner-with-caption-card .--caption-center{
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.banner-with-caption-card .--content-center .banner-with-caption-card_btn-position,
+.banner-with-caption-card .--content-center .banner-with-caption-card_header{
+  position: unset;
+}
+
+.banner-with-caption-card > svg, .banner-card > img{
+  border-radius: inherit;
+}
+
+.banner-with-caption-card_description{
+  color: var(--section-foreground-color);
+}
+
+.banner-with-caption-card::before{
+  content: "";
+  background: var(--overlay-bg);
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.blend::before{
+  mix-blend-mode: multiply;
+}

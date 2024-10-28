@@ -1,0 +1,109 @@
+{%- comment -%}
+  renders article/blog card on page templates
+  usage
+    {%- render 'blog-card', article: article, show_image: section.settings.show_featured_image, show_date: section.settings.show_date, show_author: section.settings.show_author, show_excerpt: true, prefix_class: 'section_scheme_class' -%}
+{%- endcomment -%}
+
+{%- liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  assign media_size = section.settings.section_media_size | default: section.settings.card_media_size
+  assign heading_size = blog_heading_size | default: 'h5'
+
+  capture card_media_size
+    if media_size == 'adapt'
+      echo article.image.aspect_ratio | default: '1'
+    else 
+      echo '1'
+    endif
+ endcapture
+
+-%}
+<article class="blog-card {{ prefix_class }}_blog-card --align-left">
+  <div class="blog-card_top-wrap">
+    {%- if show_image -%}
+      <a href="{{- article.url -}}" class="blog-card_image --media-size-{{ media_size }}" style="--media-ratio: {{ card_media_size }};">
+        {%- if article.image != blank -%}
+          {%- liquid
+            capture image_alt
+              if article.image.alt != blank
+                echo article.image.alt
+                else
+                  echo article.title | escape
+              endif
+            endcapture
+          -%}
+          {{- article.image | image_url: width: 620 | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '310, 620', sizes: '(max-width: 767px) 310px, 50vw' -}}
+          {% else %}
+            {{- 'blog-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+            <span class="visually-hidden">{{- article.title -}}</span>
+        {%- endif -%}
+      </a>
+    {%- endif -%}
+    {% if article.tags.size > 0 and show_tags %}
+      <ul class="list-unstyled blog-card_tags-list blog-card_tags-list--scroll">
+        {%- for tag in article.tags -%}
+          <li class="blog-card_tag-item">
+            <strong class="blog-card_tag-link --word-break">
+              {{- tag -}}
+            </strong>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {% endif %}
+    <h2 class="{{ heading_size }} blog-card_heading mty --h-anchor-none">
+      <a href="{{- article.url -}}" class="--hover-underline">
+        {{- article.title -}}
+      </a>
+    </h2>
+    {%- if show_author or show_date or show_comments_count -%}
+      <div class="blog-card_stats-wrap mty">
+        {%- if show_author -%}
+          <strong class="blog-card_subtitle blog-card_subtitle--author --word-break">
+            {{- article.author -}}
+          </strong>
+        {%- endif -%}
+        {%- if show_date -%}
+          <strong class="blog-card_subtitle blog-card_subtitle--date --word-break">
+            {{- article.published_at | time_tag: format: 'date' -}}
+          </strong>
+        {%- endif -%}
+        {%- if show_comments_count -%}
+          {%- if article.comments_count > 0 -%}
+            <strong class="blog-card_subtitle blog-card_subtitle--comments-count --word-break">
+              {%- liquid
+                capture count
+                  if article.comments_count > 1
+                    echo 'blogs.comments.count.other' | t: count: article.comments_count
+                    else
+                      echo 'blogs.comments.count.one' | t: count: article.comments_count
+                  endif
+                endcapture
+
+                echo count
+              -%}
+            </strong>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if article.excerpt_or_content.size > 0 and show_excerpt -%}
+      <div class="text-size--medium mty blog-card_excerpt --word-break">
+        <p>
+          {{- article.excerpt_or_content | strip_html | truncatewords: 30 -}}
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+  <footer class="blog-card_btn-wrap mty">
+    <a href="{{- article.url -}}" class="button button--primary">
+      {{- 'blogs.link_label' | t -}}
+    </a>
+  </footer>
+</article>

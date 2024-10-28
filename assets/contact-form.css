@@ -1,0 +1,157 @@
+.contact-form{
+  --q-align-value: var(--mobile-q-align);
+}
+
+.form-wrapper .form-group {
+  position: relative;
+}
+
+.form-group textarea {
+  resize: none;
+  --input-height: 151px;
+}
+
+.form-group textarea,
+.form-group input,
+.contact-form .error-email{
+  margin-top: 10px;
+}
+
+.form-group input{
+  --input-height: 6.5rem;
+}
+
+.form-group label{
+  font-weight: 500;
+}
+
+.form-wrapper_button {
+  --button-padding-y: 1.5rem;
+  --button-padding-x: 1.6rem;
+  --button-font-size: 1.6rem;
+  --button-line-height: 2.4rem;
+  --button-font-family: var(--body-font-family);
+}
+
+.contact-form_wrapper,
+.contact-form .form__message,
+.contact-form .error-email {
+  display: flex;
+}
+
+.contact-form_wrapper {
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.contact-form_col-form,
+.form-wrapper_button{
+  width: 100%;
+}
+
+.contact-form_col-info {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.contact-form .form-wrapper_heading {
+  --mt-bottom: 7px;
+}
+
+.contact-form_col-form .heading-head{
+  margin-bottom: 25px;
+}
+
+.form-wrapper_main-heading{
+  --mt-bottom: 28px;
+}
+
+.contact-form .errors-list_link {
+  text-decoration: none;
+}
+
+.contact-form .success-message {
+  text-align: center;
+  margin-top: 39px;
+  font-size: 2rem;
+  line-height: 3.3rem;
+}
+
+.contact-form .success-message p {
+  margin: 0;
+}
+
+.contact-form .success-message .image {
+  margin-bottom: 10px;
+}
+
+.contact-form .form__message {
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+  margin-top: 50px;
+}
+
+.contact-form .form__message,
+.contact-form .error-email {
+  align-items: center;
+  gap: 15px;
+}
+
+.contact-form .error-email {
+  position: absolute;
+  right: 0;
+}
+
+.contact-form .contact__field-error{
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+}
+
+.contact-form .errors-list,
+.form-wrapper .form-group {
+  margin-bottom: 30px;
+}
+
+.contact-form .success-message_icn {
+  display: block;
+  margin-bottom: 14px;
+}
+
+@media (min-width: 768px){
+  .contact-form{
+    --q-align-value: var(--desktop-q-align);
+  }
+}
+
+@media (min-width:992px) {
+  .contact-form{
+    overflow: visible;
+  }
+
+  /* .contact-form_col{
+    position: sticky;
+    top: var(--page-header-height, 0);
+  } */
+
+  .contact-form_wrapper {
+    gap: 20px;
+  }
+
+  .contact-form_col-form {
+    width: 40%;
+  }
+
+  .contact-form--form-center .contact-form_col-form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 703px;
+  }
+}
+
+@media (min-width:1200px) {
+  .contact-form_wrapper {
+    gap: 55px;
+  }
+}

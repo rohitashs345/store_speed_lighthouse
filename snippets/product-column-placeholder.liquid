@@ -1,0 +1,184 @@
+{%- comment -%}
+  renders product placeholder column on section templates
+  usage
+    {%- render 'product-column-placeholder' -%}
+{%- endcomment -%}
+{%- liquid
+  assign card_media_ratio = 1
+
+  capture card_heading_weight
+    case heading_weight
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture show_separator
+    if enable_atc and enable_quick_view
+      echo 'true'
+    endif
+  endcapture
+
+  capture btns_at_down
+    if btns_position == 'bottom'
+      if enable_atc or show_details_btn or enable_quick_view
+        echo '--pd-bot'
+      endif
+    endif
+  endcapture
+
+  capture slider_class
+    if thumbnail_layout == 'slider'
+      echo 'product-column--slider-enabled'
+    endif
+  endcapture
+-%}
+{%- capture column_button -%}
+  <div class="product-column_btn-wrap {% unless btns_at_down != blank %}product-column_btn-wrap--pb{% endunless %} --justify-center">
+    {%- if details_btn -%}
+      <a class="btn-icn-ixi product-column_btn-ixi product-column_qv-toggler --block" aria-disabled="true">
+        <span class="btn-icn-ixi_wrapper">
+          {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'eye' -%}
+          <span class="visually-hidden --uppercase">
+            {{- 'product.view_details' | t: product.title -}}
+          </span>
+        </span>
+      </a>
+    {%- endif -%}
+    <div class="product-column_btn-icns">
+      {%- if enable_quick_view -%}
+        <div class="product-column-card_toggler">
+          <button class="btn-icn-ixi product-column_btn-ixi product-column_qv-toggler" aria-disabled="true">
+            <span class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'search' -%}
+              <span class="visually-hidden">
+                {{- 'product.quick_view.toggler_label' | t: product.title -}}
+              </span>
+            </span>
+          </button>
+        </div>
+      {%- endif -%}
+      {%- if show_separator == 'true' -%}
+        <i class="product-column_btn-separator">
+          {%- render 'icons-data', width: 2, height: 18, use_icon: true, icon_reference: 'line' -%}
+        </i>
+      {%- endif -%}
+      {%- if enable_atc -%}
+        <button
+          type="submit"
+          name="add"
+          class="btn-icn-ixi product-column_btn-ixi product-column_atc"
+          disabled
+        >
+          <span class="btn-icn-ixi_wrapper">
+            {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'cart' -%}
+            <span class="visually-hidden" data-atc-text="">
+              {{- atc_button_label | default: 'Add to Cart' -}}
+            </span>
+          </span>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endcapture -%}
+{%- if thumbnail_layout == 'slider' -%}
+  {%- capture drag_slider -%}
+    <div class="drag-slider">
+      <div class="drag-slider_wrapper --v-align-start">
+        {%- for placeholder in (1..3) -%}
+          {%- liquid
+            capture placeholder_image
+              if forloop.index > 3
+                echo 'product-apparel-1'
+                else
+                  echo 'product-apparel-' | append: forloop.index
+              endif
+            endcapture
+          -%}
+          <a aria-disabled="true" class="drag-slider_image --featured-image --media-size-{{ card_media_size }}" style="--media-ratio: {{ card_media_ratio }};">
+            {{- placeholder_image | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+            <span class="visually-hidden">
+              {{- 'product.title' | t -}}
+            </span>
+          </a>
+        {%- endfor -%}
+      </div>
+      <div class="drag-slider_input-wrap">
+        <input
+          title="{{- 'product.drag_slider.input_title' | t: product: product.title -}}"
+          min="0"
+          max="{{- product.media.size | minus: 1 -}}"
+          type="range"
+          value="0"
+        >
+      </div>
+    </div>
+  {%- endcapture -%}
+{%- endif -%}
+<div class="product-column --align-center {{ btns_at_down }} {{ slider_class }}" data-parent="{{- parent_selector -}}" {% if on_load %}data-recommend-check=""{% endif %}>
+  <div class="product-column_media-wrap">
+    <div {% unless thumbnail_layout == 'slider' %}data-switch-wrapper=""{% endunless %}>
+      {%- unless thumbnail_layout == 'slider' -%}
+        <a {% if product_clean_url != blank %} href="{{- product_clean_url -}}" {% endif %} class="product-column_image --featured-image --media-size-{{ card_media_size }}" style="--media-ratio: {{ card_media_ratio }};" data-media-id="{{- first_image.id -}}" data-update-link="">
+          {%- if first_image != blank -%}
+            {%- render 'product-featured-image', product: product, loading: loading, size: 'thumbnail' -%}
+          {%- else -%}
+            {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+            <span class="visually-hidden">
+              {{- product.title | escape -}}
+            </span>
+          {%- endif -%}
+        </a>
+        {%- else -%}
+          {{- drag_slider -}}
+      {%- endunless -%}
+    </div>
+    {%- if btns_position == 'top' -%}
+      {{- column_button -}}
+    {%- endif -%}
+  </div>
+  <div class="product-column_details-wrap">
+    {%- if show_vendor -%}
+      <strong class="product-column_vendor mty --fw-medium --word-break">
+        {{- 'product.vendor' | t -}}
+      </strong>
+    {%- endif -%}
+    <{{ heading_tag | default: 'h3' }} class="product-column_heading mty h6 {{ card_heading_weight }}">
+      <a aria-disabled="true" class="--hover-underline">
+        {{- 'product.title' | t -}}
+      </a>
+    </{{ heading_tag | default: 'h3' }}>
+    {%- if show_price -%}
+      <div class="product-column_price">
+        {%- render 'product-price', product: product, use_variant: false, show_unit_price: false -%}
+      </div>
+      <div class="product-column_unit-price parent-node">
+        {%- render 'product-unit-price', product: product -%}
+      </div>
+    {%- endif -%}
+    {%- unless show_swatches == 'none' -%}
+      <div class="product-column_swatch-wrap --v-align-middle">
+        <div class="product-column_swatches --v-align-middle --justify-center">
+          <div class="product-variant_options-wrap --v-align-middle product-variant_options-wrap--clr-swatch --justify-center">
+            {%- render 'product-variant-options-placeholder', limit: variant_limit, swatches: show_swatches -%}
+          </div>
+        </div>
+        {%- if show_price -%}
+          <div class="product-column_price">
+            {%- render 'product-price', product: product, use_variant: true, show_unit_price: false -%}
+          </div>
+          <div class="product-column_unit-price parent-node">
+            {%- render 'product-unit-price', product: product -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+  </div>
+  {%- if btns_position == 'bottom' -%}
+    <div class="product-column_btns-down">
+      {{- column_button -}}
+    </div>
+  {%- endif -%}
+</div>

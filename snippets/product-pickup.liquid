@@ -1,0 +1,156 @@
+{%- comment -%}
+  renders product pickup drawer for product
+  usage
+    {%- render 'product-pickup', product: product, scheme: block.settings.pickcom_color_scheme -%}
+{%- endcomment -%}
+{%- liquid
+  assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities | where: 'pick_up_enabled', true
+  assign closest_location = pick_up_availabilities.first
+-%}
+<div
+  class="product-pickup scheme scheme--{{ scheme }}"
+  {% if product.selected_or_first_available_variant.available and pick_up_availabilities.size > 0 %}
+    available
+    {% else %}
+    hidden
+  {% endif %}
+>
+  {%- if closest_location.available -%}
+    <strong class="product-pickup_heading h6 product-pickup_check--available product-pickup_icn-align">
+      {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'check' -%}
+      {{- 'product.pickup.available_at' | t: location: closest_location.location.name -}}
+    </strong>
+    <p class="product-pickup_subheading text-size--small">
+      {{- closest_location.pick_up_time -}}
+    </p>
+    {%- else -%}
+      <strong class="product-pickup_heading h6 product-pickup_cross--unavailable product-pickup_icn-align">
+        {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'cross' -%}
+        {{- 'product.pickup.unavailable_at' | t: location: closest_location.location.name -}}
+      </strong>
+      <em class="product-pickup_subheading text-size--small">
+        {{- closest_location.pick_up_time -}}
+      </em>
+  {%- endif -%}
+  {%- if product.selected_or_first_available_variant.available and pick_up_availabilities.size > 0 -%}
+    <modal-component-toggler>
+      <button
+        type="button"
+        data-expanded="false"
+        data-modal-ref="modal-pickup-drawer-{{ section.id }}-{{ product.id }}"
+        aria-haspopup="dialog"
+        aria-controls="modal-pickup-drawer-{{ section.id }}-{{ product.id }}"
+        class="button button--link product-pickup_opener-link"
+      >
+        {%- liquid
+          if pick_up_availabilities.size == 1
+            echo 'product.pickup.view_store' | t
+            else
+              echo 'product.pickup.other_store' | t
+          endif
+        -%}
+      </button>
+    </modal-component-toggler>
+    <modal-component
+      data-modal="modal-pickup-drawer-{{ section.id }}-{{ product.id }}"
+      data-container="body"
+    >
+      <div
+        class="modal modal-component --drawer modal-component--pickup-drawer scheme--{{ section.settings.section_color_scheme }}"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-pickup-drawer-{{ section.id }}-{{ product.id }}-heading"
+        aria-describedby="modal-pickup-drawer-{{ section.id }}-{{ product.id }}"
+        tabindex="-1"
+      >
+        <div class="modal-component_wrapper" id="modal-pickup-drawer-{{ section.id }}-{{ product.id }}">
+          <modal-component-toggler>
+            <button
+              type="button"
+              data-expanded="true"
+              data-toggle-attribute="false"
+              data-modal-ref="modal-pickup-drawer-{{ section.id }}-{{ product.id }}"
+              class="modal-component_btn-close btn-icn-ixi"
+            >
+              <span class="btn-icn-ixi_wrapper">
+                {%- render 'icons-data', width: 14, height: 14, use_icon: true, icon_reference: 'cross' -%}
+                <span class="visually-hidden">{{- 'accessibility.close' | t -}}</span>
+              </span>
+            </button>
+          </modal-component-toggler>
+          <div class="modal-component_body">
+            <div class="modal-component_head">
+              <strong class="visually-hidden" id="modal-pickup-drawer-{{ section.id }}-{{ product.id }}-heading">
+                {{- 'product.pickup.modal_heading' | t: product_title: product.title -}}
+              </strong>
+              <strong class="product-pickup_heading mty h4 --word-break">
+                {{- product.title -}}
+              </strong>
+              <strong class="product-pickup_subheading mty text-size--small --word-break">
+                {{- product.vendor -}}
+              </strong>
+              {%- unless product.has_only_default_variant -%}
+                <ul class="list-unstyled product-pickup_options-list text-size--small mty">
+                  {%- for option in product.options_with_values -%}
+                    <li>
+                      <strong class="product-pickup_options-title text-size--medium --word-break">
+                        {{- option.name -}}:
+                      </strong>
+                      <strong class="product-pickup_options-value text-size--small --word-break">
+                        {{- option.selected_value -}}
+                      </strong>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endunless -%}
+            </div>
+            <div class="modal-component_content">
+              <ul class="list-unstyled product-pickup_showcase-list">
+                {%- for availability in pick_up_availabilities -%}
+                  <li class="product-pickup_showcase-item">
+                    <strong class="product-pickup_showcase-heading h6 mty --word-break">
+                      {{- availability.location.name -}}
+                    </strong>
+                    <div class="product-pickup_showcase-description mty">
+                      {%- if availability.available -%}
+                        <strong class="product-pickup_showcase-texture h6 product-pickup_showcase-texture--available mty">
+                          {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'check' -%}
+                          {{- 'product.pickup.available_at' | t: location: availability.location.name -}}
+                        </strong>
+                        <span class="product-pickup_showcase-texture product-pickup_showcase-texture--subtext text-size--medium">
+                          {{- availability.pick_up_time -}}
+                        </span>
+                        {%- assign address = availability.location.address -%}
+                        <address class="pickup-showcase_address text-size--medium mty">
+                          {{- address | format_address -}}
+                          {%- if address.phone.size > 0 -%}
+                            <em class="product-pickup_showcase-subtext">{{- address.phone -}}</em>
+                          {%- endif -%}
+                        </address>
+                        {%- else -%}
+                          <strong class="product-pickup_showcase-texture product-pickup_showcase-texture--unavailable mty">
+                            {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'cross' -%}
+                            {{- 'product.pickup.unavailable_at' | t: location: availability.location.name -}}
+                          </strong>
+                          <span class="product-pickup_showcase-texture product-pickup_showcase-texture--subtext text-size--medium">
+                            {{- availability.pick_up_time -}}
+                          </span>
+                          {%- assign address = availability.location.address -%}
+                          <address class="pickup-showcase_address text-size--medium mty">
+                            {{- address | format_address -}}
+                            {%- if address.phone.size > 0 -%}
+                              <em class="product-pickup_showcase-subtext">{{- address.phone -}}</em>
+                            {%- endif -%}
+                          </address>
+                      {%- endif -%}
+                    </div>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal-component>
+  {%- endif -%}
+</div>

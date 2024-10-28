@@ -1,0 +1,35 @@
+.discount-form_label{
+  margin-bottom: 9px;
+  display: block;
+  font-weight: 500;
+}
+
+.discount-form_results-wrap{
+  text-align: right;
+}
+
+.discount-form_group-wrap{
+  position: relative;
+  font-size: 1.6rem;
+}
+
+.discount-form_group-wrap input{
+  --outline-width: 2px;
+  --input-height: 5.3rem;
+  --input-background: var(--section-input-text-color, #000);
+  --input-text: var(--section-input-background-color, #fff);
+}
+
+.discount-form_arrow{
+  position: absolute;
+  top: 50%;
+  right: 23px;
+  line-height: 0;
+  transform: translateY(-50%);
+  transition: 0.3s ease;
+  color: var(--section-input-background-color, #fff);
+}
+
+.btn-icn-ixi.discount-form_btn:hover {
+  transform: translate(7px, -50%);
+}

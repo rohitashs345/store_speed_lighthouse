@@ -1,0 +1,61 @@
+.drag-slider,
+.drag-slider_image,
+.drag-slider_input-wrap::before{
+  display: block;
+}
+
+.drag-slider,
+.drag-slider_image,
+.drag-slider_input-wrap,
+.drag-slider_input-wrap input[type='range']{
+  width: 100%;
+}
+
+.drag-slider_wrapper{
+  display: flex;
+  position: relative;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.drag-slider--vertical{
+  scroll-snap-type: y mandatory;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex-direction: column;
+  height: 695px;
+}
+
+.drag-slider_image{
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.drag-slider_input-wrap{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 111;
+}
+
+.drag-slider_input-wrap::before{
+  content: '';
+  border-top: 4px solid var(--section-heading-color);
+}
+
+.drag-slider_input-wrap input[type='range']{
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.drag-slider_input-wrap input[type="range"]:focus-visible{
+  --focus-outline-offset: 0;
+}

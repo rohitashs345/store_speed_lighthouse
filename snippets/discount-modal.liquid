@@ -1,0 +1,165 @@
+{%- liquid
+  capture button_1_text
+    if section.settings.button_label_1 != blank
+      echo section.settings.button_label_1
+      else
+        echo 'discount_popup.button' | t
+    endif
+  endcapture
+  assign section_prefix_class = 'discount-popup'
+
+  capture modal_heading
+    echo 'discount_popup.heading' | t
+  endcapture
+-%}
+<modal-component
+  data-modal="modal-discount-popup"
+  data-trigger="self"
+  data-storage="true"
+  data-storage-key="discount_popup"
+  data-storage-value="true"
+  data-hide-outside="false"
+>
+  <div
+    class="modal modal-component modal-component--discount-popup modal-component--{{ section.settings.age_position }} scheme--{{ section.settings.age_color_scheme }}"
+    style="--popup-bg: {{ section.settings.Popup_bg }}"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-discount-popup-heading"
+    aria-describedby="modal-discount-popup"
+    tabindex="-1"
+  >
+    <div class="modal-component_spacer">
+      <div class="modal-component_wrapper" id="modal-discount-popup">
+        <div class="modal-component_body">
+          <div class="modal-component_content">
+            <modal-component-toggler
+              data-storage="true"
+              data-storage-key="discount_popup"
+              data-storage-value="true"
+            >
+              <button
+                type="button"
+                data-expanded="true"
+                data-toggle-attribute="false"
+                data-modal-ref="modal-discount-popup"
+                class="modal-component_btn-close btn-icn-ixi">
+                <span class="btn-icn-ixi_wrapper">
+                  {%- render 'icons-data', width: 14, height: 14, use_icon: true, icon_reference: 'cross' -%}
+                  <span class="visually-hidden">{{- 'accessibility.close' | t -}}</span>
+                </span>
+              </button>
+            </modal-component-toggler>
+            <div class="discount-popup --align-{{ section.settings.age_text_alignment }}">
+              <strong id="modal-discount-popup-heading" style="background-color: white; color: black;" class="visually-hidden">
+                {{- modal_heading -}}
+              </strong>
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when 'heading' -%}
+                    {%- liquid
+                      capture block_heading_size
+                        case block.settings.heading_size
+                          when 'heading_x_large'
+                            echo 'h2'
+                          when 'heading_large'
+                            echo 'h3'
+                          when 'heading_medium'
+                            echo 'h4'
+                          else
+                            echo 'h'
+                        endcase
+                      endcapture
+
+                      capture heading_weight
+                        case block.settings.heading_weight
+                          when 'semi_bold'
+                            echo '--fw-semi-bold'
+                          when 'bold'
+                            echo '--fw-bold'
+                          when 'medium'
+                            echo '--fw-medium'
+                          when 'normal'
+                            echo '--fw-normal'
+                        endcase
+                      endcapture
+                    -%}
+                    <strong class="{{ section_prefix_class }}_heading {{ heading_weight }} {{ block_heading_size }} {{ block.type }} mty" style="--block-spacing: {{ block.settings.block_spacing }}px;" {{ block.shopify_attributes }}>
+                      {{- block.settings.heading -}}
+                    </strong>
+                  {%- when 'text' -%}
+                    {%- liquid
+                      capture block_text_size
+                        case block.settings.block_text_size_heading
+                          when 'heading_medium'
+                            echo 'h4'
+                          when 'heading_small'
+                            echo 'h5'
+                          when 'heading_x_small'
+                            echo 'h6'
+                          else
+                            echo 'h'
+                        endcase
+                      endcapture
+
+                      capture description_weight
+                        case block.settings.description_weight
+                          when 'semi_bold'
+                            echo '--fw-semi-bold'
+                          when 'bold'
+                            echo '--fw-bold'
+                          when 'medium'
+                            echo '--fw-medium'
+                          when 'normal'
+                            echo '--fw-normal'
+                        endcase
+                      endcapture
+                    -%}
+                    <div
+                      class="discount-popup_description mty {{ description_weight }} {{ block_text_size }}"
+                      {{ block.shopify_attributes }}
+                      style="--block-spacing: {{ block.settings.block_spacing }}px"
+                    >
+                      {{- block.settings.description -}}
+                    </div>
+                  {%- when 'form' -%}
+                    <div
+                      class="discount-popup_form mty"
+                      {{ block.shopify_attributes }}
+                      style="--block-spacing: {{ block.settings.block_spacing }}px"
+                    >
+                      {%- liquid
+                        assign id = 'discount-popup-' | append: section.id
+                        render 'discount-popup-form', prefix_class: section_prefix_class, form_id: id, button_label: button_1_text 
+                      -%}
+                    </div>
+                  {%- when 'image' -%}
+                    <div
+                      class="discount-popup_image {% if block.settings.hide_image_on_mobile %}--mobile-hidden{% endif %} mty"
+                      {{ block.shopify_attributes }}
+                       style="--block-spacing: {{ block.settings.block_spacing }}px"
+                    >
+                        {%- if block.settings.image != blank -%}
+                          {%- liquid
+                            capture image_alt
+                              if block.settings.image.alt != blank
+                                echo block.settings.image.alt
+                                else
+                                  echo modal_heading | escape
+                              endif
+                            endcapture
+                          -%}
+                          {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: class: '', loading: 'eager', widths: '3840, 480', sizes: '(max-width: 767px) 3840vw', alt: image_alt -}}
+                          {%- else -%}
+                            {{- 'image' | placeholder_svg_tag: 'object-fit' -}}
+                        {%- endif -%}
+                    </div>
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</modal-component>

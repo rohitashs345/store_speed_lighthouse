@@ -1,0 +1,175 @@
+{{- 'component-main-account.css' | asset_url | stylesheet_tag -}}
+{{- 'component-breadcrumb.css' | asset_url | stylesheet_tag -}}
+{{- 'component-pagination.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign section_prefix_class = 'main-account'
+  assign section_scheme_class = section.settings.section_color_scheme | prepend: 'scheme scheme--'
+-%}
+
+{%- liquid
+  if section.settings.show_breadcrumb
+    render 'breadcrumb', border_top: section.settings.show_top_bdr, border_bottom: section.settings.show_bottom_bdr, color_scheme: section.settings.breadcrumb_color_scheme
+  endif
+-%}
+<div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }}">
+  <div class="{{ section_prefix_class }}_wrapper">
+    <header class="account-header">
+      <div class="container">
+        <div class="account-header_wrapper">
+          <ul class="list-unstyled account-header_list">
+            <li>
+              <a href="{{- routes.account_url -}}" class="account-header_link active">
+                {{- 'account.header.order_history' | t -}}
+              </a>
+            </li>
+            <li>
+              <a href="{{- routes.account_addresses_url -}}" class="account-header_link">
+                {{- 'account.header.addresses' | t -}}
+              </a>
+            </li>
+          </ul>
+          <a href="{{- routes.account_logout_url -}}" class="account-header_btn">
+            {{- 'customer.logout_label' | t -}}
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="account-content">
+      <div class="container">
+        <h1 class="h5 mty account-content_heading">
+          {{- 'account.header.heading' | t -}}
+        </h1>
+        <div class="account-content_wrapper">
+          <div class="account-content_col account-content_col--description">
+            {% paginate customer.orders by 20 %}
+              {%- if customer.orders.size > 0 -%}
+                <div class="account-content_table-wrapper">
+                  <table class="account-table">
+                    <caption class="visually-hidden">
+                      {{- 'account.header.heading' | t -}}
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th>{{- 'customer.main.order_label' | t -}}</th>
+                        <th>{{- 'customer.main.date_label' | t -}}</th>
+                        <th>{{- 'customer.main.pay_status_label' | t -}}</th>
+                        <th>{{- 'customer.main.fillment_status_label' | t -}}</th>
+                        <th>{{- 'customer.main.total_label' | t -}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {%- for order in customer.orders -%}
+                        <tr>
+                          <td>
+                            <span class="account-table_heading">
+                              {{- 'customer.main.order_label' | t -}}
+                            </span>
+                            <a href="{{- order.customer_url -}}" class="account-table_status-label account-table_status-label--default">
+                              {{- order.name -}}
+                            </a>
+                          </td>
+                          <td>
+                            <span class="account-table_heading">
+                              {{- 'customer.main.date_label' | t -}}
+                            </span>
+                            {{- order.created_at | time_tag: format: 'date' -}}
+                          </td>
+                          <td>
+                            <span class="account-table_heading">
+                              {{- 'customer.main.pay_status_label' | t -}}
+                            </span>
+                            <span class="account-table_status-label {% if order.financial_status_label == 'Paid' %}account-table_status-label--success{% else %}account-table_status-label--error{% endif %}">
+                              {{- order.financial_status_label -}}
+                            </span>
+                          </td>
+                          <td>
+                            <span class="account-table_heading">
+                              {{- 'customer.main.fillment_status_label' | t -}}
+                            </span>
+                            <span class="account-table_status-label {% if order.fulfillment_status_label == 'Paid' %}account-table_status-label--success{% else %}account-table_status-label--error{% endif %}">
+                              {{- order.fulfillment_status_label -}}
+                            </span>
+                          </td>
+                          <td>
+                            <span class="account-table_heading">
+                              {{- 'customer.main.total_label' | t -}}
+                            </span>
+                            {{- order.total_net_amount | money_with_currency -}}
+                          </td>
+                        </tr>
+                      {%- endfor -%}
+                    </tbody>
+                  </table>
+                </div>
+                {%- else -%}
+                  <div class="myt account-content_empty text-size--large">
+                    <p>{{- 'customer.main.no_orders' | t -}}</p>
+                  </div>
+              {%- endif -%}
+              {%- render 'pagination', prefix_class: section_prefix_class -%}
+            {% endpaginate %}
+          </div>
+          {%- if customer.default_address -%}
+            <aside class="account-content_col account-content_col--info">
+              <div class="account-info-widget">
+                <h2 class="h6 account-info-widget_heading --word-break mty">
+                  {{- 'customer.main.billing_address' | t -}}
+                </h2>
+                <address class="text-size--medium account-info-widget_description --word-break mty">
+                  {{- customer.default_address | format_address -}}
+                </address>
+              </div>
+            </aside>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main_account.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:breadcrumb.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "t:breadcrumb.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_bdr",
+      "label": "t:top_bdr.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_bdr",
+      "label": "t:bottom_bdr.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "breadcrumb_color_scheme",
+      "default": "scheme1",
+      "label": "t:color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:settings_schema.layout.name"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "default": "scheme1",
+      "label": "t:settings_schema.color_schemes.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,312 @@
+.flash-spotlight{
+  --q-align-value: var(--mobile-q-align);
+}
+
+.flash-spotlight .container-fluid{
+  --cp-spacer-left: 0;
+  --cp-spacer-right: 0;
+}
+
+.flash-spotlight marquee-component{
+  width: auto;
+  left: 6px;
+  right: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.flash-spotlight .marquee-component_col{
+  padding: 16px 20px;
+}
+
+.flash-spotlight_image-wrap{
+  overflow: hidden;
+}
+
+.flash-spotlight_wrapper{
+  padding-bottom: 54px;
+}
+
+.flash-spotlight .marquee-component_col,
+.flash-spotlight_column,
+.flash-spotlight .heading-head,
+.flash-spotlight .countdown-timer,
+.flash-spotlight .countdown-timer .block,
+.flash-spotlight_image-wrapper{
+  display: flex;
+}
+
+.flash-spotlight_column{
+  gap: 37px;
+}
+
+.flash-spotlight .countdown-timer{
+  justify-content: center;
+  gap: 22px;
+}
+
+.countdown-timer_message{
+  text-align: center;
+}
+
+.flash-spotlight_column{
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  align-items: center;
+}
+
+.flash-spotlight .container-fluid{
+  --cp-spacer-left: 0;
+  --cp-spacer-right: 0;
+}
+
+.flash-spotlight_image-wrap,
+.flash-spotlight .countdown-timer .block,
+.--content-position{
+  position: relative;
+}
+
+.flash-spotlight_image-wrap{
+  width: 180px;
+}
+
+.--image-overlay:nth-child(1) .flash-spotlight_image-wrap{
+  transform: rotate(1.81deg);
+}
+
+.--image-overlay:nth-child(2) .flash-spotlight_image-wrap{
+  transform: rotate(-0.61deg);
+  top: 0;
+}
+
+.--image-overlay:nth-child(3) .flash-spotlight_image-wrap{
+  transform: rotate(0.15deg);
+  top: -8px;
+}
+
+.--image-overlay:nth-child(4) .flash-spotlight_image-wrap{
+  transform: rotate(2.3deg);
+}
+
+.flash-spotlight_image-wrap.--media-size-portrait{
+  --ratio-divider: 1.2;
+}
+
+.flash-spotlight_image-wrap.--media-size-landscape{
+  --ratio-divider: .7;
+}
+
+.--image-overlay:nth-child(odd),
+.--image-overlay:nth-child(even):hover{
+  z-index: 99;
+}
+
+.--image-overlay:nth-child(odd):hover{
+  z-index: 0;
+}
+
+.flash-spotlight_image-wrapper{
+  column-gap: 30px;
+  row-gap: 30px;
+  justify-content: center;
+  padding: 30px 20px 25px 20px;
+  flex-wrap: wrap;
+}
+
+.flash-spotlight_image-wrap img,
+.flash-spotlight .countdown-timer .block:not(:last-child)::after{
+  position: absolute;
+}
+
+.flash-spotlight_image-wrap img,
+.flash-spotlight .countdown-timer .block:not(:last-child)::after{
+  transform: translateY(-50%);
+}
+
+.flash-spotlight_image-wrap img{
+  top: 50%;
+}
+
+.flash-spotlight_text-wrap,
+.flash-spotlight_head{
+  flex-grow: 1;
+}
+
+.flash-spotlight_heading,
+.flash-spotlight_space:after,
+.countdown-timer_message{
+  display: block;
+}
+
+a.flash-spotlight_column{
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.flash-spotlight_space:after{
+  content: "-";
+  font-weight: bold;
+  color: var(--section-foreground-color);
+  font-size: 2rem;
+}
+
+.--stencil-text{
+  -webkit-text-fill-color: var(--section-background-color);
+  -webkit-text-stroke: 1px var(--section-heading-color);
+}
+
+.flash-spotlight .heading-head{
+  gap: 15px;
+  flex-direction: column;
+  padding: 30px 20px  20px;
+}
+
+.flash-spotlight_count-down{
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.flash-spotlight .countdown-timer,
+.flash-spotlight .countdown-timer_message{
+  color: var(--section-heading-color);
+}
+
+.flash-spotlight .countdown-timer .block{
+  flex-direction: column;
+  text-align: center;
+}
+
+.flash-spotlight .countdown-timer .block .time,
+.flash-spotlight .countdown-timer_message{
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  font-weight: 700;
+  font-family: var(--font-headings-family);
+}
+
+.flash-spotlight .countdown-timer .block .text{
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  font-family: var(--font-headings-family);
+  text-transform: uppercase;
+}
+
+.flash-spotlight .countdown-timer .block:not(:last-child)::after {
+  content: ':';
+  right: -15px;
+  top: 30%;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+@media (min-width: 576px){
+  .--image-overlay:nth-child(2) .flash-spotlight_image-wrap{
+    top: 32px;
+  }
+
+  .flash-spotlight .countdown-timer{
+    gap: 37px;
+  }
+
+  .flash-spotlight .countdown-timer .block:not(:last-child)::after {
+    right: -24px;
+  }
+  
+  .flash-spotlight_image-wrapper{
+    row-gap: 56px;
+  }
+}
+
+@media (min-width: 768px){
+  .flash-spotlight{
+    --q-align-value: var(--desktop-q-align);
+  }
+
+  .flash-spotlight .heading-head{
+    flex-direction: row;
+    padding: 30px 40px 0 40px;
+  }
+
+  .flash-spotlight .countdown-timer{
+    justify-content: end;
+  }
+
+  .flash-spotlight_image-wrapper{
+    padding: 30px 40px 48px 40px;
+  }
+
+  .flash-spotlight_count-down{
+    width: 42%;
+  }
+
+  .countdown-timer_message{
+    text-align: right;
+  }
+}
+
+@media(min-width: 992px){
+  .flash-spotlight .countdown-timer .block .time,
+  .flash-spotlight .countdown-timer_message{
+    font-size: 4rem;
+    line-height: 6rem;
+  }
+
+  .flash-spotlight_image-wrapper{
+    row-gap: 0;
+  }
+
+  .flash-spotlight .countdown-timer .block .text{
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+  }
+
+  .flash-spotlight .heading-head{
+    padding: 30px 50px 0 50px;
+    gap: 30px;
+  }
+
+  .flash-spotlight_image-wrap{
+    width: 190px;
+  }
+
+  .flash-spotlight .countdown-timer .block:not(:last-child)::after {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width:1200px){
+  .flash-spotlight_wrapper:hover .marquee{
+    position: absolute;
+    z-index: 999;
+  }
+  
+  .flash-spotlight_image-wrapper{
+    gap: 40px;
+    justify-content: center;
+    padding: 49px 68px 39px 68px;
+    flex-wrap: unset;
+  }
+
+  .flash-spotlight .heading-head{
+    padding: 39px 68px 0 68px;
+  }
+
+  .flash-spotlight .marquee{
+    position: absolute;
+  }
+
+  .flash-spotlight .marquee{
+    top: 50%;
+  }
+
+  .flash-spotlight_image-wrap{
+    width: 259px;
+  }
+}
+
+@media (min-width:1600px){
+  .flash-spotlight_image-wrapper{
+    gap: 79px;
+  }
+}

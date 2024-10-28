@@ -1,0 +1,9 @@
+.main-order_head-wrapper{
+  margin-bottom: 35px;
+}
+
+@media (min-width:992px){
+  .main-order_head-wrapper{
+    margin-bottom: 59px;
+  }
+}

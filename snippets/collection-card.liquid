@@ -1,0 +1,129 @@
+{%- comment -%}
+  renders collection card
+  usage
+    {%- render 'collection-card', card: collection, block: block, prefix_class: section_prefix_class, heading_size: section.settings.card_heading_size, heading_weight: section.settings.card_heading_weight, media_size: section.settings.card_media_size, show_title: section.settings.show_title -%}
+{%- endcomment -%}
+{%- liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture card_media_ratio
+    if media_size == 'adapt'
+      if custom_image == blank
+        echo card.featured_image.aspect_ratio | default: '1'
+        else
+          echo custom_image.aspect_ratio | default: '1'
+      endif
+      else
+        echo '1'
+    endif
+  endcapture
+
+  capture heading_tag
+    echo heading_tag | default: 'h3'
+  endcapture
+
+  capture card_heading_size
+    case heading_size
+      when 'heading_small'
+        echo 'h5'
+      when 'heading_x_small'
+        echo 'h6'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture card_heading_weight
+    case heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture card_caption_weight
+    case caption_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture collection_title
+    if card.title != blank
+      echo card.title | escape
+      else
+        echo 'collection.title' | t
+    endif
+  endcapture
+
+  capture image_alt
+    if card.title != blank
+      if custom_image != blank
+        if custom_image.alt != blank
+          echo custom_image.alt
+          else
+            echo card.title | escape
+        endif
+      endif
+      else
+        echo 'collection.title' | t
+    endif
+  endcapture
+-%}
+<a
+  {% if card.title != blank %}href="{{- card.url -}}"{% else %}aria-disabled="true"{% endif %}
+  class="collection-card {{ prefix_class }}_collection-card"
+>
+  <div class="collection-card_image --media-size-{{ media_size }}" style="--media-ratio: {{ card_media_ratio }}">
+    {%- if card.title == blank -%}
+      {%- if custom_image != blank -%}
+        {{- custom_image | image_url: width: 648 | image_tag: alt: image_alt, class: 'object-fit object-fit--cover object-fit--absolute', loading: loading_attr, widths: '464, 928', sizes: '(max-width: 767px) 30vw, 928px' -}}
+      {%- else -%}
+        {{- 'collection-apparel-4' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      {%- endif -%}
+    {%- else -%}
+      {%- if custom_image == blank -%}
+        {%- if card.featured_image != blank -%}
+          {%- render 'collection-featured-image', collection: card, loading: loading_attr -%}
+        {%- else -%}
+          {{- 'collection-apparel-4' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+        {%- endif -%}
+      {%- else -%}
+        {{- custom_image | image_url: width: 464 | image_tag: alt: collection_title, class: 'object-fit object-fit--cover object-fit--absolute', loading: loading_attr, widths: '464, 928', sizes: '(max-width: 767px) 30vw, 928px' -}}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  {%- if show_title or tag != blank -%}
+    <div class="collection-card_caption-wrap align-holder align-holder--{{ content_position }} --align-center">
+      <div class="collection-card_align align-holder_wrapper">
+        {%- if tag != blank -%}
+          <strong class="collection-card_caption h mty {{ card_caption_weight }}" style="--tag-bg: {{ tag_bg }}; --tag-fg: {{ tag_fg }};">
+            {{- tag -}}
+          </strong>
+        {%- endif -%}
+        {%- if show_title -%}
+          <{{ heading_tag }} class="collection-card_heading mty {{ card_heading_weight }} {{ card_heading_size }}">
+            {{- collection_title -}}
+          </{{ heading_tag }}>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</a>

@@ -1,0 +1,950 @@
+{%- liquid
+  assign section_prefix_class = 'page-header'
+  assign section_scheme_class = section.settings.section_color_scheme | prepend: 'scheme scheme--'
+  assign menu_drawer_scheme_class = section.settings.menu_drawer_color_scheme | prepend: 'scheme scheme--'
+  assign mega_menu_scheme_class = section.settings.mega_menu_color_scheme | prepend: 'scheme--'
+  assign cart_view = settings.cart_view
+
+  capture custom_links_exists
+    if section.blocks.size > 0
+      for block in section.blocks
+        case block.type
+          when 'custom_link'
+            echo 'true'
+            break
+        endcase
+      endfor
+    endif
+  endcapture
+
+  capture mega_menu_enabled
+    if section.blocks.size > 0
+      for block in section.blocks
+        case block.type
+          when 'custom_link'
+            if block.settings.enable_mega_menu
+              echo 'true'
+              break
+            endif
+        endcase
+      endfor
+    endif
+  endcapture
+
+  capture enable_account_dashboard
+    if shop.customer_accounts_enabled
+      if customer
+        echo 'true'
+      endif
+    endif
+  endcapture
+
+  capture action_lhs_exists
+    if section.settings.show_store_locator or section.settings.enable_search
+      echo 'true'
+    endif
+  endcapture
+
+  capture action_rhs_exists
+    if section.settings.show_cart or section.settings.show_customer
+      echo 'true'
+    endif
+  endcapture
+
+  capture burger_label
+    if section.settings.desktop_drawer_label != blank
+      echo section.settings.desktop_drawer_label
+      else
+        echo 'menu.burger_label' | t
+    endif
+  endcapture
+
+  capture enable_dropdown_css
+    for link in section.settings.menu.links
+      if link.links != blank
+        echo 'true'
+        break
+      endif
+    endfor
+  endcapture
+
+  capture container_class
+    if section.settings.section_full_width
+      echo 'container-fluid'
+      else
+        echo 'container'
+    endif
+  endcapture
+
+  capture sticky_behavior
+    case section.settings.enable_sticky
+      when 'on_scroll_up'
+        echo 'upwards'
+      when 'on_scroll'
+        echo 'downwards'
+      else
+        echo 'stacked'
+    endcase
+  endcapture
+
+  capture predictive_heading_size
+    case section.settings.predictive_heading_size
+      when 'heading_small'
+        echo 'h5'
+      when 'heading_x_small'
+        echo 'h6'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture predictive_heading_weight
+    case section.settings.predictive_heading_weight
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'bold'
+        echo '--fw-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+-%}
+{%- style -%}
+  .{{ section_prefix_class }}-{{ section.id }}{
+    --logo-desktop-width: {{ section.settings.logo_desktop_width }}px;
+    --logo-mobile-width: {{ section.settings.logo_mobile_width }}px;
+  }
+{%- endstyle -%}
+{%- if section.settings.enable_search -%}
+  {{- 'component-search-bar.css' | asset_url | stylesheet_tag -}}
+{%- endif -%}
+{%- if section.settings.enable_predictive_suggestions -%}
+  {{- 'component-predictive-search.css' | asset_url | stylesheet_tag -}}
+  <script src="{{- 'predictive-search.js' | asset_url -}}" defer="defer"></script>
+{%- endif -%}
+{% comment %} {%- if enable_dropdown_css == 'true' -%} {% endcomment %}
+  {{- 'component-dropdown-menu.css' | asset_url | stylesheet_tag -}}
+{% comment %} {%- endif -%} {% endcomment %}
+{%- if mega_menu_enabled == 'true' -%}
+  {{- 'component-mega-menu.css' | asset_url | stylesheet_tag -}}
+{%- endif -%}
+{{- 'page-header.css' | asset_url | stylesheet_tag -}}
+<div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }} {% if section.settings.show_bottom_bdr %}--bdr-bottom{% endif %} {% if section.settings.show_top_bdr %}--bdr-top{% endif %} --header-scheme" {% if template.name == 'index' %}{% if section.settings.make_header_transparent %}data-header-transparent="true"{% else %}data-header-transparent="false"{% endif %}{% endif %}>
+  {%- unless section.settings.enable_sticky == 'none' -%}
+    <sticky-block class="sticky-header-wrapper" data-ref-block=".page-header--fixed-area" data-body-class="page-header--fixed" data-revealed="false" data-behavior="{{ sticky_behavior }}" data-spacer="true">
+  {%- endunless -%}
+    <div class="{{ section_prefix_class }}--fixed-area">
+      <div class="{{- container_class -}}">
+        <div class="{{ section_prefix_class }}_wrapper --v-align-middle">
+          {%- if section.settings.menu.links != null -%}
+            {%- liquid
+              capture drawer_label_fw
+                case section.settings.drawer_label_fw
+                  when 'bold'
+                    echo '--fw-bold'
+                  when 'semi_bold'
+                    echo '--fw-semi-bold'
+                  when 'medium'
+                    echo '--fw-medium'
+                  when 'normal'
+                    echo '--fw-normal'
+                endcase
+              endcapture
+            -%}
+            <nav class="{{ section_prefix_class }}_col {{ section_prefix_class }}_col--menu">
+              <modal-component-toggler>
+                <button
+                  type="button"
+                  data-expanded="false"
+                  data-modal-ref="modal-menu-drawer"
+                  aria-haspopup="dialog"
+                  aria-controls="{{ section.id }}-modal-menu-drawer"
+                  class="mobile-menu-opener {{ drawer_label_fw }}"
+                  aria-label="{{- burger_label -}}"
+                >
+                  <span class="mobile-menu_toggle" aria-hidden="true"></span>
+                  <span class="btn-icn-ixi_wrapper {{ section_prefix_class }}_burger-icn">
+                    {%- render 'icons-data', width: 29, height: 29, use_icon: true, icon_reference: 'barlines' -%}
+                  </span>
+                  <span class="{% unless section.settings.enable_desktop_drawer or section.settings.desktop_drawer_label != blank %}visually-hidden{% else %}mobile-menu_label{% endunless %}">
+                    {{- burger_label -}}
+                  </span>
+                </button>
+              </modal-component-toggler>
+              <modal-component
+                data-modal="modal-menu-drawer"
+                data-container="body"
+              >
+                <div
+                  class="modal modal-component --drawer modal-component--menu-drawer {{ menu_drawer_scheme_class }}"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="modal-menu-drawer-heading"
+                  aria-describedby="{{ section.id }}-modal-menu-drawer"
+                  tabindex="-1"
+                >
+                  <div class="modal-component_wrapper" id="{{ section.id }}-modal-menu-drawer">
+                    <div class="modal-component_body">
+                      <div class="modal-component_head">
+                        <strong class="h6 modal-component_heading mty {{ drawer_label_fw }}" id="modal-menu-drawer-heading">
+                          {{- burger_label -}}
+                        </strong>
+                        <modal-component-toggler>
+                          <button
+                            type="button"
+                            data-expanded="true"
+                            data-toggle-attribute="false"
+                            data-modal-ref="modal-menu-drawer"
+                            class="btn-icn-ixi modal-component_btn-close"
+                          >
+                            <span class="btn-icn-ixi_wrapper">
+                              {%- render 'icons-data', width: 14, height: 14, use_icon: true, icon_reference: 'cross' -%}
+                              <span class="visually-hidden">
+                                {{- 'accessibility.close' | t -}}
+                              </span>
+                            </span>
+                          </button>
+                        </modal-component-toggler>
+                      </div>
+                      <div class="modal-component_content">
+                        <ul class="list-unstyled main-navigation --word-break" style="--fw-menu-items: {{ section.settings.links_font_weight }};">
+                          {%- for link in section.settings.menu.links -%}
+                            {%- liquid
+                              assign link_title = link.title | escape
+                              assign link_handle = link.title | handle | escape
+                            -%}
+                            {%- if link.links != blank -%}
+                              {%- render 'menu-dropdown', link: link, link_title: link_title, link_handle: link_handle, index: forloop.index, drawer_label_fw: drawer_label_fw -%}
+                              {%- else -%}
+                                <li class="main-navigation_item">
+                                  <a href="{{- link.url -}}" class="main-navigation_link {% if link.current %}main-navigation_link--active{% endif %}" {% if link.current %}aria-current="{{- 'page.current_label' | t -}}"{% endif %}>
+                                    {{- link_title -}}
+                                  </a>
+                                </li>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </modal-component>
+            </nav>
+            {%- else -%}
+              <div class="{{ section_prefix_class }}_col --empty {{ section_prefix_class }}_col--menu">&nbsp;</div>
+          {%- endif -%}
+          <div class="{{ section_prefix_class }}_col {{ section_prefix_class }}_col--actions">
+            <div class="{{ section_prefix_class }}_box-wrap widget--styles --v-align-middle">
+              {%- if action_lhs_exists == 'true' -%}
+                <div class="{{ section_prefix_class }}_box-col {{ section_prefix_class }}_box-col--left">
+                  <ul class="icns-list list-unstyled --v-align-middle">
+                    {%- if section.settings.show_store_locator -%}
+                      <li class="icns-list_item {{ section_prefix_class }}_icns-items">
+                        <modal-component-toggler class="{{ section_prefix_class }}_modal-toggler">
+                          <button
+                            type="button"
+                            class="btn-icn-ixi"
+                            data-expanded="false"
+                            aria-haspopup="dialog"
+                            data-modal-ref="modal-store-locator"
+                            aria-controls="modal-store-locator"
+                          >
+                            <i class="btn-icn-ixi_wrapper">
+                              {%- render 'icons-data', width: 22, height: 22, use_icon: true, icon_reference: 'pin-area'-%}
+                              <span class="visually-hidden">
+                                {{- 'store.toggler_label' | t -}}
+                              </span>
+                            </i>
+                          </button>
+                        </modal-component-toggler>
+                      </li>
+                    {%- endif -%}
+                    {%- if section.settings.enable_search -%}
+                      <li class="icns-list_item {{ section_prefix_class }}_icns-items">
+                        <strong id="search-bar-heading" class="visually-hidden">{{- 'search.label' | t -}}</strong>
+                        <dropdown-component class="{{ section_prefix_class }}_search-dropdown" data-focus-form="true">
+                          <button
+                            type="button"
+                            class="dropdown-component_opener search-bar_dropdown-opener btn-icn-ixi {{ section_prefix_class }}_search-opener"
+                            aria-expanded="false"
+                            aria-controls="search-bar"
+                            aria-describedby="search-bar-heading"
+                          >
+                            <i class="btn-icn-ixi_wrapper">
+                              {%- render 'icons-data', width: 22, height: 22, use_icon: true, icon_reference: 'search' -%}
+                              <span class="visually-hidden">
+                                {{- 'search.toggler_label' | t -}}
+                              </span>
+                            </i>
+                          </button>
+                          <div class="dropdown-component_wrapper search-bar_dropdown-wrapper" id="search-bar">
+                            {%- render 'search-bar', predictive: section.settings.enable_predictive_suggestions, predictive_collection: section.settings.predictive_collection, heading_size: predictive_heading_size, heading_weight: predictive_heading_weight, predictive_heading: section.settings.predictive_heading -%}
+                          </div>
+                        </dropdown-component>
+                      </li>
+                    {%- endif -%}
+                  </ul>
+                </div>
+                {%- else -%}
+                  <div class="{{ section_prefix_class }}_box-col {{ section_prefix_class }}_box-col--left">&nbsp;</div>
+              {%- endif -%}
+              <div class="{{ section_prefix_class }}_box-col {{ section_prefix_class }}_box-col--center">
+                <div class="logo {{ section_prefix_class }}_logo">
+                  {%- if request.page_type == 'index' -%}
+                    <h1 class="logo_heading h6 mty">
+                  {%- endif -%}
+                      <a href="{{ routes.root_url }}" class="logo_link --word-break">
+                        {%- liquid
+                          assign logo_alt = section.settings.logo.alt | default: shop.name | escape
+                          capture logo_height
+                            assign height = section.settings.logo_desktop_width | divided_by: section.settings.logo.aspect_ratio
+                            echo height | round
+                          endcapture
+                          capture logo_mob_height
+                            assign height = section.settings.logo_mobile_width | divided_by: section.settings.logo.aspect_ratio
+                            echo height | round
+                          endcapture
+                        -%}
+                        {%- if section.settings.logo != blank -%}
+                          {%- capture d_sizes -%}
+                            (max-width: {{ section.settings.logo_desktop_width | times: 2 }}px) 50vw, {{ section.settings.logo_desktop_width }}px
+                          {%- endcapture -%}
+                          {%- capture m_sizes -%}
+                            (max-width: {{ section.settings.logo_mobile_width | times: 2 }}px) 50vw, {{ section.settings.logo_mobile_width }}px
+                          {%- endcapture -%}
+                          {%- capture d_widths -%}
+                            {{ section.settings.logo_desktop_width }}, {{ section.settings.logo_desktop_width | times: 1.5 | round }}, {{ section.settings.logo_desktop_width | times: 2 }}
+                          {%- endcapture -%}
+                          {%- capture m_widths -%}
+                            {{ section.settings.logo_mobile_width }}, {{ section.settings.logo_mobile_width | times: 1.5 | round }}, {{ section.settings.logo_mobile_width | times: 2 }}
+                          {%- endcapture -%}
+                          {{- section.settings.logo | image_url: width: 532 | image_tag: class: '--desktop-img', widths: d_widths, height: logo_height, width: section.settings.logo_desktop_width, alt: logo_alt, sizes: d_sizes, preload: true -}}
+                          {{- section.settings.logo | image_url: width: 532 | image_tag: class: '--mobile-img', widths: m_widths, height: logo_mob_height, width: section.settings.logo_mobile_width, alt: logo_alt, sizes: m_sizes, preload: true -}}
+                          {%- else -%}
+                            {{- shop.name -}}
+                        {%- endif -%}
+                      </a>
+                  {%- if request.page_type == 'index' -%}
+                    </h1>
+                  {%- endif -%}
+                </div>
+              </div>
+              {%- if action_rhs_exists == 'true' -%}
+                <div class="{{ section_prefix_class }}_box-col {{ section_prefix_class }}_box-col--right">
+                  <ul class="icns-list list-unstyled --v-align-middle">
+                    {%- if section.settings.show_cart -%}
+                      <li class="icns-list_item {{ section_prefix_class }}_icns-items">
+                        {%- if cart_view == 'page' -%}
+                          <a href="{{- routes.cart_url -}}" class="btn-icn-ixi" data-cart-bubble="">
+                            <i class="btn-icn-ixi_wrapper">
+                              {%- liquid
+                                render 'icons-data', width: 22, height: 22, use_icon: true, icon_reference: 'cart'
+                                render 'cart-bubble'
+                                render 'cart-text'
+                              -%}
+                            </i>
+                          </a>
+                          {%- else -%}
+                            <modal-component-toggler>
+                              <button
+                                type="button"
+                                class="btn-icn-ixi btn-icn-cart {{ section_prefix_class }}_menu-link"
+                                data-cart-bubble=""
+                                data-expanded="false"
+                                aria-haspopup="dialog"
+                                data-modal-ref="modal-cart-drawer"
+                                aria-controls="modal-cart-drawer"
+                              >
+                                <i class="btn-icn-ixi_wrapper">
+                                  {%- liquid
+                                    render 'icons-data', width: 22, height: 22, use_icon: true, icon_reference: 'cart'
+                                    render 'cart-bubble'
+                                    render 'cart-text'
+                                  -%}
+                                </i>
+                              </button>
+                            </modal-component-toggler>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
+                    {%- if section.settings.show_customer -%}
+                      {%- if shop.customer_accounts_enabled -%}
+                        {%- if enable_account_dashboard == 'true' -%}
+                          <li class="icns-list_item {{ section_prefix_class }}_icns-items">
+                            <a href="{{- routes.account_logout_url -}}" class="btn-icn-ixi">
+                              <i class="btn-icn-ixi_wrapper">
+                                {%- render 'icons-data', width: 22, height: 22, use_icon: true, icon_reference: 'user' -%}
+                                <span class="visually-hidden">
+                                  {{- 'customer.logout_label' | t -}}
+                                </span>
+                              </i>
+                            </a>
+                          </li>
+                          {%- else -%}
+                            <li class="icns-list_item {{ section_prefix_class }}_icns-items --user-icn">
+                              <a href="{{- routes.account_login_url -}}" class="btn-icn-ixi">
+                                <i class="btn-icn-ixi_wrapper">
+                                  {%- render 'icons-data', width: 22, height: 22, use_icon: true, icon_reference: 'user' -%}
+                                  <span class="visually-hidden">
+                                    {{- 'customer.login_label' | t -}}
+                                  </span>
+                                </i>
+                              </a>
+                            </li>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  </ul>
+                </div>
+                {%- else -%}
+                  <div class="{{ section_prefix_class }}_box-col --empty {{ section_prefix_class }}_box-col--right">&nbsp;</div>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- if custom_links_exists == 'true' -%}
+            <nav class="{{ section_prefix_class }}_col {{ section_prefix_class }}_col--links">
+              <div class="{{ section_prefix_class }}_mega-menu-mobile">
+                <modal-component-toggler>
+                  <button
+                    type="button"
+                    data-expanded="false"
+                    data-modal-ref="mega-menu-drawer"
+                    aria-haspopup="dialog"
+                    aria-controls="{{ section.id }}-mega-menu-drawer"
+                    class="mobile-mega-menu-opener mobile-menu-opener"
+                  >
+                    <span class="mobile-mega-menu_toggle" aria-hidden="true"></span>
+                    <span class="btn-icn-ixi_wrapper {{ section_prefix_class }}_burger-icn">
+                      {%- render 'icons-data', width: 29, height: 29, use_icon: true, icon_reference: 'mega-menu' -%}
+                    </span>
+                    <span class="visually-hidden">
+                      {{ 'menu.mega_menu' | t }}
+                    </span>
+                  </button>
+                </modal-component-toggler>
+                <modal-component
+                  data-modal="mega-menu-drawer"
+                  data-container="body"
+                >
+                  <div
+                    class="modal modal-component --drawer modal-component--mega-menu-drawer {{ mega_menu_scheme_class }}"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-mega-menu-drawer-heading"
+                    aria-describedby="{{ section.id }}-mega-menu-drawer"
+                    tabindex="-1"
+                  >
+                    <div class="modal-component_wrapper mega-menu--wrapper" id="{{ section.id }}-mega-menu-drawer">
+                      <div class="modal-component_body">
+                        <div class="modal-component_head --desktop-head">
+                          <strong class="h6 modal-component_heading mty" id="modal-mega-menu-drawer-heading">
+                            {{ 'menu.mega_menu' | t }}
+                          </strong>
+                          <modal-component-toggler>
+                            <button
+                              type="button"
+                              data-expanded="true"
+                              data-toggle-attribute="false"
+                              data-modal-ref="mega-menu-drawer"
+                              class="btn-icn-ixi modal-component_btn-close"
+                            >
+                              <span class="btn-icn-ixi_wrapper">
+                                {%- render 'icons-data', width: 14, height: 14, use_icon: true, icon_reference: 'cross' -%}
+                                <span class="visually-hidden">
+                                  {{- 'accessibility.close' | t -}}
+                                </span>
+                              </span>
+                            </button>
+                          </modal-component-toggler>
+                        </div>
+                        <div class="modal-component_content">
+                          <ul class="list-unstyled main-navigation custom-links --word-break">
+                            {%- for block in section.blocks -%}
+                              {%- liquid
+                                capture link_label_fw
+                                  case block.settings.link_weight
+                                    when 'bold'
+                                      echo '--fw-bold'
+                                    when 'semi_bold'
+                                      echo '--fw-semi-bold'
+                                    when 'medium'
+                                      echo '--fw-medium'
+                                    when 'normal'
+                                      echo '--fw-normal'
+                                  endcase
+                                endcapture
+                              -%}
+                              {%- unless block.settings.enable_mega_menu -%}
+                                <li class="custom-links_item {{ link_label_fw }}" {{ block.shopify_attributes }}>
+                                  <a {% if block.settings.url != blank %}href="{{- block.settings.url -}}" {% if block.settings.open_new_window_link %}target="_blank"{% endif %} {% else %} aria-disabled="true" {% endif %}>
+                                    {{- block.settings.heading -}}
+                                  </a>
+                                </li>
+                                {%- else -%}
+                                  {%- render 'mega-menu-dropdown', block: block, index: forloop.index, link_label_fw: link_label_fw -%}
+                              {%- endunless -%}
+                            {%- endfor -%}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </modal-component>
+              </div>
+            </nav>
+            {%- else -%}
+              <div class="{{ section_prefix_class }}_col --empty {{ section_prefix_class }}_col--links">&nbsp;</div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- unless section.settings.enable_sticky == 'none' -%}
+    </sticky-block>
+  {%- endunless -%}
+</div>
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "tag": "header",
+  "class": "page-main-header",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "make_header_transparent",
+      "label": "t:sections.header.settings.make_transparent.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "t:sections.header.settings.show_cart.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_customer",
+      "label": "t:sections.header.settings.show_customer.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_store_locator",
+      "label": "t:sections.header.settings.show_store_locator.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.main_menu.content"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:menu.label",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "links_font_weight",
+      "label": "t:menu.font_weight.label",
+      "options": [
+        {
+          "value": "700",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "600",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "500",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "400",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_drawer_color_scheme",
+      "default": "scheme2",
+      "label": "t:sections.header.settings.main_menu.color_scheme.label"
+    },
+    {
+      "type": "text",
+      "id": "desktop_drawer_label",
+      "label": "t:sections.header.settings.main_menu.collapsed.text.label",
+      "default": "Main menu"
+    },
+    {
+      "type": "select",
+      "id": "drawer_label_fw",
+      "label": "t:sections.header.settings.main_menu.collapsed.text.weight.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "semi_bold"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_drawer_banner",
+      "label": "t:sections.header.settings.main_menu.collapsed.banner.label",
+      "info": "t:sections.header.settings.main_menu.collapsed.banner.info"
+    },
+    {
+      "type": "url",
+      "id": "desktop_drawer_banner_link",
+      "label": "t:sections.header.settings.main_menu.collapsed.banner.link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_new_window",
+      "label": "t:target_blank.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:site_logo.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:image.label",
+      "info": "t:site_logo.info"
+    },
+    {
+      "type": "range",
+      "id": "logo_desktop_width",
+      "label": "t:image.width.desktop.label",
+      "min": 100,
+      "max": 200,
+      "step": 1,
+      "default": 133,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "logo_mobile_width",
+      "label": "t:image.width.mobile.label",
+      "min": 90,
+      "max": 150,
+      "step": 1,
+      "default": 133,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.search.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "t:sections.header.settings.search.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_predictive_suggestions",
+      "label": "t:sections.header.settings.search.predictive.label",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "label": "t:collection_list.sigular.label",
+      "id": "predictive_collection"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "predictive_heading",
+      "label": "t:heading.label",
+      "default": "Trending Items"
+    },
+    {
+      "type": "select",
+      "id": "predictive_heading_size",
+      "label": "t:sizes.heading.label",
+      "options": [
+        {
+          "value": "heading_small",
+          "label": "t:sizes.heading.options.opt_5.label"
+        },
+        {
+          "value": "heading_x_small",
+          "label": "t:sizes.heading.options.opt_6.label"
+        }
+      ],
+      "default": "heading_small"
+    },
+    {
+      "type": "select",
+      "id": "predictive_heading_weight",
+      "label": "t:weight.heading.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.mega_menu.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "mega_menu_color_scheme",
+      "default": "scheme1",
+      "label": "t:sections.header.settings.mega_menu.color"
+    },
+    {
+      "type": "header",
+      "content": "t:layout.content"
+    },
+    {
+      "type": "select",
+      "id": "enable_sticky",
+      "label": "t:sections.header.settings.sticky.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sticky.options.opt_1.label"
+        },
+        {
+          "value": "on_scroll_up",
+          "label": "t:sticky.options.opt_3.label"
+        },
+        {
+          "value": "on_scroll",
+          "label": "t:sticky.options.opt_4.label"
+        }
+      ],
+      "default": "on_scroll"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_bdr",
+      "label": "t:top_bdr.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_bdr",
+      "label": "t:bottom_bdr.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "section_full_width",
+      "label": "t:sections.full_width.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "default": "scheme2",
+      "label": "t:color_scheme.label"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "t:sections.header.blocks.custom_link.name",
+      "type": "custom_link",
+      "limit": 15,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.header.blocks.custom_link.label",
+          "default": "Link"
+        },
+        {
+          "type": "select",
+          "id": "link_weight",
+          "label": "t:weight.label",
+          "options": [
+            {
+              "value": "bold",
+              "label": "t:weight.heading.options.opt_1.label"
+            },
+            {
+              "value": "semi_bold",
+              "label": "t:weight.heading.options.opt_5.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:weight.heading.options.opt_2.label"
+            },
+            {
+              "value": "normal",
+              "label": "t:weight.heading.options.opt_3.label"
+            }
+          ],
+          "default": "semi_bold"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "t:link.label",
+          "info": "t:sections.header.blocks.custom_link.info"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_window_link",
+          "label": "t:target_blank.label",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:sections.header.blocks.custom_link.settings.mega_menu.content"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_mega_menu",
+          "label": "t:sections.header.blocks.custom_link.settings.mega_menu.label",
+          "default": false
+        },
+        {
+          "type": "collection_list",
+          "label": "t:collection_list.label",
+          "id": "mega_collections",
+          "limit": 10
+        },
+        {
+          "type": "header",
+          "content": "t:scroll.content"
+        },
+        {
+          "type": "range",
+          "id": "marquee_speed",
+          "label": "t:scroll.settings.speed.label",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "default": 15,
+          "unit": "sec"
+        },
+        {
+          "type": "select",
+          "id": "marquee_direction",
+          "label": "t:scroll.settings.direction.label",
+          "options": [
+            {
+              "value": "marquee_backward",
+              "label": "t:scroll.settings.direction.options.opt_3.label"
+            },
+            {
+              "value": "marquee_forward",
+              "label": "t:scroll.settings.direction.options.opt_4.label"
+            }
+          ],
+          "default": "marquee_backward"
+        },
+        {
+          "type": "checkbox",
+          "label": "t:scroll.settings.on_hover.label",
+          "id": "marquee_on_hover",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:sections.header.blocks.custom_link.settings.mega_menu.banners.one.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_i",
+          "label": "t:image.label",
+          "info": "t:sections.header.blocks.custom_link.settings.mega_menu.banners.info"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_i",
+          "label": "t:link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_window_i",
+          "label": "t:target_blank.label",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:sections.header.blocks.custom_link.settings.mega_menu.banners.two.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_ii",
+          "label": "t:image.label",
+          "info": "t:sections.header.blocks.custom_link.settings.mega_menu.banners.info"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_ii",
+          "label": "t:link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_window_ii",
+          "label": "t:target_blank.label",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:sections.header.blocks.custom_link.settings.mega_menu.banners.three.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_iii",
+          "label": "t:image.label",
+          "info": "t:sections.header.blocks.custom_link.settings.mega_menu.banners.info"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_iii",
+          "label": "t:link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_window_iii",
+          "label": "t:target_blank.label",
+          "default": false
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

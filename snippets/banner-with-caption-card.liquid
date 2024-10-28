@@ -1,0 +1,109 @@
+{%- comment -%}
+  renders banner-with-caption on section templates
+  usage
+    {%- render 'banner-with-caption', figure: block, index: forloop.index -%}
+{%- endcomment -%}
+{% liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture image_alt
+    if figure.settings.heading != blank
+      echo figure.settings.heading
+      else
+       echo 'promotion_banners.alt_label' | t: index: index
+    endif
+  endcapture
+
+  capture heading_size
+    case figure.settings.caption_heading_size
+      when 'heading_xx_large'
+        echo 'h1'
+      when 'heading_x_large'
+        echo 'h2'
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture blend_overlay
+    if figure.settings.overlay_blend
+      echo 'blend'
+      else
+        echo 'not-blend'
+    endif
+  endcapture
+%}
+{%- if figure.settings.link != blank -%}
+  <a class="banner-with-caption-card {{ blend_overlay }} scheme scheme--{{ figure.settings.block_color_scheme }}" href="{{- figure.settings.link -}}" {% if figure.settings.open_new_window %}target="_blank"{% endif %} style="--overlay-bg: {{ figure.settings.background }}">
+    {%- if figure.settings.image != blank -%}
+      {{- figure.settings.image | image_url: width: 1445 | image_tag: alt: image_alt,
+      class: 'object-fit object-fit--absolute',  loading: loading_attr, widths: '550, 1445', sizes: '(max-width: 767px) 550w, 1445w' -}}
+      {% else %}
+        {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    {%- endif -%}
+    <span class="visually-hidden">{{- image_alt -}}</span>
+    <div class="main-content {% if figure.settings.caption_alignment == 'justify' %}--content-justify{% else %}--content-center{% endif %}">
+      <div class="banner-with-caption-card_header {% if figure.settings.caption_alignment == 'justify' %}--caption-top-left{% else %}--caption-center{% endif %}">
+        {%- if figure.settings.caption_heading != blank -%}
+          <div class="banner-with-caption-card_heading {{ heading_size }} --word-break">
+            {{- figure.settings.caption_heading -}}
+          </div>
+        {%- endif -%}
+        {%- if figure.settings.caption_description != blank -%}
+          <div class="banner-with-caption-card_description --word-breakss mty text-size--{{ figure.settings.description_text_size }}">
+            <p>{{- figure.settings.caption_description -}}</p>
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="banner-with-caption-card_btn-position {% if figure.settings.caption_alignment == 'justify' %}--btn-bottom-right{% else %}--btn-center{% endif %}">
+        <div class="banner-with-caption-card_button button button--{{ figure.settings.type }}"
+        >
+          <i class="button_icn">
+            {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'right-arrow' -%}
+          </i>
+        </div>
+      </div>
+    </div>
+  </a>
+  {%- else -%}
+    <figure class="banner-with-caption-card {{ blend_overlay }} scheme scheme--{{ figure.settings.block_color_scheme }}" style="--overlay-bg: {{ figure.settings.background }}">
+      {%- if figure.settings.image != blank -%}
+        {{- figure.settings.image | image_url: width: 1445 | image_tag: alt: image_alt,
+        class: 'object-fit object-fit--absolute',  loading: loading_attr, widths: '550, 1445', sizes: '(max-width: 767px) 550w, 1445w' -}}
+        {% else %}
+          {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      {%- endif -%}
+      <div class="main-content {% if figure.settings.caption_alignment == 'justify' %}--content-justify{% else %}--content-center{% endif %}">
+        <div class="banner-with-caption-card_header {% if figure.settings.caption_alignment == 'justify' %}--caption-top-left{% else %}--caption-center{% endif %}">
+          {%- if figure.settings.caption_heading != blank -%}
+            <div class="banner-with-caption-card_heading {{ heading_size }} --word-break">
+              {{- figure.settings.caption_heading -}}
+            </div>
+          {%- endif -%}
+          {%- if figure.settings.caption_description != blank -%}
+            <div class="banner-with-caption-card_description --word-breakss mty text-size--{{ figure.settings.description_text_size }}">
+              <p>{{- figure.settings.caption_description -}}</p>
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="banner-with-caption-card_btn-position {% if figure.settings.caption_alignment == 'justify' %}--btn-bottom-right{% else %}--btn-center{% endif %}">
+          <div class="banner-with-caption-card_button button button--{{ figure.settings.type }}"
+          >
+            <i class="button_icn">
+              {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'right-arrow' -%}
+            </i>
+          </div>
+        </div>
+      </div>
+    </figure>
+{%- endif -%}

@@ -1,0 +1,30 @@
+.section-grid{
+  --desktop-columns-count: 1;
+}
+
+.chead{
+  margin-bottom: 60px;
+}
+
+.grid_col--empty{
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  width: 100%;
+}
+
+.collection-products_icn{
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .section-grid{
+    --desktop-columns-count: 2;
+  }
+}
+
+@media (min-width: 1200px){
+  .section-grid{
+    --desktop-columns-count: var(--columns-count);
+  }
+}

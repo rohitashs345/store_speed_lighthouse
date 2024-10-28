@@ -1,0 +1,127 @@
+{%- comment -%}
+  renders line item of cart
+  usage
+    {% render 'locator-row', row: block, index: forloop.index %}
+{%- endcomment -%}
+
+{%- liquid
+  capture placeholder_image
+    if index > 3
+      echo 'hero-apparel-1'
+      else
+        echo 'hero-apparel-' | append: index
+    endif
+  endcapture
+
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture heading_size
+    case row.settings.heading_size
+      when 'heading_x_large'
+        echo 'h2'
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      when 'heading_small'
+        echo 'h5'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture heading_weight
+    case row.settings.heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture description_weight
+    case row.settings.description_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+-%}
+<article class="locator-row_row locator-row-{{ section.id }}-{{ row.id }}" {{ row.shopify_attributes }}>
+  <div class="locator-row_col locator-row_col-description widget--styles">
+    <div class="locator-row_content-block {{ description_weight }} text-size--{{ row.settings. description_text_size }}">
+      {%- if row.settings.heading != blank -%}
+        <header class="heading-head">
+          <h2 class="locator-row_heading {{ heading_size }} {{ heading_weight }} --h-anchor-none mty --word-break">
+            {{- row.settings.heading -}}
+          </h2>
+        </header>
+      {%- endif -%}
+      {%- if row.settings.phone_hour_description != blank -%}
+        <div class="locator-row_store-hours-section">
+          <h3 class="locator-row_store-hours --word-break mty h6">
+            {{- 'store_locator.hours.title' | t -}}
+          </h3>
+          <div class="locator-row_store-time --word-break">
+            {{- row.settings.phone_hour_description -}}
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if row.settings.working_hours != blank -%}
+        <div class="locator-row_address-section">
+          <h3 class="locator-row_address --word-break mty h6">
+            {{- 'store_locator.live_chat.title' | t -}}
+          </h3>
+          <div class="locator-row_address-location --word-break">
+            {{- row.settings.working_hours -}}
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if row.settings.section_description != blank -%}
+        <div class="locator-row_description --word-break mty">
+          {{- row.settings.section_description -}}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="locator-row_image-wrap">
+      {%- if row.settings.image != blank -%}
+        {%- liquid
+          capture image_alt
+            if row.settings.image.alt != blank
+              echo row.settings.image.alt
+              else
+                echo row.settings.heading| escape
+            endif
+          endcapture
+        -%}
+        {{- row.settings.image | image_url: width: 1360 | image_tag: class: 'object-fit object-fit--absolute', loading: 'lazy', widths: '680, 1360', sizes: '(max-width: 767px) 680vw, 1360vw', alt: image_alt -}}
+      {%- else -%}
+          {{- placeholder_image | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="locator-row_col locator-row_col--iframe">
+    <div class="locator-row--iframe">
+      {%- if row.settings.map_iframe != blank -%}
+        {{- row.settings.map_iframe -}}
+        {%- else -%}
+          {{- 'hero-apparel-2' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      {%- endif -%}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,8 @@
+.rating-list{
+  display: flex;
+  width: 100%;
+  line-height: 0;
+  gap: 3px;
+  color: var(--section-warning-color);
+  margin-bottom: 10px;
+}

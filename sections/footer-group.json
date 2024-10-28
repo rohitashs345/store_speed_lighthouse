@@ -1,0 +1,45 @@
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "footer_top": {
+      "type": "footer-top",
+      "settings": {
+      },
+      "blocks": {
+        "menu_1": {
+          "type": "menu",
+          "settings": {
+            "heading": ""
+          }
+        },
+        "menu_2": {
+          "type": "menu",
+          "settings": {
+            "heading": ""
+          }
+        },
+        "menu_3": {
+          "type": "menu",
+          "settings": {
+            "heading": ""
+          }
+        }
+      },
+      "block_order": [
+        "menu_1",
+        "menu_2",
+        "menu_3"
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "footer_top",
+    "footer"
+  ]
+}

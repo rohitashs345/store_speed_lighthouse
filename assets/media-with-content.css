@@ -1,0 +1,224 @@
+.media-with-content{
+  --q-align-value: var(--mobile-q-align);
+}
+
+.media-with-content .container-fluid{
+  --cp-spacer-left: 0;
+  --cp-spacer-right: 0;
+}
+
+.media-with-content_wrapper{
+  border-radius: 0;
+}
+
+.media-with-content_wrapper--no-box,
+.--image-full-radius{
+  border-radius: var(--section-radius);
+}
+
+.media-with-content .splide__slide{
+  padding: 4px;
+}
+
+.media-with-content .video-card .video-card_media {
+  min-height: 150px;
+}
+
+.media-with-content .video-card {
+  height: 100%;
+}
+
+.media-with-content_wrapper.--row-reverse{
+  flex-direction: row-reverse;
+}
+
+.media-with-content_image-wrap{
+  overflow: hidden;
+  /* min-height: 150px; */
+  padding-top: 50%;
+}
+
+.media-with-content_image-wrap img{
+  border-radius: inherit;
+}
+
+strong.h5.media-with-content_caption-title,
+strong.h4.media-with-content_caption-title,
+strong.h6.media-with-content_caption-title,
+.media-with-content_content-icn{
+  display: block;
+}
+
+strong.h5.media-with-content_caption-title,
+strong.h4.media-with-content_caption-title,
+strong.h6.media-with-content_caption-title{
+  margin-bottom: 17px;
+  margin-top: 0;
+}
+
+.media-with-content_heading {
+  margin-bottom: 23px;
+}
+
+.media-with-content_foot {
+  margin-top: 25px;
+}
+
+.media-with-content .splide-controls{
+  gap: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  margin-top: 20px;
+  --ixi-padding-x: 6px;
+  --ixi-padding-y: 6px;
+}
+
+.media-with-content_col-description{
+  padding: 25px 30px;
+}
+
+.media-with-content_content-icn,
+.media-with-content_content{
+  width: 100%;
+}
+
+.media-with-content.--remove-sliders .splide-controls{
+  display: none;
+}
+
+.media-with-content_link-icn {
+  font-size: 2.2rem;
+  line-height: 2.6rem;
+  font-family: var(--font-headings-family);
+}
+
+@media (min-width: 576px){
+  .media-with-content_col-description{
+    padding: 25px 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  .media-with-content{
+    --q-align-value: var(--desktop-q-align);
+  }
+
+  .media-with-content_wrapper{
+    position: relative;
+    overflow: hidden;
+  }
+
+  .--row-reverse .media-with-content_col-media{
+    right: 0;
+  }
+
+  .--row .media-with-content_col-media{
+    left: 0;
+  }
+
+  .media-with-content_col-media{
+    width: 50%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 5px;
+  }
+
+  .--row-reverse .media-with-content_col-description{
+    margin-right: auto;
+  }
+
+  .--row .media-with-content_col-description{
+    margin-left: auto;
+  }
+  
+  .media-with-content_col-description{
+    padding: 20px 50px;
+    max-width: 420px;
+    display: flex;
+  }
+
+  .media-with-content_col-description.--content-center{
+    max-width: 100%;
+  }
+
+  .media-with-content splide-slider,
+  .media-with-content .splide,
+  .media-with-content .splide__track,
+  .media-with-content .splide__list,
+  .media-with-content .splide__slide,
+  .media-with-content_image-wrap {
+    height: 100%;
+  }
+
+  .media-with-content_image-wrap,
+  .media-with-content .video-card {
+    padding-top: 0;
+  }
+  
+  .media-with-content .splide-controls{
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    margin-top: 42px;
+    --ixi-padding-x: 9px;
+    --ixi-padding-y: 9px;
+  }
+  
+  .media-with-content_col-media:hover .splide-controls{
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .--small-content{
+    min-height: 420px;
+  }
+
+  .--medium-content{
+    min-height: 550px;
+  }
+
+  .--vh-content{
+    min-height: 700px;
+  }
+}
+
+@media (min-width: 992px){
+  .media-with-content_col-description{
+    max-width: calc(550px - 30px);
+  }
+
+  .--small-content{
+    min-height: 470px;
+  }
+
+  .--medium-content{
+    min-height: 600px;
+  }
+
+  .--vh-content{
+    min-height: 800px;
+  }
+}
+
+@media (min-width: 1200px){
+  .media-with-content_col-description{
+    max-width: calc(650px - 30px);
+  }
+
+  .--small-content{
+    min-height: 500px;
+  }
+
+  .--medium-content{
+    min-height: 650px;
+  }
+
+  .--vh-content{
+    min-height: 900px;
+  }
+}

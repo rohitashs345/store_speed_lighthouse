@@ -1,0 +1,83 @@
+{%- comment -%}
+  renders product variant count
+  usage
+    {%- render 'share-button', share_link: share_url, share_title: article.title, product: null -%}
+{%- endcomment -%}
+{%- unless share_title == blank -%}
+  <strong id="share-button-heading-{{ section.id }}-{{ product.id }}" class="visually-hidden">
+    {{- 'share_button.title' | t: title: share_title -}}
+  </strong>
+  <dropdown-component data-share="true" class="dropdown-component--share">
+    <button
+      type="button"
+      class="dropdown-component_opener {% if btn_ixi %}btn-icn-ixi{% endif %} share-button__button"
+      aria-expanded="false"
+      aria-controls="share-button-dropdown-{{ section.id }}-{{ product.id }}"
+      aria-describedby="share-button-heading-{{ section.id }}-{{ product.id }}"
+      {% if btn_ixi %}data-tooltip="{{- 'share_button.label' | t -}}"{% endif %}
+    >
+      {%- if btn_ixi -%}
+        <span class="btn-icn-ixi_wrapper">
+          {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'share-link' -%}
+          <span class="visually-hidden">
+            {{- 'share_button.title' | t: title: share_title -}}
+          </span>
+        </span>
+      {%- endif -%}
+    </button>
+    <div class="dropdown-component_wrapper share-button_wrapper" id="share-button-dropdown-{{ section.id }}-{{ product.id }}">
+      <div class="share-content_wrapper">
+        <div class="form-group">
+          <span class="share-button__message hidden shareMessage" role="status"></span>
+          <input
+            type="text"
+            class="shareUrl"
+            value="{{- share_link -}}"
+            placeholder="{{- 'share_button.share_url' | t -}}"
+            onclick="this.select();"
+            readonly
+            title="{{- 'share_button.title' | t: title: share_title -}}"
+            id="shareUrl-{{ section.id }}-{{ product.id }}"
+          >
+          <label class="field__label" for="shareUrl-{{ section.id }}-{{ product.id }}">
+            {{- 'share_button.share_url' | t -}}
+          </label>
+        </div>
+        <button class="btn-icn-ixi share-button__close hidden">
+          <span class="btn-icn-ixi_wrapper">
+            {%- render 'icons-data', width: 13, height: 13, use_icon: true, icon_reference: 'cross' -%}
+            <span class="visually-hidden">
+              {{- 'share_button.close' | t -}}
+            </span>
+            </span>
+        </button>
+        <button class="btn-icn-ixi share-button__copy" type="button">
+          <span class="btn-icn-ixi_wrapper">
+            {% render 'icons-data', width: 16, height: 16, use_icon: true, icon_reference: 'clipboard' %}
+            <span class="visually-hidden">
+              {{- 'share_button.copy_to_clipboard' | t -}}
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </dropdown-component>
+  {%- else -%}
+    <div class="dropdown-component--share">
+      <button
+        type="button"
+        class="dropdown-component_opener {% if btn_ixi %}btn-icn-ixi{% endif %} share-button__button"
+        disabled
+        {% if btn_ixi %}data-tooltip="{{- 'share_button.label' | t -}}"{% endif %}
+      >
+        {%- if btn_ixi -%}
+          <span class="btn-icn-ixi_wrapper">
+            {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'share-link' -%}
+            <span class="visually-hidden">
+              {{- 'share_button.title' | t: title: share_title -}}
+            </span>
+          </span>
+        {%- endif -%}
+      </button>
+    </div>
+{%- endunless -%}

@@ -1,0 +1,32 @@
+.main-collections {
+  --desktop-columns-count: 1;
+  --q-align-value: var(--mobile-q-align);
+}
+
+.main-collections_description{
+  --mt-top: 24px;
+}
+
+.main-collections .heading-head{
+  max-width: 943px;
+  margin: 0 auto 39px;
+}
+
+@media (min-width: 768px){
+  .main-collections{
+    --desktop-columns-count: 3;
+    --q-align-value: var(--desktop-q-align);
+  }
+}
+
+@media (min-width: 992px){
+  .main-collections{
+    --desktop-columns-count: 4;
+  }
+}
+
+@media(min-width: 1200px){
+  .main-collections{
+    --desktop-columns-count: var(--columns-count);
+  }
+}

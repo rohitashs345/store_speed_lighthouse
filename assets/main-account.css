@@ -1,0 +1,233 @@
+.account-header{
+  font-size: 1.8rem;
+  border-bottom: 1px solid var(--section-border-color);
+}
+
+.account-header_list,
+.account-header_wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  align-items: center;
+}
+
+.account-header_wrapper{
+  justify-content: space-between;
+  padding-bottom: 27px;
+}
+
+.account-header_link{
+  text-decoration: none;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  transition: color 0.3s ease;
+  display: block;
+  padding: 0;
+}
+
+.account-content_table-wrapper{
+  overflow-x: auto;
+}
+
+.account-table{
+  min-width: 820px;
+}
+
+.account-table thead th{
+  border: none;
+  background-color: var(--section-widget-background-color);
+  color: var(--section-widget-foreground-color);
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}
+
+.account-table td,
+.account-table th{
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  text-align: left;
+  padding-top: 21px;
+  padding-bottom: 21px;
+}
+
+.account-table tbody tr:last-child td{
+  border-bottom: 0;
+}
+
+.account-table tbody td:nth-child(1) {
+  width: 150px;
+}
+
+.account-content{
+  padding-top: 40px;
+}
+
+.account-content_heading{
+  --mt-bottom: 34px;
+}
+
+a.account-table_status-label:focus-visible{
+  --focus-outline-offset: 2px;
+}
+
+.account-table,
+.account-content_table-wrapper,
+.account-table_status-label{
+  border-radius: var(--section-radius);
+}
+
+.account-table,
+.account-table_status-label{
+  padding: 5px 10px;
+}
+
+.account-table_status-label{
+  text-decoration: none;
+  border: 1px solid transparent;
+  display: inline-block;
+  transition: color .3s ease;
+}
+
+.account-table_status-label--default{
+  background-color: transparent;
+  border-color: var(--section-border-color);
+}
+
+.account-table_status-label--success,
+.account-table_status-label--error{
+  color: var(--section-background-color);
+  background-color: var(--section-foreground-color);
+  border-color: var(--section-foreground-color);
+}
+
+.account-info-widget{
+  background-color: var(--section-widget-background-color);
+  color: var(--section-widget-foreground-color);
+  border-radius: var(--section-radius);
+  padding: 20px;
+}
+
+.account-info-widget_heading{
+  color: inherit;
+}
+
+.account-content_wrapper{
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.account-content_col--description{
+  width: 100%;
+}
+
+.account-content_col--info{
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.account-header .account-header_btn{
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.account-info-widget_description{
+  font-style: normal;
+  margin-top: 26px;
+}
+
+@media (min-width: 768px){
+  .account-content_col--info{
+    width: calc(40% - 8px);
+  }
+
+  .account-content_wrapper{
+    flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: 992px){
+  .account-content_col--info{
+    width: calc(25% - 8px);
+  }
+
+  .account-content_col--description{
+    width: 75%;
+  }
+
+  .account-table_heading{
+    display: none;
+  }
+}
+
+@media (max-width: 991px){
+  .account-table{
+    min-width: 1px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .account-table,
+  .account-table tbody, 
+  .account-table th, 
+  .account-table td, 
+  .account-table tr{
+    display: block;
+  }
+
+  .account-table thead{
+    display: none;
+  }
+
+  .account-table tbody {
+    position: relative;
+  }
+
+  .account-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .account-table tbody td {
+    overflow: hidden;
+    width: 100%;  
+  }
+
+  .account-table tbody tr + tr{
+    border-top: 1px solid ;
+    border-color: var(--section-border-color);
+  }
+
+  .account-table_heading {
+    flex-shrink: 0;
+    width: 200px;
+  }
+
+  .account-table tbody th, 
+  .account-table tbody td {
+    border: 0;
+  }
+
+  .account-table tbody th, 
+  .account-table tbody td {
+    padding: 10px 15px;
+  }
+
+  .account-table tbody td, 
+  .account-table tbody td:nth-child(1) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 413px){
+  .account-table td {
+    font-size: 1.4rem;
+  }
+
+  .account-table_heading{
+    width: 140px;
+  }
+}

@@ -1,0 +1,109 @@
+{%- comment -%}
+  renders mega menu banner on main navigation dropdown item
+  usage
+    {%- render 'menu-dropdown', link: link, link_title: link_title, index: forloop.index -%}
+{%- endcomment -%}
+<li class="main-navigation_item --has-dropdown">
+  <strong id="{{- link_handle -}}-{{- index -}}-heading-1st-level" class="visually-hidden">
+    {{- link_title -}}
+  </strong>
+  <dropdown-component data-dropdown-level="1">
+    <button
+      type="button"
+      class="dropdown-component_opener main-navigation_link main-navigation_link--opener"
+      aria-expanded="false"
+      aria-controls="{{- link_handle -}}-{{- index -}}-1st-level"
+      aria-describedby="{{- link_handle -}}-{{- index -}}-heading-1st-level"
+    >
+      <span class="main-navigation_link-title">
+        {{- link_title -}}
+      </span>
+      {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'chevron-arrow' -%}
+    </button>
+    <div class="dropdown-component_wrapper main-navigation_dropdown-wrapper main-navigation_dropdown-wrapper--level1 main-navigation_dropdown--inner-wrapper" id="{{- link_handle -}}-{{- index -}}-1st-level">
+      <div class="dropdown-internal-wrapper widget--styles">
+        <strong class="h6 modal-component_heading mty {{ drawer_label_fw }}">
+          {{- link_title -}}
+        </strong>
+        <ul class="list-unstyled main-navigation_dropdown-list main-navigation_dropdown-list--simple">
+          {%- for childlink in link.links -%}
+            {%- liquid
+              assign child_link_title = childlink.title | escape
+              assign child_link_handle = childlink.title | handle | escape
+              assign check_handle = childlink.url | split: '/' | last
+            -%}
+            {%- if childlink.links == blank -%}
+              <li class="main-navigation_dropdown-item">
+                <a class="main-navigation_dropdown-link main-navigation_dropdown-link--level1 {% if childlink.current %}main-navigation_link--active{% endif %}" href="{{- childlink.url -}}" {% if childlink.current %}aria-current="{{- 'page.current_label' | t -}}"{% endif %}>
+                  <span class="main-navigation_child-link">
+                    {{- child_link_title -}}
+                  </span>
+                  {%- render 'dropdown-collection-images', handle: check_handle -%}
+                  {%- render 'dropdown-product-images', handle: check_handle -%}
+                </a>
+              </li>
+              {%- else -%}
+                <li class="main-navigation_dropdown-item --has-dropdown">
+                  <strong id="{{- child_link_handle -}}-{{- forloop.index -}}-heading-2nd-level" class="visually-hidden">
+                    {{- child_link_title -}}
+                  </strong>
+                  <dropdown-component data-dropdown-level="2">
+                    <button
+                      type="button"
+                      class="dropdown-component_opener main-navigation_dropdown-link--level1 main-navigation_dropdown-link main-navigation_dropdown-link--opener"
+                      aria-expanded="false"
+                      aria-controls="{{- child_link_handle -}}-{{- forloop.index -}}-2nd-level"
+                      aria-describedby="{{- child_link_handle -}}-{{- forloop.index -}}-heading-2nd-level"
+                    >
+                      <span class="main-navigation_link-title">
+                        {{- child_link_title -}}
+                      </span>
+                      <i class="dropdown-component_opener-icn dropdown-component_opener--icn-open">
+                        {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'chevron-right' -%}
+                      </i>
+                      <i class="dropdown-component_opener-icn dropdown-component_opener--icn-close">
+                        {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'chevron-arrow' -%}
+                      </i>
+                    </button>
+                    <div class="dropdown-component_wrapper main-navigation_dropdown-wrapper main-navigation_dropdown-wrapper--level2 main-navigation_dropdown--inner-wrapper" id="{{- child_link_handle -}}-{{- forloop.index -}}-2nd-level">
+                      <div class="dropdown-internal-wrapper widget--styles">
+                        <ul class="list-unstyled main-navigation_dropdown-list main-navigation_dropdown-list--inner">
+                          {%- for grandchildlink in childlink.links -%}
+                            {%- liquid
+                              assign grandchild_link_title = grandchildlink.title | escape
+                              assign grandcheck_handle = grandchildlink.url | split: '/' | last
+                            -%}
+                            <li class="main-navigation_dropdown-item">
+                              <a class="main-navigation_dropdown-link main-navigation_dropdown-link--level2 {% if grandchildlink.current %}main-navigation_link--active{% endif %}" href="{{- grandchildlink.url -}}" {% if grandchildlink.current %}aria-current="{{- 'page.current_label' | t -}}"{% endif %}>
+                                <span class="main-navigation_child-link">
+                                  {{- grandchild_link_title -}}
+                                </span>
+                                {%- render 'dropdown-collection-images', handle: grandcheck_handle -%}
+                                {%- render 'dropdown-product-images', handle: grandcheck_handle -%}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    </div>
+                  </dropdown-component>
+                </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if section.settings.desktop_drawer_banner != blank -%}
+          {%- assign image_alt = 'menu.banner_image' | t: index: '' -%}
+          {%- if section.settings.desktop_drawer_banner_link != blank -%}
+            <a href="{{- section.settings.desktop_drawer_banner_link -}}" {% if section.settings.open_new_window %}target="_blank"{% endif %} class="main-navigation_banner-image">
+              {{- section.settings.desktop_drawer_banner | image_url: width: 1360 | image_tag: class: 'object-fit object-fit--absolute', loading: 'lazy', widths: '680, 1360', sizes: '(max-width: 767px) 680vw, 1360vw', alt: image_alt -}}
+            </a>
+            {%- else -%}
+              <div class="main-navigation_banner-image">
+                {{- section.settings.desktop_drawer_banner | image_url: width: 1360 | image_tag: class: 'object-fit object-fit--absolute', loading: 'lazy', widths: '680, 1360', sizes: '(max-width: 767px) 680vw, 1360vw', alt: image_alt -}}
+              </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </dropdown-component>
+</li>

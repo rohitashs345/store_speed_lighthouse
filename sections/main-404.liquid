@@ -1,0 +1,254 @@
+{{- 'main-404.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign section_prefix_class = 'main-404'
+  assign section_scheme_class = section.settings.section_color_scheme | prepend: 'scheme scheme--'
+
+
+  capture btn_url
+    echo section.settings.button_link | default: routes.root_url
+  endcapture
+
+  capture btn_label
+    if section.settings.button_label != blank
+      echo section.settings.button_label | escape
+      else
+        echo 'main_404.button_label' | t
+    endif
+  endcapture
+
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture section_heading_weight
+    case section.settings.section_heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture section_heading_size
+    case section.settings.section_heading_size
+      when 'heading_x_large'
+        echo 'h2'
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      when 'heading_small'
+        echo 'h5'
+      else
+        echo 'h'
+    endcase
+  endcapture
+-%}
+{%- style -%}
+  .{{ section_prefix_class }}-{{ section.id }}{
+    --section-padding-top: {{ section.settings.section_top_padding }}px;
+    --section-padding-bottom: {{ section.settings.section_bottom_padding }}px;
+  }
+{%- endstyle -%}
+<div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }} --align-center">
+  <div class="container" style="--cp-width: 1100">
+    <div class="{{ section_prefix_class }}_wrapper">
+      <h1 class="{{ section_prefix_class }}_heading mty --v-align-middle --justify-center">
+        {{- 'main_404.four' | t -}}
+        {{- 'main_404.404_zero' | t -}}
+        {{- 'main_404.four' | t -}}
+      </h1>
+      <div class="{{ section_prefix_class }}_found-text-wrapper">
+        {%- if section.settings.section_description != blank -%}
+          <h2 class="{{ section_prefix_class }}_found-text-detail {{ section_heading_weight }} --h-anchor-none --word-break {{ section_heading_size }} mty">
+            {{- section.settings.section_description -}}
+          </h2>
+        {%- endif -%}
+        <a
+          href="{{- btn_url -}}" 
+          class="{{ section_prefix_class }}_btn button button--{{ section.settings.button_type }}"
+          {% if section.settings.open_new_window %}target="_blank"{% endif %}
+        >
+          {{- btn_label -}}
+        </a>
+      </div>
+    </div>
+  </div>
+  {%- if section.settings.left_image != blank -%}
+    <div class="{{ section_prefix_class }}_left-image">
+      {%- liquid
+        capture image_alt_left
+          if section.settings.left_image.alt != blank
+            echo section.settings.left_image.alt
+            else
+              echo section.settings.section_description | escape | append: '1'
+          endif
+        endcapture
+      -%}
+      {{- section.settings.left_image | image_url: width: 1944 | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, alt: image_alt_left, widths: '972, 1944', sizes: '(max-width: 767px) 972vw, 1944vw' -}}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.right_image != blank -%}
+    <div class="{{ section_prefix_class }}_right-image">
+      {%- liquid
+        capture image_alt_right
+          if section.settings.right_image.alt != blank
+            echo section.settings.right_image.alt
+            else
+              echo section.settings.section_description | escape | append: '2'
+          endif
+        endcapture
+      -%}
+      {{- section.settings.right_image | image_url: width: 1944 | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, alt: image_alt_right, widths: '972, 1944', sizes: '(max-width: 767px) 972vw, 1944vw' -}}
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "t:sections.main_404.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "section_description",
+      "label": "t:heading.label",
+      "default": "PAGE NOT FOUND"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_size",
+      "label": "t:sizes.heading.label",
+      "options": [
+        {
+          "value": "heading_x_large",
+          "label": "t:sizes.heading.options.opt_2.label"
+        },
+        {
+          "value": "heading_large",
+          "label": "t:sizes.heading.options.opt_3.label"
+        },
+        {
+          "value": "heading_medium",
+          "label": "t:sizes.heading.options.opt_4.label"
+        },
+        {
+          "value": "heading_small",
+          "label": "t:sizes.heading.options.opt_5.label"
+        }
+      ],
+      "default": "heading_small"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_weight",
+      "label": "t:weight.heading.label",
+      "options": [
+        {
+          "value": "bold",
+          "label": "t:weight.heading.options.opt_1.label"
+        },
+        {
+          "value": "semi_bold",
+          "label": "t:weight.heading.options.opt_5.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:weight.heading.options.opt_2.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:weight.heading.options.opt_3.label"
+        }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings_schema.buttons.settings.button.label",
+      "default": "BACK TO HOME"
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "t:settings_schema.buttons.settings.button.type.label",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:settings_schema.buttons.settings.button.type.opt_1.label"
+        },
+        {
+          "value": "secondary",
+          "label": "t:settings_schema.buttons.settings.button.type.opt_2.label"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings_schema.buttons.settings.button.link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_new_window",
+      "label": "t:target_blank.label",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "t:sections.main_404.settings.left_image.label",
+      "info": "t:sections.main_404.settings.left_image.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "t:sections.main_404.settings.right_image.label",
+      "info": "t:sections.main_404.settings.right_image.info"
+    },
+    {
+      "type": "header",
+      "content": "t:settings_schema.layout.name"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "default": "scheme1",
+      "label": "t:settings_schema.color_schemes.name"
+    },
+    {
+      "type": "header",
+      "content": "t:spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "section_top_padding",
+      "label": "t:spacing.settings.top.label",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 94,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_bottom_padding",
+      "label": "t:spacing.settings.bottom.label",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 94,
+      "unit": "px"
+    }
+  ]
+}
+{% endschema %}

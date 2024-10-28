@@ -1,0 +1,25 @@
+{%- comment -%}
+  renders product unit price
+  usage
+    {%- render 'product-unit-price', product: product -%}
+{%- endcomment -%}
+<strong class="product-unit {% if product.selected_or_first_available_variant.unit_price_measurement == nil %}hidden{% endif %}">
+  <span class="product-unit_unit-pricing --word-break">
+    <span class="visually-hidden" style="background-color: var(--section-background-color); color: var(--section-foreground-color);">
+      {{- 'product.unit_price' | t -}}
+    </span>
+    <span class="unit-price">
+      <span>
+        {{- product.selected_or_first_available_variant.unit_price | money -}}
+      </span>
+      <span aria-hidden="true">/</span>
+      <span class="visually-hidden" style="background-color: var(--section-background-color); color: var(--section-foreground-color);">&nbsp;{{- 'product.unit_price_separator' | t -}}&nbsp;</span>
+      <span>
+        {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+          {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+        {%- endif -%}
+        {{- product.selected_or_first_available_variant.unit_price_measurement.reference_unit -}}
+      </span>
+    </span>
+  </span>
+</strong>

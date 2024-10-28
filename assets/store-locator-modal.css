@@ -1,0 +1,155 @@
+accordion-wrapper.store-collapsible_row{
+  display: block;
+}
+
+.store-collapsible_row,
+.modal-component--store-locator .modal-component_head{
+  border-bottom: 1px solid var(--section-border-color);
+}
+
+.store-collapsible_row:last-child{
+  border-bottom: none;
+}
+
+.store-collapsible_opener{
+  --headings-font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.store-collapsible_description-wrap,
+.modal-component--store-locator .modal-component_body,
+.store-collapsible_opener{
+  padding: 0;
+}
+
+/* .store-collapsible_row .open-close[open] .open-close_opener--icn-open{
+  display: none;
+} */
+
+.store-collapsible_row .open-close_opener-icn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  line-height: 0;
+}
+
+.store-collapsible_row .open-close_opener--icn-open svg,
+.store-collapsible_row .open-close_opener--icn-close svg{
+  padding: 7px;
+}
+
+.store-collapsible{
+  padding: 15px;
+}
+
+.modal-component--store-locator .modal-component_head{
+  padding: 32px 20px 21px 15px;
+}
+
+.store-collapsible_logo{
+  margin-bottom: 5px;
+}
+
+.store-collapsible_btn{
+  --button-padding-x: 2.4rem;
+  --button-padding-y: 0.6rem;
+}
+
+.store-collapsible_description p{
+  margin: 0;
+}
+
+.store-collapsible_description{
+  margin-top: 9px;
+  margin-bottom: 22px;
+}
+
+.store-collapsible_map-wrap svg{
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+}
+
+.store-collapsible_map-wrap iframe{
+  margin: 0;
+}
+
+.store-collapsible_map-wrap iframe + svg,
+.--desktop-store-img {
+  display: none;
+}
+
+.store-collapsible_map-wrap{
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+  line-height: 0;
+}
+
+@media(min-width: 576px){
+  .store-collapsible_map-wrap iframe{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+  }
+
+  .store-collapsible_map-wrap iframe + svg {
+    display: block;
+  }
+
+  .store-collapsible_map-wrap svg{
+    margin-top: 0;
+  }
+
+  .store-collapsible_map-wrap iframe,
+  .store-collapsible_map-wrap{
+    top: 0;
+    position: absolute;
+  }
+
+  .modal-component--store-locator .modal-component_head,
+  .modal-component--store-locator .modal-component_content{
+    width: 38%;
+  }
+  
+  .store-collapsible_map-wrap{
+    left: 38%;
+    bottom: 0;
+    right: 0;
+    margin-top: 0;
+  }
+
+  .store-collapsible_map-wrap{
+    z-index: 999;
+  }
+
+  .modal-component--store-locator .modal-component_body{
+    position: relative;
+    overflow: hidden;
+    max-width: 940px;
+    overflow: auto;
+  }
+}
+
+@media (min-width: 768px){
+  .--mobile-store-img{
+    display: none;
+  }
+
+  .--desktop-store-img{
+    display: block;
+  }
+}
+
+@media (min-width: 992px){
+  .store-collapsible{
+    padding: 35px 35px 45px 41px;
+  }
+
+  .modal-component--store-locator .modal-component_head{
+    padding: 32px 20px 21px 41px;
+  }
+}

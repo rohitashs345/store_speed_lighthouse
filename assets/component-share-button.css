@@ -1,0 +1,94 @@
+.share-button-wrap{
+  position: relative;
+  margin-left: auto;
+}
+
+.share-button__button{
+  --ixi-padding-x: 7px;
+  --ixi-padding-y: 7px;
+  --ixi-bg-color: var(--section-primary-bg);
+  --ixi-text-color: var(--section-primary-text-color);
+  --ixi-bdr-clr: var(--section-primary-border-color);
+  --btn-radius: var(--input-corner-radius);
+  --ixi-text-hover-color: var(--section-primary-bg);
+  --ixi-bg-hover-color: var(--section-primary-text-color);
+  --btn-hover-bdr-clr: var(--section-primary-bg);
+  --ixi-bdr-width: 1px;
+}
+
+.share-button_wrapper{
+  transform: translateX(-50px);
+  left: -65px;
+  position: absolute;
+  top: 100%;
+  border-radius: 10px;
+  width: 300px;
+  padding: 0;
+}
+
+.share-content_wrapper{
+  padding: 40px 10px 10px;
+  position: relative;
+}
+
+.field__label{
+  top: 5px;
+  left: 23px;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  position: absolute;
+}
+
+.share-button__close,
+.share-button__copy {
+  --ixi-padding-x: 6px;
+  --ixi-padding-y: 6px;
+  --btn-radius: calc(var(--section-radius) / 4);
+}
+
+.share-button__copy{
+  right: 10px;
+  bottom: 10px;
+  position: absolute;
+}
+
+.share-button-wrap .form-group{
+  width: calc(100% - 50px);
+}
+
+.share-button__close{
+  position: absolute;
+  top: 5px;
+  right: 7px;
+}
+
+.dropdown-component--share .field__label,
+.dropdown-component--share .share-button__message{
+  top: 10px;
+  left: 23px;
+  z-index: 1;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  position: absolute;
+  background: var(--section-widget-background-color);
+}
+
+input.shareUrl{
+  --input-background: var(--section-widget-foreground-color);
+  --input-text: var(--section-widget-background-color);
+}
+
+.share-button_wrapper{
+  width: 250px;
+  right: 0;
+  left: auto;
+  top: 100%;
+  transform: none;
+  margin-top: 10px;
+}
+
+@media (min-width: 768px){
+  .share-button_wrapper{
+    width: 400px;
+  }
+}

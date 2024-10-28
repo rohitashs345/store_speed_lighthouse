@@ -1,0 +1,467 @@
+{%- if section.settings.show_only_on_homepage == false or template.name == 'index' -%}
+  {%- liquid
+    assign section_prefix_class = 'announcement-bar'
+    assign section_scheme_class = section.settings.section_color_scheme | prepend: 'scheme scheme--'
+
+    capture container_class
+      if section.settings.section_full_width
+        echo 'container-fluid'
+        else
+          echo 'container'
+      endif
+    endcapture
+
+    capture check_localization
+      render 'check-localization-drops'
+    endcapture
+
+    capture local_exists
+      if section.settings.enable_country_selector or section.settings.enable_language_selector
+        if check_localization == 'true'
+          echo 'true'
+        endif
+      endif
+    endcapture
+
+    capture check_social_links
+      render 'check-social-links'
+    endcapture
+
+    capture social_exists
+      if check_social_links == 'true' and section.settings.show_social_links
+        echo 'true'
+      endif
+    endcapture
+
+    capture only_socials
+      if social_exists == 'true'
+        if section.blocks.size == 0 and local_exists != 'true'
+          echo '--justify-center'
+        endif
+      endif
+    endcapture
+
+    capture two_columns
+      if section.blocks.size > 0
+        if section.settings.enable_country_selector or section.settings.enable_language_selector or social_exists == 'true'
+          echo 'true'
+        endif
+      endif
+    endcapture
+
+    capture no_slider
+      if section.blocks.size == 0
+        echo 'true'
+      endif
+    endcapture
+
+    capture only_locals
+      if local_exists == 'true'
+        if section.blocks.size == 0 and social_exists != 'true'
+            echo '--justify-center'
+            else
+              echo '--justify-end'
+        endif
+      endif
+    endcapture
+  -%}
+  {{- 'announcement-bar.css' | asset_url | stylesheet_tag -}}
+  <div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }} {% if section.settings.show_bottom_bdr %}--bdr-bottom{% endif %} {% if section.settings.show_top_bdr %}--bdr-top{% endif %}">
+    <div class="{{ container_class }}">
+      <div class="{{ section_prefix_class }}_wrapper --v-align-middle">
+        {%- if two_columns == 'true' -%}
+          {%- if social_exists == 'true' -%}
+            <div class="{{ section_prefix_class }}_social {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} {{ section_prefix_class }}_col">
+              {%- render 'social-icons' | prefix_class: section_prefix_class | social_icons_enable: true -%}
+            </div>
+            {%- else -%}
+              <div class="{{ section_prefix_class }}_social {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} {{ section_prefix_class }}_col"></div>
+          {%- endif -%}
+          {%- else -%}
+            {%- if social_exists == 'true' -%}
+              <div class="{{ section_prefix_class }}_social {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} {{ section_prefix_class }}_col">
+                {%- render 'social-icons' | prefix_class: section_prefix_class | social_icons_enable: true | social_extra_class: only_socials -%}
+              </div>
+            {%- endif -%}
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="{{ section_prefix_class }}_announce-slide --word-break {{ section_prefix_class }}_col">
+            <splide-slider
+              data-drag="true"
+              data-autoplay="{{- section.settings.auto_play -}}"
+              data-rewind="true"
+              data-pause-on-hover="true"
+              data-gap="0"
+              data-per-move="1"
+              data-arrows="false"
+              data-pagination="false"
+              data-per-page="1"
+              data-interval="{{- section.settings.change_slides_every | times: 1000 -}}"
+              data-type="fade"
+            >
+              <div class="splide">
+                <div class="splide__track">
+                  <div class="splide__list">
+                    {%- for block in section.blocks -%}
+                      {%- liquid
+                        capture block_description_weight
+                          case block.settings.block_description_weight
+                            when 'bold'
+                              echo '--fw-bold'
+                            when 'semi_bold'
+                              echo '--fw-semi-bold'
+                            when 'medium'
+                              echo '--fw-medium'
+                            when 'normal'
+                              echo '--fw-normal'
+                          endcase
+                        endcapture
+                      -%}
+                      <div class="splide__slide" {{ block.shopify_attributes }}>
+                        {%- if block.settings.heading != blank -%}
+                          <span class="{{ section_prefix_class }}_text text-size--{{ block.settings.description_text_size }} {{ block_description_weight }}">{{- block.settings.heading -}}</span>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+            </splide-slider>
+          </div>
+        {%- endif -%}
+        {%- if two_columns == 'true' -%}
+          {%- if local_exists == 'true' -%}
+            <div class="{{ section_prefix_class }}_localizations-col {{ section_prefix_class }}_info {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} {{ section_prefix_class }}_col">
+              <div class="localization-wrapper --align-middle {{ only_locals }}">
+                {%- liquid
+                  assign lfid = section.id | prepend: 'language-form-'
+                  assign if_id_no_script = section.id | prepend: 'language-form-' | append: '-noscript'
+
+                  assign resid = section.id | prepend: 'country-form-'
+                  assign res_id_no_script = section.id | prepend: 'country-form-' | append: '-noscript'
+                -%}
+                {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+                  <div class="localization-wrapper_drop">
+                    <noscript>
+                      {%- form 'localization', id: res_id_no_script, class: 'localization-form' -%}
+                        <div class="custom-select">
+                          <h2 class="visually-hidden" id="{{ res_id_no_script }}-country-heading">{{- 'localization.country_label' | t -}}</h2>
+                          <select
+                            name="country_code"
+                            aria-labelledby="{{ res_id_no_script }}-country-heading"
+                          >
+                            {%- for country in localization.available_countries -%}
+                              <option
+                                value="{{ country.iso_code }}"
+                                {% if country.iso_code == localization.country.iso_code %}
+                                  selected
+                                {% endif %}
+                              >
+                                {{- country.name }} ({{ country.currency.iso_code }}
+                                {{ country.currency.symbol -}})
+                              </option>
+                            {%- endfor -%}
+                          </select>
+                        </div>
+                        <button class="button button--tertiary">{{- 'localization.update_country' | t -}}</button>
+                      {%- endform -%}
+                    </noscript>
+                    {%- form 'localization', id: resid, class: 'localization-form' -%}
+                      {%- render 'country-localization', localPosition: section.id, id: resid -%}
+                    {%- endform -%}
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+                  <div class="localization-wrapper_drop">
+                    <noscript>
+                      {%- form 'localization', id: if_id_no_script, class: 'localization-form' -%}
+                        <h2 class="visually-hidden" id="{{ if_id_no_script }}-lang-heading">{{- 'localization.country_label' | t -}}</h2>
+                        <div class="custom-select">
+                          <select
+                            name="locale_code"
+                            aria-labelledby="{{ if_id_no_script }}-lang-heading"
+                          >
+                            {%- for language in localization.available_languages -%}
+                              <option
+                                value="{{ language.iso_code }}"
+                                lang="{{ language.iso_code }}"
+                                {% if language.iso_code == localization.language.iso_code %}
+                                  selected
+                                {% endif %}
+                              >
+                                {{ language.endonym_name | capitalize }}
+                              </option>
+                            {%- endfor -%}
+                          </select>
+                        </div>
+                        <button class="button button--primary">{{- 'localization.update_language' | t -}}</button>
+                      {%- endform -%}
+                    </noscript>
+                    {%- form 'localization', id: lfid, class: 'localization-form' -%}
+                      {%- render 'language-localization', localPosition: section.id, id: lfid -%}
+                    {%- endform -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+            {%- else -%}
+              <div class="{{ section_prefix_class }}_localizations-col {{ section_prefix_class }}_info {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} {{ section_prefix_class }}_col">&nbsp;</div>
+          {%- endif -%}
+          {%- else -%}
+            {%- if local_exists == 'true' -%}
+              <div class="{{ section_prefix_class }}_localizations-col {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} --word-break --align-right {{ section_prefix_class }}_col">
+                <div class="{{ section_prefix_class }}_localizations-col {% if no_slider == 'true' %}{{ section_prefix_class }}_col--half{% endif %} {{ section_prefix_class }}_col">
+                  <div class="localization-wrapper --align-middle {{ only_locals }}">
+                    {%- liquid
+                      assign lfid = section.id | prepend: 'language-form-'
+                      assign if_id_no_script = section.id | prepend: 'language-form-' | append: '-noscript'
+    
+                      assign resid = section.id | prepend: 'country-form-'
+                      assign res_id_no_script = section.id | prepend: 'country-form-' | append: '-noscript'
+                    -%}
+                    {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+                      <div class="localization-wrapper_drop">
+                        <noscript>
+                          {%- form 'localization', id: res_id_no_script, class: 'localization-form' -%}
+                            <div class="custom-select">
+                              <h2 class="visually-hidden" id="{{ res_id_no_script }}-country-heading">{{- 'localization.country_label' | t -}}</h2>
+                              <select
+                                name="country_code"
+                                aria-labelledby="{{ res_id_no_script }}-country-heading"
+                              >
+                                {%- for country in localization.available_countries -%}
+                                  <option
+                                    value="{{ country.iso_code }}"
+                                    {% if country.iso_code == localization.country.iso_code %}
+                                      selected
+                                    {% endif %}
+                                  >
+                                    {{- country.name }} ({{ country.currency.iso_code }}
+                                    {{ country.currency.symbol -}})
+                                  </option>
+                                {%- endfor -%}
+                              </select>
+                            </div>
+                            <button class="button button--tertiary">{{- 'localization.update_country' | t -}}</button>
+                          {%- endform -%}
+                        </noscript>
+                        {%- form 'localization', id: resid, class: 'localization-form' -%}
+                          {%- render 'country-localization', localPosition: section.id, id: resid -%}
+                        {%- endform -%}
+                      </div>
+                    {%- endif -%}
+                    {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+                      <div class="localization-wrapper_drop">
+                        <noscript>
+                          {%- form 'localization', id: if_id_no_script, class: 'localization-form' -%}
+                            <h2 class="visually-hidden" id="{{ if_id_no_script }}-lang-heading">{{- 'localization.country_label' | t -}}</h2>
+                            <div class="custom-select">
+                              <select
+                                name="locale_code"
+                                aria-labelledby="{{ if_id_no_script }}-lang-heading"
+                              >
+                                {%- for language in localization.available_languages -%}
+                                  <option
+                                    value="{{ language.iso_code }}"
+                                    lang="{{ language.iso_code }}"
+                                    {% if language.iso_code == localization.language.iso_code %}
+                                      selected
+                                    {% endif %}
+                                  >
+                                    {{ language.endonym_name | capitalize }}
+                                  </option>
+                                {%- endfor -%}
+                              </select>
+                            </div>
+                            <button class="button button--primary">{{- 'localization.update_language' | t -}}</button>
+                          {%- endform -%}
+                        </noscript>
+                        {%- form 'localization', id: lfid, class: 'localization-form' -%}
+                          {%- render 'language-localization', localPosition: section.id, id: lfid -%}
+                        {%- endform -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.announcement_bar.name",
+  "tag": "header",
+  "limit": 1,
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_only_on_homepage",
+      "label": "t:sections.announcement_bar.settings.show_home_only.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "t:localization_drops.language.label",
+      "info": "t:localization_drops.language.info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "t:localization_drops.country.label",
+      "info": "t:localization_drops.country.info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links",
+      "label": "t:sections.announcement_bar.settings.show_social_list.label",
+      "info": "t:sections.announcement_bar.settings.show_social_list.info",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:layout.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_bdr",
+      "label": "t:top_bdr.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_bdr",
+      "label": "t:bottom_bdr.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "section_full_width",
+      "label": "t:sections.full_width.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "default": "scheme2",
+      "label": "t:color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:slideshow.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_play",
+      "label": "t:slideshow.auto_play.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_every",
+      "label": "t:slideshow.interval.label",
+      "min": 2,
+      "max": 9,
+      "step": 1,
+      "default": 5,
+      "unit": "s",
+      "info": "t:slideshow.interval.info"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "t:sections.announcement_bar.blocks.text.name",
+      "type": "announcement_text",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "t:description_text.label",
+          "default": "Welcome to our store"
+        },
+        {
+          "type": "select",
+          "id": "description_text_size",
+          "label": "t:sizes.description_text.label",
+          "options": [
+            {
+              "value": "small",
+              "label": "t:sizes.text.options.opt_1.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sizes.text.options.opt_2.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sizes.text.options.opt_3.label"
+            },
+            {
+              "value": "xlarge",
+              "label": "t:sizes.text.options.opt_4.label"
+            }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "block_description_weight",
+          "label": "t:weight.description_text.label",
+          "options": [
+            {
+              "value": "bold",
+              "label": "t:weight.heading.options.opt_1.label"
+            },
+            {
+              "value": "semi_bold",
+              "label": "t:weight.heading.options.opt_5.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:weight.heading.options.opt_2.label"
+            },
+            {
+              "value": "normal",
+              "label": "t:weight.heading.options.opt_3.label"
+            }
+          ],
+          "default": "semi_bold"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement_bar.name",
+      "blocks": [
+        {
+          "type": "announcement_text",
+          "settings": {
+            "heading": "Welcome to our store"
+          }
+        },
+        {
+          "type": "announcement_text",
+          "settings": {
+            "heading": "Welcome to our store"
+          }
+        },
+        {
+          "type": "announcement_text",
+          "settings": {
+            "heading": "Welcome to our store"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

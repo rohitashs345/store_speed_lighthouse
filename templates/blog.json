@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+      }
+    },
+    "media_with_content": {
+      "type": "media-with-content",
+      "settings": {
+        "section_top_padding": 0,
+        "section_bottom_padding": 0
+      },
+      "blocks": {
+        "image": {
+          "type": "image",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "image"
+      ]
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "settings": {
+        "section_heading": ""
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+          }
+        },
+        "column_4": {
+          "type": "column",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3",
+        "column_4"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "media_with_content",
+    "multicolumn"
+  ]
+}

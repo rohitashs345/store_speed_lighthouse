@@ -1,0 +1,116 @@
+.product-pickup_subheading{
+  display: block;
+}
+
+.modal-component--pickup-drawer .product-pickup_heading,
+.modal-component--pickup-drawer .product-pickup_subheading{
+  color: var(--section-heading-color);
+}
+
+.product-pickup_subheading{
+  margin-top: 9px;
+}
+
+.product-pickup_showcase-heading{
+  --mt-bottom: 20px;
+}
+
+.modal-component--pickup-drawer .product-pickup_heading,
+.modal-component--pickup-drawer .product-pickup_subheading,
+.modal-component--pickup-drawer .product-pickup_showcase-heading,
+.product-pickup_icn-align{
+  position: relative;
+}
+
+.modal-component--pickup-drawer .product-pickup_heading,
+.modal-component--pickup-drawer .product-pickup_subheading,
+.modal-component--pickup-drawer .product-pickup_showcase-heading,
+.product-pickup_showcase-texture--available{
+  display: block;
+}
+
+.modal-component--pickup-drawer .modal-component_body{
+  width: 100%;
+  height: 100%;
+}
+
+.modal-component--pickup-drawer .product-pickup_subheading,
+.modal-component--pickup-drawer .product-pickup_options-value,
+.modal-component--pickup-drawer .product-pickup_showcase-texture{
+  font-weight: 400;
+}
+
+.modal-component--pickup-drawer .product-pickup_options-list,
+.modal-component--pickup-drawer .pickup-showcase_address{
+  margin-top: 14px;
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-subtext{
+  font-style: normal;
+}
+
+.modal-component--pickup-drawer .modal-component_head{
+  margin-bottom: 34px;
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-texture--unavailable .ico.ico-cross,
+.product-pickup_heading.product-pickup_cross--unavailable .ico.ico-cross{
+  color: var(--section-error-color);
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-item{
+  position: relative;
+  padding-left: 17px;
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-texture .ico,
+.modal-component--pickup-drawer .product-pickup_icn-align .ico{
+  position: absolute;
+  left: -20px;
+  top: 10px;
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-texture .ico{
+  top: 12px;
+}
+
+.main-product_row--pickup_availability .product-pickup_heading .ico-check,
+.modal-component--pickup-drawer .product-pickup_showcase-texture .ico,
+.product-pickup_heading.product-pickup_check--available .ico.ico-check{
+  color: var(--section-success-color);
+}
+
+.modal-component--pickup-drawer .pickup-showcase_address{
+  font-style: normal;
+}
+
+.modal-component--pickup-drawer .modal-component_wrapper{
+  max-width: 374px;
+  width: 100%;
+  background-color: var(--section-background-color);
+  color: var(--section-foreground-color);
+  box-shadow: 0 20px 20px rgba(0,0,0,0.15);
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-list,
+.modal-component--pickup-drawer .product-pickup_showcase-item + .product-pickup_showcase-item{
+  border-top: 1px solid var(--section-border-color);
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-list{
+  margin-left: -40px;
+  margin-right: -40px;
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-item,
+.modal-component--pickup-drawer .modal-component_body{
+  padding: 20px 40px;
+}
+
+.modal-component--pickup-drawer .product-pickup_showcase-description{
+  position: relative;
+}
+
+.modal-component--pickup-drawer .modal-component_wrapper{
+  max-width: 574px;
+}

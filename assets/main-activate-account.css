@@ -1,0 +1,77 @@
+.activate-account_form-group + .activate-account_form-group{
+  margin-top: 27px;
+}
+.activate-account_form-align{
+  padding-top: 44px;
+  padding-bottom: 44px;
+  max-width: 595px;
+  position: relative;
+}
+
+.activate-account_foot-wrapper{
+  --mt-top: 47px;
+}  
+
+.activate-accoun_success-wrapper{
+  color: var(--section-success-color);
+}
+
+.activate-account_foot-wrapper-btns{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activate-account_foot-wrapper-btns .button{
+  min-width: calc(50% - 5px);
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.activate-account .errors-list_link {
+  text-decoration: none;
+}
+
+.activate-account .form__message {
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.activate-account .form__message,
+.activate-account .error-email {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.activate-account .error-email {
+  margin-top: 11px;
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+}
+
+.activate-account .errors-list {
+  padding-left: 37px;
+  margin-bottom: 30px;
+}
+
+.activate-account .success-message_icn {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.activate-account_heading-head{
+  margin-bottom: 35px;
+}
+
+@media(min-width: 768px){
+  .activate-account_form-align {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .activate-account_foot-wrapper-btns{
+    flex-direction: row;
+  }
+}

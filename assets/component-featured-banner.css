@@ -1,0 +1,58 @@
+.featured-banner_scroll-text{
+  display: block;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  font-size: 1.9rem;
+  line-height: 2.3rem;
+}
+
+.featured-banner_wrap{
+  padding-top: 14px;
+  max-width: 50%;
+}
+
+.featured-banner_slider .splide-controls{
+  margin-top: 0;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  max-width: 49%;
+}
+
+.featured-banner_slider .splide__pagination{
+  gap: 1px 14px;
+}
+
+.featured-banner_slider .splide__pagination__page{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.featured-banner_slider .splide__pagination__page::before{
+  width: 34px;
+  height: 6px;
+}
+
+.featured-banner_slider .splide__pagination__page:not(.is-active)::before{
+  border-color: var(--section-border-color);
+  background-color: var(--section-border-color);
+}
+
+.featured-banner_image{
+  position: relative;
+}
+
+.featured-banner_image,
+.featured-banner_marquee{
+  width: 100%;
+}
+
+.featured-banner_marquee{
+  --headings-color: var(--section-background-color);
+  background-color: var(--section-heading-color);
+  color: var(--section-background-color);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}

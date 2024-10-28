@@ -1,0 +1,12 @@
+{%- comment -%}
+  captures returns 'true' if any of social link is not blank to enable social list
+  usage
+    {%- render 'check-social-links' -%}
+{%- endcomment -%}
+{%- liquid
+  if settings.social_instagram_link != blank or settings.social_linkedin_link != blank or settings.social_youtube_link != blank or settings.social_twitter_link != blank or settings.social_snapchat_link != blank or settings.social_pinterest_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_vimeo_link != blank
+    echo 'true'
+    else
+      echo 'false'
+  endif
+-%}

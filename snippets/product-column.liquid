@@ -1,0 +1,554 @@
+{%- comment -%}
+  renders product column on section templates
+  usage
+    {%- render 'product-column', product: product, parent: true, loading: loading_attr, focus: true -%}
+{%- endcomment -%}
+{%- liquid
+  assign product_json_id = 'ProductCardJson-' | append: product.id | append: '-' | append: section.id
+  assign form_id= 'product-atc-form-' | append: product.id | append: '-' | append: section.id
+  assign parent_selector= 'product-card-' | append: product.id | append: '-' | append: section.id
+  assign media_template_attr = 'data-media-template-' | append: product.id | append: '-' | append: section.id
+  assign media_drag_slider_attr = 'data-drag-container-' | append: product.id | append: '-' | append: section.id
+  assign price_column_render_attr = 'data-render-column-price'
+  assign unit_price_column_render_attr = 'data-render-column-unit-price'
+  assign error_render_attr = 'data-render-error'
+
+  capture product_clean_url
+    if product.url contains '?'
+      assign parts = product.url | split: '?'
+      echo parts[0]
+      else
+        echo product.url
+    endif
+  endcapture
+
+  capture card_heading_weight
+    case heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture form_class
+    if enable_atc
+      echo 'product-column_submit-from'
+      else
+        echo 'visually-hidden'
+    endif
+  endcapture
+
+  capture show_separator
+    if enable_atc and enable_quick_view
+      echo 'true'
+    endif
+  endcapture
+  
+  capture first_image
+    if product.selected_or_first_available_variant.featured_media != null
+      echo 'true'
+      else
+        for media in product.media
+          echo 'true'
+          break
+        endfor
+    endif
+  endcapture
+
+  assign card_media_ratio = 1
+  assign featured_image = null
+  if card_media_size == 'adapt'
+    if product.selected_or_first_available_variant.featured_media != null
+      assign media = product.selected_or_first_available_variant.featured_media
+      assign featured_image = media
+      else
+        for media in product.media
+          assign media = media
+          assign featured_image = media
+          break
+        endfor
+    endif
+    assign card_media_ratio = media.aspect_ratio | default: '1'
+  endif
+
+  capture btns_at_down
+    if btns_position == 'bottom'
+      if enable_atc or show_details_btn or enable_quick_view
+        echo '--pd-bot'
+      endif
+    endif
+  endcapture
+
+  capture slider_class
+    if thumbnail_layout == 'slider'
+      echo 'product-column--slider-enabled'
+    endif
+  endcapture
+-%}
+{%- capture column_button -%}
+  <div class="product-column_btn-wrap {% unless btns_at_down != blank %}product-column_btn-wrap--pb{% endunless %} --justify-center">
+    {%- unless product.requires_selling_plan -%}
+      <div class="product-column_btn-icns">
+        {%- if details_btn -%}
+          <a class="btn-icn-ixi product-column_btn-ixi product-column_qv-toggler --block" {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %}>
+            <span class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'eye' -%}
+              <span class="visually-hidden --uppercase">
+                {{- 'product.view_details' | t: product.title -}}
+              </span>
+            </span>
+          </a>
+        {%- endif -%}
+        {%- if show_separator == 'true' -%}
+          <i class="product-column_btn-separator">
+            {%- render 'icons-data', width: 2, height: 18, use_icon: true, icon_reference: 'line' -%}
+          </i>
+        {%- endif -%}
+        {%- if enable_quick_view -%}
+          <modal-component-toggler class="product-column-card_toggler">
+            <button
+              data-expanded="false"
+              data-modal-ref="modal-quick-view-{{ section.id }}-{{ product.id }}"
+              aria-haspopup="dialog"
+              aria-controls="modal-quick-view-{{ section.id }}-{{ product.id }}"
+              class="btn-icn-ixi product-column_btn-ixi product-column_qv-toggler"
+            >
+              <span class="btn-icn-ixi_wrapper">
+                {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'search' -%}
+                <span class="visually-hidden">
+                  {{- 'product.quick_view.toggler_label' | t: product.title -}}
+                </span>
+              </span>
+            </button>
+          </modal-component-toggler>
+        {%- endif -%}
+        {%- if show_separator == 'true' -%}
+          <i class="product-column_btn-separator">
+            {%- render 'icons-data', width: 2, height: 18, use_icon: true, icon_reference: 'line' -%}
+          </i>
+        {%- endif -%}
+        {%- if enable_atc or show_swatches -%}
+          {%- form 'product',
+            product,
+            id: form_id,
+            class: form_class,
+            novalidate: 'novalidate',
+            data-type: 'add-to-cart-form'
+          -%}
+            {%- liquid
+              assign check_against_inventory = true
+              if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+                assign check_against_inventory = false
+              endif
+              if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+                assign quantity_rule_soldout = true
+              endif
+      
+              capture atc_button_label
+                if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+                  echo 'product.atc_buttons.soldout' | t
+                  else
+                    echo 'product.atc_buttons.add_to_cart' | t
+                endif
+              endcapture
+            -%}
+            <input
+              type="hidden"
+              name="id"
+              value="{{- product.selected_or_first_available_variant.id -}}"
+            >
+            <input
+              type="hidden"
+              name="quantity"
+              value="{{- product.selected_or_first_available_variant.quantity_rule.min -}}"
+            >
+            <atc-submit-form
+              data-error-selector="[{{ error_render_attr }}]"
+              data-form="#{{ form_id }}"
+              {% if settings.cart_view == 'drawer' %}
+                {% unless template == 'cart' %}
+                  data-modal="true"
+                  data-modal-ref='[data-modal-ref="modal-cart-drawer"][data-expanded="false"]'
+                {% endunless %}
+                {% else %}
+                  {% unless template == 'cart' %}
+                    data-redirect-to="{{- routes.cart_url -}}"
+                  {% endunless %}
+              {% endif %}
+              {% if parent %}
+                data-parent='true'
+                data-parent-selector="[data-parent='{{- parent_selector -}}']"
+                {% else %}
+                  data-parent='false'
+              {% endif %}
+              data-sections='[
+                {
+                  "id": "cart-head",
+                  "selectors": ["[data-render-cart-bubble]", "[data-render-cart-text]"]
+                },
+                {
+                  "id": "cart-showcase",
+                  "selectors": ["[data-line-items-drawer-container]"]
+                }
+                {% if template == 'cart' %}
+                  ,
+                  {
+                    "id": "main-cart",
+                    "selectors": ["[data-line-items-container]"]
+                  }
+                {% endif %}
+              ]'
+            >
+              <button
+                type="submit"
+                name="add"
+                class="btn-icn-ixi product-column_btn-ixi product-column_atc"
+                {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+                  disabled
+                {% endif %}
+              >
+                <span class="btn-icn-ixi_wrapper">
+                  {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'cart' -%}
+                  <span class="visually-hidden" data-atc-text="">
+                    {{- atc_button_label -}}
+                  </span>
+                </span>
+              </button>
+            </atc-submit-form>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+      {%- else -%}
+        {%- if details_btn -%}
+          <a class="product-column_btn-details --uppercase button button--primary" {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %}>
+            {{- 'product.view_details' | t -}}
+          </a>
+        {%- endif -%}
+        {%- if show_swatches -%}
+          
+          {%- form 'product',
+            product,
+            id: form_id,
+            class: 'visually-hidden',
+            novalidate: 'novalidate',
+            data-type: 'add-to-cart-form'
+          -%}
+            {%- liquid
+              assign check_against_inventory = true
+              if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+                assign check_against_inventory = false
+              endif
+              if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+                assign quantity_rule_soldout = true
+              endif
+      
+              capture atc_button_label
+                if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+                  echo 'product.atc_buttons.soldout' | t
+                  else
+                    echo 'product.atc_buttons.add_to_cart' | t
+                endif
+              endcapture
+            -%}
+            <input
+              type="hidden"
+              name="id"
+              value="{{- product.selected_or_first_available_variant.id -}}"
+            >
+            <input
+              type="hidden"
+              name="quantity"
+              value="{{- product.selected_or_first_available_variant.quantity_rule.min -}}"
+            >
+            <atc-submit-form
+              data-error-selector="[{{ error_render_attr }}]"
+              data-form="#{{ form_id }}"
+              {% if settings.cart_view == 'drawer' %}
+                {% unless template == 'cart' %}
+                  data-modal="true"
+                  data-modal-ref='[data-modal-ref="modal-cart-drawer"][data-expanded="false"]'
+                {% endunless %}
+                {% else %}
+                  {% unless template == 'cart' %}
+                    data-redirect-to="{{- routes.cart_url -}}"
+                  {% endunless %}
+              {% endif %}
+              {% if parent %}
+                data-parent='true'
+                data-parent-selector="[data-parent='{{- parent_selector -}}']"
+                {% else %}
+                  data-parent='false'
+              {% endif %}
+              data-sections='[
+                {
+                  "id": "cart-head",
+                  "selectors": ["[data-render-cart-bubble]", "[data-render-cart-text]"]
+                },
+                {
+                  "id": "cart-showcase",
+                  "selectors": ["[data-line-items-drawer-container]"]
+                }
+                {% if template == 'cart' %}
+                  ,
+                  {
+                    "id": "main-cart",
+                    "selectors": ["[data-line-items-container]"]
+                  }
+                {% endif %}
+              ]'
+            >
+              <button
+                type="submit"
+                name="add"
+                class="btn-icn-ixi product-column_btn-ixi product-column_atc"
+                {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+                  disabled
+                {% endif %}
+              >
+                <span class="btn-icn-ixi_wrapper">
+                  {%- render 'icons-data', width: 20, height: 20, use_icon: true, icon_reference: 'cart' -%}
+                  <span class="visually-hidden" data-atc-text="">
+                    {{- atc_button_label -}}
+                  </span>
+                </span>
+              </button>
+            </atc-submit-form>
+          {%- endform -%}
+        {%- endif -%}
+    {%- endunless -%}
+  </div>
+{%- endcapture -%}
+{%- if thumbnail_layout == 'slider' -%}
+  {%- capture drag_slider -%}
+    <drag-slider class="drag-slider" {{ media_drag_slider_attr }}>
+      <div class="drag-slider_wrapper --v-align-start">
+        <a {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %} class="drag-slider_image --featured-image --media-size-{{ card_media_size }}" style="--media-ratio: {{ card_media_ratio }};" data-media-id="{{- featured_image.id | default: 'null' -}}">
+          {%- if first_image != blank -%}
+            {%- render 'product-featured-image', product: product, loading: loading, size: 'thumbnail' -%}
+            {%- else -%}
+              {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+              <span class="visually-hidden">
+                {{- product.title | escape -}}
+              </span>
+          {%- endif -%}
+        </a>
+        {%- if product.media.size > 1 -%}
+          {%- for media in product.media -%}
+            {%- if media.id != featured_image.id -%}
+              {%- liquid
+                capture media_ratio
+                  if card_media_size == 'adapt'
+                    echo media.preview_image.aspect_ratio | default: '1'
+                    else 
+                      echo '1'
+                  endif
+                endcapture
+              -%}
+              <a {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %} class="drag-slider_image --drag-image --media-size-{{ card_media_size }}" style="--media-ratio: {{ media_ratio }};" data-media-id="{{- media.id -}}">
+                {%- render 'product-media-image', product: product, media: media, loading: 'lazy' -%}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="drag-slider_input-wrap">
+          <input
+            title="{{- 'product.drag_slider.input_title' | t: product: product.title -}}"
+            min="0"
+            max="{{- product.media.size | minus: 1 -}}"
+            type="range"
+            value="0"
+          >
+        </div>
+      {%- endif -%}
+    </drag-slider>
+  {%- endcapture -%}
+{%- endif -%}
+<focused-element class="product-column --align-center {{ btns_at_down }} {{ slider_class }}" data-parent="{{- parent_selector -}}" {% if on_load %}data-recommend-check=""{% endif %}>
+  <div class="product-column_media-wrap">
+    <div {% unless thumbnail_layout == 'slider' %}data-switch-wrapper=""{% endunless %}>
+      {%- unless thumbnail_layout == 'slider' -%}
+        <a {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %} class="product-column_image --featured-image --media-size-{{ card_media_size }}" style="--media-ratio: {{ card_media_ratio }};" data-media-id="{{- first_image.id -}}" data-update-link="">
+          {%- if first_image != blank -%}
+            {%- render 'product-featured-image', product: product, loading: loading, size: 'thumbnail' -%}
+            {%- else -%}
+              {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+              <span class="visually-hidden">
+                {{- product.title | escape -}}
+              </span>
+          {%- endif -%}
+        </a>
+        {%- else -%}
+          {{- drag_slider -}}
+      {%- endunless -%}
+    </div>
+    {%- if btns_position == 'top' -%}
+      {{- column_button -}}
+    {%- endif -%}
+  </div>
+  <div class="product-column_details-wrap">
+    {%- if show_vendor -%}
+      <strong class="product-column_vendor mty --fw-medium --word-break">
+        {{- product.vendor -}}
+      </strong>
+    {%- endif -%}
+    <{{ heading_tag | default: 'h3' }} class="product-column_heading mty h6 {{ card_heading_weight }}">
+      <a {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %} class="--hover-underline" data-update-link="">
+        {{- product.title | escape -}}
+      </a>
+    </{{ heading_tag | default: 'h3' }}>
+    {%- if show_price -%}
+      <div class="product-column_price">
+        {%- render 'product-price', product: product, use_variant: false, show_unit_price: false -%}
+      </div>
+      <div class="product-column_unit-price parent-node">
+        {%- render 'product-unit-price', product: product -%}
+      </div>
+    {%- endif -%}
+    {%- unless show_swatches == 'none' -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          {%- liquid
+            unless show_swatches == 'none'
+              capture has_color_variant
+                for value in option.values
+                  if show_swatches == 'swatches'
+                    if value.swatch.image
+                      echo 'true'
+                      break
+                      elsif value.swatch.color
+                        echo 'true'
+                        break
+                    endif
+                    else
+                      if option.name == 'color' or option.name == 'Color' or option.name == 'colour' or option.name == 'Colour'
+                        echo 'true'
+                        break
+                      endif
+                  endif
+                endfor
+              endcapture
+            endunless
+          -%}
+          {%- if has_color_variant == 'true' -%}
+            <div class="product-column_swatch-wrap --v-align-middle">
+              <single-variant
+                class="product-column_swatches --v-align-middle --justify-center"
+                data-json-selector="#{{ product_json_id }}"
+                data-renders='["[{{ price_column_render_attr }}]", "[{{ unit_price_column_render_attr }}]"]'
+                data-section-id="product-organizer"
+                data-product-url="{{- product_clean_url -}}"
+                data-update-url='false'
+                data-filter="color"
+                {% unless thumbnail_layout == 'slider' %}
+                  data-media-template="[{{- media_template_attr -}}]"
+                  {% else %}
+                    data-drag-selector="[{{- media_drag_slider_attr -}}]"
+                {% endunless %}
+                data-forms='["#{{ form_id }}"]'
+                data-parent='true'
+                data-loader='true'
+                data-parent-selector="[data-parent='{{- parent_selector -}}']"
+                {% if show_swatches == 'images' %}
+                  data-swatch="image"
+                {% endif %}
+              >
+                <div class="product-variant_options-wrap --v-align-middle product-variant_options-wrap--clr-swatch --justify-center">
+                  {%- render 'product-variant-options', product: product option: option, product_form_id: form_id, limit: variant_limit, show_only_swatch: true, swatches: show_swatches -%}
+                </div>
+                {% unless show_swatches == 'none' %}
+                  {%- for option in product.options_with_values -%}
+                    {%- liquid
+                      capture has_color_variant
+                        for value in option.values
+                          if show_swatches == 'swatches'
+                            if value.swatch.image
+                              echo 'true'
+                              break
+                              elsif value.swatch.color
+                                echo 'true'
+                                break
+                            endif
+                            else
+                              if option.name == 'color' or option.name == 'Color' or option.name == 'colour' or option.name == 'Colour'
+                                echo 'true'
+                                break
+                              endif
+                          endif
+                        endfor
+                      endcapture
+                    -%}
+                    {%- if has_color_variant == 'true' -%}
+                      {%- assign total_variants = option.values.size -%}
+                      {%- if total_variants > variant_limit -%}
+                        {%- assign rest_count = total_variants | minus: variant_limit -%}
+                        <strong class="product-variant-options_limiter --fw-medium widget--styles">
+                          +{{- rest_count -}}
+                        </strong>
+                      {%- endif -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endunless -%}
+              </single-variant>
+              {%- if show_price -%}
+                <div class="product-column_price" {{ price_column_render_attr }}>
+                  {%- render 'product-price', product: product, use_variant: true, show_unit_price: false -%}
+                </div>
+                <div class="product-column_unit-price parent-node" {{ unit_price_column_render_attr }}>
+                  {%- render 'product-unit-price', product: product -%}
+                </div>
+              {%- endif -%}
+            </div>
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endunless -%}
+    {%- endunless -%}
+  </div>
+  {%- if btns_position == 'bottom' -%}
+    <div class="product-column_btns-down">
+      {{- column_button -}}
+    </div>
+  {%- endif -%}
+  <script id="{{- product_json_id -}}" type="application/json">
+    {{- product | json -}}
+  </script>
+  <div class="product-column_error-container hidden" {{ error_render_attr }}>
+    <span data-error=""></span>
+  </div>
+  <template {{ media_template_attr }}>
+    {%- if first_image != blank -%}
+      <a {% if product.title != blank %}href="{{- product_clean_url -}}"{% else %}aria-disabled="true"{% endif %} data-update-link="" class="product-column_image --featured-image --media-size-{{ card_media_size }}" style="--media-ratio: {{ card_media_ratio }};" data-media-id="{{ first_image.id }}">
+        {%- render 'product-featured-image', product: product, loading: loading, size: 'thumbnail' -%}
+      </a>
+    {%- endif -%}
+    {%- for variant in product.variants -%}
+      {%- liquid
+        capture variant_media_ratio
+          if card_media_size == 'adapt'
+            echo variant.featured_image.aspect_ratio | default: '1'
+            else 
+              echo '1'
+          endif
+        endcapture
+      -%}
+      <a href="{{- variant.url -}}" class="product-column_image --media-size-{{ card_media_size }} --template-image" style="--media-ratio: {{ variant_media_ratio }};" data-media-id="{{ variant.featured_media.id }}">
+        {%- unless variant.featured_image == blank -%}
+          {%- render 'product-variant-image', product: product, variant: variant, loading: 'lazy' -%}
+          {%- else -%}
+            {{- 'image' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+            <span class="visually-hidden">
+              {{- image_alt -}}
+            </span>
+        {%- endunless -%}
+      </a>
+    {%- endfor -%}
+  </template>
+</focused-element>

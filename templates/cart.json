@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+      },
+      "blocks": {
+        "widget_row_1": {
+          "type": "icon_description",
+          "settings": {
+            "heading": "Free Shipping & Returns:",
+            "description": "<p>Free standard shipping on orders over $99, delivered on 12/01/2022 - 15/10/2022.</p>"
+          }
+        },
+        "widget_row_2": {
+          "type": "icon_description",
+          "settings": {
+            "heading": "Notice:",
+            "description": "<p>Covid-19 Shipping Delay Notice</p>"
+          }
+        }
+      },
+      "block_order": [
+        "widget_row_1",
+        "widget_row_2"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

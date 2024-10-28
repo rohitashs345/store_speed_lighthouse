@@ -1,0 +1,155 @@
+.main-addresses{
+  --desktop-columns-count: 1;
+}
+
+.main-addresses .account-content_heading{
+  --mt-bottom: 0;
+}
+
+.main-addresses_head-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 46px;
+}
+
+.main-addresses_inline-wrapper{
+  margin-left: auto;
+  max-width: 50%;
+}
+
+.account-content_new-btn .button_icn{
+  display: none;
+}
+
+.account-content_new-btn{
+  --button-padding-y: 1rem;
+  --button-padding-x: 1.8rem;
+  --button-font-size: 1.6rem;
+  --button-line-height: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.account-info-widget_action-btns{
+  position: absolute;
+  top: 30px;
+  right: 27px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+input:focus-visible + .custom-checkbox-label{
+  outline: 1px solid var(--section-focus-outline-color);
+  outline-offset: 3px;
+}
+
+.main-addresses_form-col .custom-checkbox-label_text{
+  margin-bottom: 0;
+}
+
+.account-info-widget_action-btn{
+  --ixi-bdr-width: 0;
+  --ixi-bg-color: var(--section-widget-background-color);
+  --ixi-text-color: var(--section-widget-foreground-color);
+  --ixi-bg-hover-color: var(--section-widget-foreground-color);
+  --ixi-text-hover-color: var(--section-widget-background-color);
+  --btn-outer-padding-x: 0;
+  --btn-outer-padding-y: 0;
+  --ixi-padding-x: 3px;
+  --ixi-padding-y: 3px;
+  --btn-radius: calc(var(--section-radius) / 2);
+}
+
+.address-widget{
+  display: flex;
+}
+
+.modal-component--new-address .modal-component_head,
+.modal-component--update-address .modal-component_head,
+.form-wrapper_btns-wrap,
+.modal-component--update-address .modal-component_head{
+  text-align: center;
+}
+
+.modal-component--new-address .modal-component_heading{
+  font-size: 2.2rem;
+  line-height: 3rem;
+}
+
+.main-addresses_description{
+  font-size: 14px;
+  line-height: 1.8rem;
+  color: var(--section-error-color);
+  margin-top: 12px;
+}
+
+.main-addresses_form-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 17px;
+}
+
+.main-addresses_form-col{
+  width: 100%;
+}
+
+.form-wrapper_btns-wrap{
+  margin-top: 25px;
+}
+
+.form-wrapper_btn-cancel{
+  margin-top: 19px;
+}
+
+.form-wrapper_btn--full-width{
+  width: 100%;
+}
+
+.modal-component--new-address .modal-component_body,
+.modal-component--update-address .modal-component_body{
+  border-radius: 10px;
+  max-width: 560px;
+}
+
+.main-addresses_form-col .custom-checkbox-span{
+  position: relative;
+}
+
+@media (min-width: 576px){
+  .main-addresses{
+    --desktop-columns-count: 2;
+  }
+
+  .main-addresses_form-col.main-addresses_form-col--half{
+    width: calc(50% - 10px);
+  }
+
+  .account-content_new-btn{
+    --button-padding-y: 1.3rem;
+    --button-padding-x: 3rem;
+  }
+   
+  .account-content_new-btn .button_icn{
+    display: inline;
+  } 
+}
+
+@media (min-width: 992px){
+  .main-addresses{
+    --desktop-columns-count: 3;
+  }
+
+  .main-addresses_head-wrapper{
+    margin-bottom: 76px;
+  }
+
+  .modal-component--new-address .modal-component_body,
+  .modal-component--update-address .modal-component_body{
+    padding: 40px;
+  }
+}

@@ -1,0 +1,180 @@
+{%- liquid
+  assign section_prefix_class = 'footer'
+  assign section_scheme_class = section.settings.section_color_scheme | prepend: 'scheme scheme--'
+
+  capture container_class
+    if section.settings.section_full_width
+      echo 'container-fluid'
+      else
+        echo 'container'
+    endif
+  endcapture
+
+  capture check_localization
+    render 'check-localization-drops'
+  endcapture
+
+  capture local_exists
+    if section.settings.enable_country_selector or section.settings.enable_language_selector
+      if check_localization == 'true'
+        echo 'true'
+      endif
+    endif
+  endcapture
+-%}
+{{- 'footer.css' | asset_url | stylesheet_tag -}}
+<div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }} {% if section.settings.show_bottom_bdr %}--bdr-bottom{% endif %} {% if section.settings.show_top_bdr %}--bdr-top{% endif %}">
+  <div class="{{ container_class }}">
+    <div class="{{ section_prefix_class }}_wrapper --v-align-middle">
+      <div class="{{ section_prefix_class }}_social {{ section_prefix_class }}_col">
+        {%- if section.settings.show_payment_icons -%}
+          <div class="{{ section_prefix_class }}_pay-methods-wrap">
+            {%- render 'payment-icons' | prefix_class: section_prefix_class -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="{{ section_prefix_class }}_announce-slide --word-break {{ section_prefix_class }}_col">
+        <span class="{{ section_prefix_class }}_text">
+          Copyright &copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}} &nbsp; {{ powered_by_link }}
+        </span>
+      </div>
+      {%- if local_exists == 'true' -%}
+        <div class="{{ section_prefix_class }}_localizations-col {{ section_prefix_class }}_info {{ section_prefix_class }}_col">
+          <div class="localization-wrapper --align-middle --justify-end">
+            {%- liquid
+              assign lfid = section.id | prepend: 'language-form-'
+              assign if_id_no_script = section.id | prepend: 'language-form-' | append: '-noscript'
+
+              assign resid = section.id | prepend: 'country-form-'
+              assign res_id_no_script = section.id | prepend: 'country-form-' | append: '-noscript'
+            -%}
+            {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+              <div class="localization-wrapper_drop">
+                <noscript>
+                  {%- form 'localization', id: res_id_no_script, class: 'localization-form' -%}
+                    <div class="custom-select">
+                      <h2 class="visually-hidden" id="{{ res_id_no_script }}-country-heading">{{- 'localization.country_label' | t -}}</h2>
+                      <select
+                        name="country_code"
+                        aria-labelledby="{{ res_id_no_script }}-country-heading"
+                      >
+                        {%- for country in localization.available_countries -%}
+                          <option
+                            value="{{ country.iso_code }}"
+                            {% if country.iso_code == localization.country.iso_code %}
+                              selected
+                            {% endif %}
+                          >
+                            {{- country.name }} ({{ country.currency.iso_code }}
+                            {{ country.currency.symbol -}})
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                    </div>
+                    <button class="button button--tertiary">{{- 'localization.update_country' | t -}}</button>
+                  {%- endform -%}
+                </noscript>
+                {%- form 'localization', id: resid, class: 'localization-form' -%}
+                  {%- render 'country-localization', localPosition: section.id, id: resid -%}
+                {%- endform -%}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+              <div class="localization-wrapper_drop">
+                <noscript>
+                  {%- form 'localization', id: if_id_no_script, class: 'localization-form' -%}
+                    <h2 class="visually-hidden" id="{{ if_id_no_script }}-lang-heading">{{- 'localization.country_label' | t -}}</h2>
+                    <div class="custom-select">
+                      <select
+                        name="locale_code"
+                        aria-labelledby="{{ if_id_no_script }}-lang-heading"
+                      >
+                        {%- for language in localization.available_languages -%}
+                          <option
+                            value="{{ language.iso_code }}"
+                            lang="{{ language.iso_code }}"
+                            {% if language.iso_code == localization.language.iso_code %}
+                              selected
+                            {% endif %}
+                          >
+                            {{ language.endonym_name | capitalize }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                    </div>
+                    <button class="button button--primary">{{- 'localization.update_language' | t -}}</button>
+                  {%- endform -%}
+                </noscript>
+                {%- form 'localization', id: lfid, class: 'localization-form' -%}
+                  {%- render 'language-localization', localPosition: section.id, id: lfid -%}
+                {%- endform -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+        {%- else -%}
+          <div class="{{ section_prefix_class }}_localizations-col {{ section_prefix_class }}_info {{ section_prefix_class }}_col">&nbsp;</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "tag": "footer",
+  "limit": 1,
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:sections.footer.settings.pay_icons.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "t:localization_drops.language.label",
+      "info": "t:localization_drops.language.info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "t:localization_drops.country.label",
+      "info": "t:localization_drops.country.info",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:layout.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_bdr",
+      "label": "t:top_bdr.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_bdr",
+      "label": "t:bottom_bdr.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "section_full_width",
+      "label": "t:sections.full_width.label",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "default": "scheme2",
+      "label": "t:color_scheme.label"
+    }
+  ]
+}
+{% endschema %}

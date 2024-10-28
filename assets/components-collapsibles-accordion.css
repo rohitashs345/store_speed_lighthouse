@@ -1,0 +1,37 @@
+.collapsible-accordion .open-close_opener,
+.collapsible-accordion .open-close_opener{
+  padding-bottom: 20px;
+  padding-top: 20px;
+  --headings-font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.collapsible-accordion .open-close_slide,
+.collapsible-accordion .open-close_slide{
+  padding-bottom: 10px;
+}
+
+.collapsible-accordion .open-close_opener-icn,
+.collapsible-accordion .open-close_opener-icn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  line-height: 0;
+}
+
+.collapsible-accordion .open-close_opener--icn-open svg,
+.collapsible-accordion .open-close_opener--icn-close svg{
+  padding: 7px;
+}
+
+.open-close[open] .open-close_opener--icn-open,
+.recipient-form>input[type=checkbox]:not(:checked,:disabled)~.recipient-fields,
+.--hide-subtotal .quantity-input_subtotal-wrap{
+  display: none;
+}
+
+.collapsible-accordion_row--collapsible_row{
+  border-bottom: 1px solid var(--section-border-color);
+}

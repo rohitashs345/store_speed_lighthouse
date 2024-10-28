@@ -1,0 +1,89 @@
+.modal-component--discount-popup .modal-component_body{
+  max-width: 541px;
+  padding: 25px;
+  border-radius: var(--section-radius);
+  background-color: var(--popup-bg);
+}
+
+.modal-component--discount-popup{
+  z-index: 888;
+  --input-border-width: 0;
+}
+
+.discount-popup_image path{
+  fill: currentColor;
+}
+
+.discount-popup_description,
+.discount-popup_heading{
+  word-break: break-word;
+}
+
+.discount-popup_description p{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.discount-popup_heading{
+  display: block;
+}
+
+.discount-popup_btns-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.discount-popup_image{
+  line-height: 0;
+}
+
+.discount-popup_image:last-child{
+  margin-bottom: -25px;
+}
+
+.modal-component--discount-popup .--mobile-hidden{
+  display: none;
+}
+
+.modal-component--discount-popup .mty {
+  --mt-bottom: calc(var(--block-spacing)/1.5);
+}
+
+.discount-popup_image .img--placeholder path{
+  fill: currentColor;
+}
+.discount-form_btns-wrap{
+  margin-top: 13px;
+}
+
+.discount-form_submit-btn,
+.discount-form_btns-wrap{
+  width: 100%;
+}
+
+.discount-form_submit-btn{
+  --button-padding-y: 1.7rem;
+  --button-font-size: 1.6rem;
+  --button-font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .modal-component--discount-popup .modal-component_body{
+    padding: 35px 58px;
+  }
+
+  .modal-component--discount-popup .--mobile-hidden{
+    display: block;
+  }
+
+  .discount-popup_image:last-child{
+    margin-bottom: -35px;
+  }
+}
+
+@media (min-width: 1200px){
+  .modal-component--discount-popup .mty{
+    --mt-bottom: var(--block-spacing);
+  }
+}

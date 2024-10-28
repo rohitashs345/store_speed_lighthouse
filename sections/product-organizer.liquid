@@ -1,0 +1,156 @@
+{%- liquid
+  assign price_column_render_attr = 'data-render-column-price'
+  assign unit_price_column_render_attr = 'data-render-column-unit-price'
+  assign stock_render_attr = 'data-render-stock'
+  assign price_render_attr = 'data-render-price-n-unit'
+  assign sku_render_attr = 'data-render-sku'
+  assign qty_render_attr = 'data-render-qty'
+  assign price_edit_render_attr = 'data-render-edit-price'
+  assign price_edit_main_render_attr = 'data-render-edit-main-price'
+  assign qty_bundle_render_attr = 'data-render-bundle-qty'
+  assign price_render_attr_duplicated = 'data-render-bundle-price-duplicated'
+
+  
+  assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+  assign uses_comma_decimals = false
+  if currencies_using_comma_decimals contains cart.currency.iso_code
+    assign uses_comma_decimals = true
+  endif
+-%}
+<product-organizer id="{{- section.id -}}">
+  <div {{ price_column_render_attr }}>
+    {%- render 'product-price', product: product, use_variant: true, show_unit_price: false -%}
+  </div>
+  <div {{ unit_price_column_render_attr }}>
+    {%- render 'product-unit-price', product: product -%}
+  </div>
+  <div {{ stock_render_attr }}>
+    {%- render 'product-stock', product: product -%}
+  </div>
+  <div {{ price_render_attr }}>
+    {%- render 'product-price', product: product, use_variant: true, show_unit_price: true -%}
+  </div>
+  <div {{ sku_render_attr }}>
+    {%- render 'product-sku', product: product, show_label: true -%}
+  </div>
+  <div {{ qty_render_attr }}>
+    <div class="product-common_qty-wrap">
+      <strong class="quick-view_product-label h6 --word-break">
+        {{- 'product.qty_label' | t -}}.
+      </strong>
+      <quantity-input
+        class="quantity-input product-common_quantity-input --v-align-middle"
+        data-init-value="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+        {% unless uses_comma_decimals %}
+          data-variant-price="{{- product.selected_or_first_available_variant.price | money_without_currency | replace: ',', '' | times: 100 -}}"
+          {% else %}
+            data-variant-price="{{- product.selected_or_first_available_variant.price | money_without_currency | replace: '.', '' | replace: ',', '.' | times: 100 -}}"
+        {% endunless %}
+      >
+        <div class="quantity-input_fielder-wrap">
+          <button class="quantity-input_button btn-icn-ixi quantity-input_button-minus disabled" disabled name="minus" type="button">
+            <span class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 8, height: 8, use_icon: true, icon_reference: 'minus' -%}
+              <span class="visually-hidden">
+                {{- 'quantity.decrease' | t: product: product.title -}}
+              </span>
+            </span>
+          </button>
+          <input
+            type="number"
+            data-min="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
+            min="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+            {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+              data-max="{{- product.selected_or_first_available_variant.quantity_rule.max -}}"
+              max="{{- product.selected_or_first_available_variant.quantity_rule.max -}}"
+            {% endif %}
+            step="{{- product.selected_or_first_available_variant.quantity_rule.increment -}}"
+            value="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+            aria-label="{{- 'quantity.input_label' | t: product: product.title -}}"
+            title="{{- 'quantity.input_label' | t: product: product.title -}}"
+          >
+          <button class="quantity-input_button btn-icn-ixi quantity-input_button-plus" name="plus" type="button">
+            <span class="btn-icn-ixi_wrapper">
+              {%- render 'icons-data', width: 8, height: 8, use_icon: true, icon_reference: 'plus' -%}
+              <span class="visually-hidden" style="background-color: white; color: black;">
+                {{- 'quantity.increase' | t: product: product.title -}}
+              </span>
+            </span>
+          </button>
+        </div>
+        <strong class="quantity-input_subtotal-wrap --word-break --fw-normal">
+          <span class="quantit-input_subtotal-title">
+            {{- 'quantity.subtotal' | t -}}:
+          </span>
+          <span class="quantity-input_subtotal-price" data-qty-subtotal="">
+            {{- product.selected_or_first_available_variant.price | money -}}
+          </span>
+        </strong>
+      </quantity-input>
+      <div class="product-common_error --fw-normal hidden">
+        <span data-error=""></span>
+      </div>
+    </div>
+  </div>
+  <div {{ price_edit_render_attr }}>
+    {%- render 'product-price', product: product, use_variant: true, show_unit_price: true -%}
+  </div>
+  <div {{ price_edit_main_render_attr }}>
+    {%- render 'product-price', product: product, use_variant: true, show_unit_price: true -%}
+  </div>
+  <div {{ qty_bundle_render_attr }}>
+    <quantity-input
+      class="quantity-input bundle-row_quantity-input --v-align-middle"
+      data-init-value="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+      data-ref-input="[data-product-container]"
+      data-ref-subtotals="[data-product-container='bundle-product-{{- product.id -}}'] [data-qty-subtotal]"
+      {% unless uses_comma_decimals %}
+        data-variant-price="{{- product.selected_or_first_available_variant.price | money_without_currency | replace: ',', '' | times: 100 -}}"
+        {% else %}
+          data-variant-price="{{- product.selected_or_first_available_variant.price | money_without_currency | replace: '.', '' | replace: ',', '.' | times: 100 -}}"
+      {% endunless %}
+    >
+      <div class="quantity-input_fielder-wrap">
+        <button class="quantity-input_button btn-icn-ixi quantity-input_button-minus disabled" disabled name="minus" type="button">
+          <span class="btn-icn-ixi_wrapper">
+            {%- render 'icons-data', width: 8, height: 8, use_icon: true, icon_reference: 'minus' -%}
+            <span class="visually-hidden">
+              {{- 'quantity.decrease' | t: product: product.title -}}
+            </span>
+          </span>
+        </button>
+        <input
+          type="number"
+          data-min="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
+          min="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+          {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+            data-max="{{- product.selected_or_first_available_variant.quantity_rule.max -}}"
+            max="{{- product.selected_or_first_available_variant.quantity_rule.max -}}"
+          {% endif %}
+          step="{{- product.selected_or_first_available_variant.quantity_rule.increment | default: 1 -}}"
+          value="{{- product.selected_or_first_available_variant.quantity_rule.min | default: 1 -}}"
+          aria-label="{{- 'quantity.input_label' | t: product: product.title -}}"
+          title="Quantity-bundle-row-product-{{ product.id }}"
+        >
+        <button class="quantity-input_button btn-icn-ixi quantity-input_button-plus" name="plus" type="button">
+          <span class="btn-icn-ixi_wrapper">
+            {%- render 'icons-data', width: 8, height: 8, use_icon: true, icon_reference: 'plus' -%}
+            <span class="visually-hidden">
+              {{- 'quantity.increase' | t: product: product.title -}}
+            </span>
+          </span>
+        </button>
+      </div>
+    </quantity-input>
+  </div>
+  <div {{ price_render_attr_duplicated }}>
+    <span class="bundle-row_subtotal-price --word-break" data-qty-subtotal="">
+      {{- product.selected_or_first_available_variant.price | money -}}
+    </span>
+    {%- unless product.selected_or_first_available_variant.unit_price_measurement == nil -%}
+      <div class="bundle-row_unit-wrap">
+        {%- render 'product-unit-price', product: product -%}
+      </div>
+    {%- endunless -%}
+  </div>
+</product-organizer>

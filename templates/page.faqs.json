@@ -1,0 +1,208 @@
+{
+  "sections": {
+    "main_page": {
+      "type": "main-page",
+      "settings": {
+        "section_top_padding": 50,
+        "section_bottom_padding": 0
+      }
+    },
+    "collapsible_with_media_1": {
+      "type": "collapsible-with-media",
+      "settings": {
+        "section_collapsible_heading": "General Information",
+        "section_heading": "",
+        "section_caption": "",
+        "section_heading_size": "heading_medium",
+        "section_bottom_padding": 0
+      },
+      "blocks": {
+        "collapse_row_1": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": true
+          }
+        },
+        "collapse_row_2": {
+          "type": "collapse_row",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "collapse_row_1",
+        "collapse_row_2"
+      ]
+    },
+    "collapsible_with_media_2": {
+      "type": "collapsible-with-media",
+      "settings": {
+        "section_collapsible_heading": "Products",
+        "section_heading": "",
+        "section_caption": "",
+        "section_heading_size": "heading_medium",
+        "section_bottom_padding": 0,
+        "section_top_padding": 52
+      },
+      "blocks": {
+        "collapse_row_1": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": false
+          }
+        },
+        "collapse_row_2": {
+          "type": "collapse_row",
+          "settings": {
+          }
+        },
+        "collapse_row_3": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": true
+          }
+        }
+      },
+      "block_order": [
+        "collapse_row_1",
+        "collapse_row_2",
+        "collapse_row_3"
+      ]
+    },
+    "collapsible_with_media_3": {
+      "type": "collapsible-with-media",
+      "settings": {
+        "section_collapsible_heading": "Orders and Shipping",
+        "section_heading": "",
+        "section_caption": "",
+        "section_heading_size": "heading_medium",
+        "section_bottom_padding": 0,
+        "section_top_padding": 52
+      },
+      "blocks": {
+        "collapse_row_1": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": false
+          }
+        },
+        "collapse_row_2": {
+          "type": "collapse_row",
+          "settings": {
+          }
+        },
+        "collapse_row_3": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": true
+          }
+        },
+        "collapse_row_4": {
+          "type": "collapse_row",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "collapse_row_1",
+        "collapse_row_2",
+        "collapse_row_3",
+        "collapse_row_4"
+      ]
+    },
+    "collapsible_with_media_4": {
+      "type": "collapsible-with-media",
+      "settings": {
+        "section_collapsible_heading": "Returns and Exchanges",
+        "section_heading": "",
+        "section_caption": "",
+        "section_heading_size": "heading_medium",
+        "section_top_padding": 52
+      },
+      "blocks": {
+        "collapse_row_1": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": false
+          }
+        },
+        "collapse_row_2": {
+          "type": "collapse_row",
+          "settings": {
+          }
+        },
+        "collapse_row_3": {
+          "type": "collapse_row",
+          "settings": {
+            "open_by_default": true
+          }
+        }
+      },
+      "block_order": [
+        "collapse_row_1",
+        "collapse_row_2",
+        "collapse_row_3"
+      ]
+    },
+    "media_with_content": {
+      "type": "media-with-content",
+      "settings": {
+        "section_top_padding": 0,
+        "section_bottom_padding": 0
+      },
+      "blocks": {
+        "image": {
+          "type": "image",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "image"
+      ]
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "settings": {
+        "section_heading": ""
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+          }
+        },
+        "column_4": {
+          "type": "column",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3",
+        "column_4"
+      ]
+    }
+  },
+  "order": [
+    "main_page",
+    "collapsible_with_media_1",
+    "collapsible_with_media_2",
+    "collapsible_with_media_3",
+    "collapsible_with_media_4",
+    "media_with_content",
+    "multicolumn"
+  ]
+}

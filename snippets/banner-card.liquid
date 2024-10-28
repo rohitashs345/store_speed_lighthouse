@@ -1,0 +1,214 @@
+{%- comment -%}
+  renders promotion banner on section templates
+  usage
+    {%- render 'promotion-banner', figure: block, index: forloop.index -%}
+{%- endcomment -%}
+{% liquid
+  assign btn_desktop_width = figure.settings.tag_width
+  assign btn_desktop_width = btn_desktop_width | round
+
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+      else
+        echo 'eager'
+    endif
+  endcapture
+
+  capture image_alt
+    if figure.settings.heading != blank
+      echo figure.settings.heading
+      else
+       echo 'promotion_banners.alt_label' | t: index: index
+    endif
+  endcapture
+
+  capture banner_heading_size
+    case figure.settings.banner_heading_size
+      when 'heading_xx_large'
+        echo 'h1'
+      when 'heading_x_large'
+        echo 'h2'
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      when 'heading_small'
+        echo 'h5'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture banner_heading_weight
+    case figure.settings.banner_heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture banner_description_weight
+    case figure.settings.banner_description_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  assign tag_position_var = figure.settings.tag_position
+  capture tag_position
+    case tag_position_var
+      when 'top_right'
+        echo '--btn-top-right'
+      else
+        echo '--btn-top-left'
+    endcase
+  endcapture
+
+  capture discount_heading_size
+    case figure.settings.discount_heading_size
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      when 'heading_small'
+        echo 'h5'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture discount_heading_weight
+    case figure.settings.discount_heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture discount_subheading_size
+    case figure.settings.discount_subheading_size
+      when 'heading_large'
+        echo 'h3'
+      when 'heading_medium'
+        echo 'h4'
+      when 'heading_small'
+        echo 'h5'
+      else
+        echo 'h'
+    endcase
+  endcapture
+
+  capture discount_subheading_weight
+    case figure.settings.discount_subheading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+%}
+{%- if figure.settings.link != blank -%}
+  <a class="banner-card scheme scheme--{{ figure.settings.block_color_scheme }}" href="{{- figure.settings.link -}}" {% if figure.settings.open_new_window %}target="_blank"{% endif %}>
+    {%- if figure.settings.image != blank -%}
+      {{- figure.settings.image | image_url: width: 1460 | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute',  loading: loading_attr, widths: '730, 1460', sizes: '(max-width: 767px) 25vw, 50vw' -}}
+      {% else %}
+        {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    {%- endif -%}
+    <span class="visually-hidden">{{- image_alt -}}</span>
+    <div class="banner-card_tag-position {% if figure.settings.hide_mobile_tag %}--hide-none{% else %}--mob-block{% endif %} {% if figure.settings.show_discount_tag %}--desktop-tag-none{% else %}--desktop-tag-block{% endif %} {{ tag_position }}" style="--tag-width: {{ btn_desktop_width }}px;">
+      <div class="banner-card_tag" style="--discount-bg: {{ figure.settings.discount_bg }}">
+        {%- render 'icons-data', width: btn_desktop_width, height: 161, use_icon: true, icon_reference: 'discount-tag' -%}
+        <div class="banner-card_discount-content" style="--discount-fg: {{ figure.settings.discount_fg }}">
+          {%- if figure.settings.discount_heading != blank -%}
+            <div class="banner-card_tag-heading {{ discount_heading_weight }} {{ discount_heading_size }} --word-break">
+              {{- figure.settings.discount_heading -}}
+            </div>
+          {%- endif -%}
+          {%- if figure.settings.discount_subheading != blank -%}
+            <div class="banner-card_tag-subheading --word-break {{ discount_subheading_weight }} {{ discount_subheading_size }}">
+              {{- figure.settings.discount_subheading -}}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    <div class="banner-card_content align-holder align-holder--{{ figure.settings.card_content_position }} --align-center">
+      {%- if figure.settings.banner_heading != blank or figure.settings.banner_description != blank -%}
+        <div class="heading-head --word-break align-holder_wrapper">
+          {%- if figure.settings.banner_description != blank -%}
+            <div class="banner_description --word-break text-size--{{ figure.settings.banner_description_size }} {{ banner_description_weight }} mty" style="--tag-bg: {{ figure.settings.caption_bg }}; --tag-fg: {{ figure.settings.caption_fg }};">
+              {{- figure.settings.banner_description -}}
+            </div>
+          {%- endif -%}
+          {%- if figure.settings.banner_heading != blank -%}
+            <h2 class="banner_heading --h-anchor-none {{ banner_heading_size }} {{ banner_heading_weight }} mty">
+              {{- figure.settings.banner_heading -}}
+            </h2>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </a>
+  {%- else -%}
+    <figure class="banner-card scheme scheme--{{ figure.settings.block_color_scheme }}">
+      {%- if figure.settings.image != blank -%}
+        {{- figure.settings.image | image_url: width: 1460 | image_tag: alt: image_alt, class: 'object-fit object-fit--absolute',  loading: loading_attr, widths: '730, 1460', sizes: '(max-width: 767px) 25vw, 50vw' -}}
+        {% else %}
+          {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+      {%- endif -%}
+      <div class="banner-card_tag-position {% if figure.settings.hide_mobile_tag %}--hide-none{% else %}--mob-block{% endif %} {% if figure.settings.show_discount_tag %}--desktop-tag-none{% else %}--desktop-tag-block{% endif %} {{ tag_position }}" style="--tag-width: {{ btn_desktop_width }}px;">
+        <div class="banner-card_tag" style="--discount-bg: {{ figure.settings.discount_bg }}">
+          {%- render 'icons-data', width: btn_desktop_width, height: 161, use_icon: true, icon_reference: 'discount-tag' -%}
+          <div class="banner-card_discount-content" style="--discount-fg: {{ figure.settings.discount_fg }}">
+            {%- if figure.settings.discount_heading != blank -%}
+              <div class="banner-card_tag-heading {{ discount_heading_weight }} {{ discount_heading_size }} --word-break">
+                {{- figure.settings.discount_heading -}}
+              </div>
+            {%- endif -%}
+            {%- if figure.settings.discount_subheading != blank -%}
+              <div class="banner-card_tag-subheading --word-break {{ discount_subheading_weight }} {{ discount_subheading_size }}">
+                {{- figure.settings.discount_subheading -}}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+      <div class="banner-card_content align-holder align-holder--{{ figure.settings.card_content_position }} --align-center">
+        {%- if figure.settings.banner_heading != blank or figure.settings.banner_description != blank -%}
+          <div class="heading-head --word-break align-holder_wrapper">
+            {%- if figure.settings.banner_description != blank -%}
+              <div class="banner_description --word-break text-size--{{ figure.settings.banner_description_size }} {{ banner_description_weight }} mty" style="--tag-bg: {{ figure.settings.caption_bg }}; --tag-fg: {{ figure.settings.caption_fg }};">
+                {{- figure.settings.banner_description -}}
+              </div>
+            {%- endif -%}
+            {%- if figure.settings.banner_heading != blank -%}
+              <h2 class="banner_heading --h-anchor-none {{ banner_heading_size }} {{ banner_heading_weight }} mty">
+                {{- figure.settings.banner_heading -}}
+              </h2>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </figure>
+{%- endif -%}

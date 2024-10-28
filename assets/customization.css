@@ -1,0 +1,83 @@
+.shopify-policy__container{
+  --sec-pt-top: 40px;
+  --sec-pt-bottom: 40px;
+  max-width: calc(1200 * 1px) !important;
+  padding-top: calc(var(--sec-pt-top) / 1.6) !important;
+  padding-bottom: calc(var(--sec-pt-bottom) / 1.6) !important;
+}
+
+.shopify-challenge__container{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.shopify-challenge__container iframe{
+  border-radius: 0;
+}
+
+.shopify-challenge__button{
+  background-color: var(--body-text-color);
+  color: var(--body-background-color);
+  padding: 10px 29px;
+  border-radius: var(--button-corner-radius);
+  margin-top: 40px !important;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  border: 1px solid var(--body-text-color);
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.shopify-challenge__button:hover{
+  background-color: var(--body-background-color);
+  color: var(--body-text-color);
+  border: 1px solid;
+  border-color: var(--section-border-color);
+}
+
+shopify-accelerated-checkout{
+  --shopify-accelerated-checkout-button-block-size: 6.3rem;
+  --shopify-accelerated-checkout-button-border-radius: var(--button-corner-radius);
+  --shopify-accelerated-checkout-button-box-shadow: none;
+  --shopify-accelerated-checkout-skeleton-background-color: var(--section-secondary-bg);
+  --shopify-accelerated-checkout-skeleton-animation-opacity-start: 1;
+  --shopify-accelerated-checkout-skeleton-animation-opacity-end: 0.6;
+  --shopify-accelerated-checkout-skeleton-animation-duration: 0.3s;
+  --shopify-accelerated-checkout-skeleton-animation-timing-function: ease;
+}
+
+.shopify-cleanslate .KHqjJyKjVNT1lCGf2bnQ,
+.shopify-cleanslate .wOEViUrCyNb9maEe3QrQ {
+  margin-top: 0;
+}
+
+shopify-accelerated-checkout-cart {
+  --shopify-accelerated-checkout-button-block-size: 4.2rem;
+  --shopify-accelerated-checkout-button-inline-size: 4.2rem;
+  --shopify-accelerated-checkout-button-border-radius: var(--button-corner-radius);
+  --shopify-accelerated-checkout-button-box-shadow: none;
+  --shopify-accelerated-checkout-inline-alignment: center;
+  --shopify-accelerated-checkout-row-gap: 8px;
+  --shopify-accelerated-checkout-skeleton-background-color: var(--section-secondary-bg);
+  --shopify-accelerated-checkout-skeleton-animation-opacity-start: 1;
+  --shopify-accelerated-checkout-skeleton-animation-opacity-end: 0.6;
+  --shopify-accelerated-checkout-skeleton-animation-duration: 0.3s;
+  --shopify-accelerated-checkout-skeleton-animation-timing-function: ease;
+}
+
+shopify-payment-terms{
+  display: block;
+  margin-bottom: 16px;
+}
+
+.shopify-payment-button__more-options{
+   font-size: 1.2rem !important;
+   line-height: 2rem;
+   padding: 2px 0;
+}
+
+@media (min-width: 768px) {
+  .shopify-policy__container {
+    padding-top: var(--sec-pt-top) !important;
+    padding-bottom: var(--sec-pt-bottom) !important;
+  }
+}

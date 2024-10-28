@@ -1,0 +1,82 @@
+.custom-scroll{
+  display: flex;
+}
+
+.custom-scroll--horizontal::-webkit-scrollbar {
+  height: 5px;
+  margin-top: -8px;
+}
+
+.custom-scroll--vertical::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: var(--section-border-color);
+}
+
+.custom-scroll--horizontal::-webkit-scrollbar-track{
+  margin-left: 80px; 
+  margin-right: 80px;
+}
+
+.custom-scroll--vertical::-webkit-scrollbar-track{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--section-heading-color);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--section-alternative-color);
+}
+
+.custom-scroll--vertical{
+  flex-direction: column;
+}
+
+.custom-scroll--vertical,
+.custom-scroll--horizontal{
+  -webkit-overflow-scrolling: touch;
+  scroll-padding: center;
+}
+
+.custom-scroll--horizontal{
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.custom-scroll--vertical{
+  scroll-snap-type: y mandatory;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: var(--cs-max-height, 400px);
+}
+
+.cs-col{
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  width: 326px;
+  padding: 0 calc(var(--grid-gutter, 14px) / 2) 52px;
+}
+
+.custom-scroll--vertical .cs-col{
+  width: 100%;
+}
+
+@media(min-width: 992px){
+  .custom-scroll--horizontal::-webkit-scrollbar-track{
+    margin-left: 140px; 
+    margin-right: 140px;
+  }
+}
+
+@media(min-width: 1400px){
+  .custom-scroll--horizontal::-webkit-scrollbar-track{
+    margin-left: 250px; 
+    margin-right: 250px;
+  }
+}

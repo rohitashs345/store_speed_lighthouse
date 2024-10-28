@@ -1,0 +1,57 @@
+{%- comment -%}
+  renders before/after on section templates
+  usage
+    {%- render 'before-after', height: bf_height -%}
+{%- endcomment -%}
+{%- liquid
+  capture loading_attr
+    if section.index > 1
+      echo 'lazy'
+    else
+      echo 'eager'
+    endif
+  endcapture
+
+  assign image_width = settings.page_width | times: 3
+  assign image_height = image_width | divided_by: 2
+-%}
+<div class="bf-outer-wrap">
+  <before-after class="bf-wrapper {{ height }}" style="--after-placement: {{ section.settings.after_position }}%;">
+    {%- if section.blocks.size > 1 -%}
+      {%- for block in section.blocks -%}
+        {%- assign image_alt = 'before_after.image_alt' | t: index: forloop.index -%}
+        {%- case block.type -%}
+          {%- when 'before' -%}
+            <div class="bf-wrapper_image bf-wrapper_image--before {{ height }}">
+              {%- if block.settings.image != blank -%}
+                {{- block.settings.image | image_url: width: image_width, height: image_height | image_tag: class: 'object-fit object-fit--absolute', alt: image_alt, loading: loading_attr, widths: '610, 1220', sizes: '(max-width: 767px) 610px, 1220px' -}}
+                {%- else -%}
+                  {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+      {%- for block in section.blocks -%}
+        {%- assign image_alt = 'before_after.image_alt' | t: index: forloop.index -%}
+        {%- case block.type -%}
+          {%- when 'after' -%}
+            <div class="bf-wrapper_image bf-wrapper_image--after {{ height }}">
+              {%- if block.settings.image != blank -%}
+                {{- block.settings.image | image_url: width: image_width, height: image_height | image_tag: class: 'object-fit object-fit--absolute', alt: image_alt, loading: loading_attr, widths: '610, 1220', sizes: '(max-width: 767px) 610px, 1220px' -}}
+                {%- else -%}
+                  {{- 'hero-apparel-2' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+      <div class="bf-wrapper_pointer --v-align-middle --justify-center {{ height }}">
+        <span class="bf-wrapper_point"></span>
+        <input type="range" title="{{- section.settings.section_heading | strip_html | escape -}}" value="{{- section.settings.after_position -}}">
+      </div>
+      {%- else -%}
+        <div class="bf-wrapper_error-text mty text-size--small --align-center">
+          <p>{{- 'before_after.error_text' | t -}}</p>
+        </div>
+    {%- endif -%}
+  </before-after>
+</div>

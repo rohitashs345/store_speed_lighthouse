@@ -1,0 +1,97 @@
+{%- comment -%}
+  renders before/after on section templates
+  usage
+    {%- render 'featured-banner', block: block, index: forloop.index -%}
+{%- endcomment -%}
+{%- liquid
+  capture image_alt
+    if block.settings.image != blank
+      if block.settings.image.alt != blank
+        echo block.settings.image.alt
+        else
+          echo 'featured_banner.image_alt' | t: index: forloop.index
+      endif
+    endif
+  endcapture
+
+  capture placeholder_image
+    if index > 3
+      echo 'hero-apparel-1'
+      else
+        echo 'hero-apparel-' | append: index
+    endif
+  endcapture
+
+  capture banner_heading_weight
+    case block.settings.heading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture sub_heading_weight
+    case block.settings.subheading_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+
+  capture scroll_text_weight
+    case block.settings.scroll_text_weight
+      when 'bold'
+        echo '--fw-bold'
+      when 'semi_bold'
+        echo '--fw-semi-bold'
+      when 'medium'
+        echo '--fw-medium'
+      when 'normal'
+        echo '--fw-normal'
+    endcase
+  endcapture
+-%}
+<article class="featured-banner">
+  <div class="featured-banner_image">
+    {%- if block.settings.image != blank -%}
+      {{- block.settings.image | image_url: width: 675 | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '675, 1350', sizes: '(max-width: 767px) 50vw, 1350px', alt: image_alt -}}
+      {%- else -%}
+        {{- placeholder_image | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
+    {%- endif -%}
+    {%- if block.settings.scroll_text != blank -%}
+      <marquee-component class="featured-banner_marquee" data-direction="backward" data-pause-on-hover="false" data-speed="15">
+        <div class="marquee-component">
+          <div class="marquee-component_col featured-banner_marquee-col">
+            <strong class="featured-banner_scroll-text h {{ scroll_text_weight }}">
+              {{- block.settings.scroll_text -}}
+            </strong>
+          </div>
+        </div>
+      </marquee-component>
+    {%- endif -%}
+  </div>
+  {%- if block.settings.heading != blank or block.settings.subheading != blank -%}
+    <div class="featured-banner_wrap --align-left">
+      {%- if block.settings.heading != blank -%}
+        <h3 class="featured-banner_heading mty h6 {{ banner_heading_weight }}">
+          {{- block.settings.heading -}}
+        </h3>
+      {%- endif -%}
+      {%- if block.settings.subheading != blank -%}
+        <h4 class="featured-banner_subheading h6 mty {{ sub_heading_weight }}">
+          {{- block.settings.subheading -}}
+        </h4>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</article>

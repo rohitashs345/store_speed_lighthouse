@@ -1,0 +1,167 @@
+{%- liquid
+  capture section_heading
+    if section.settings.section_heading != blank
+      echo section.settings.section_heading | escape
+      else
+        echo 'store.label' | t
+    endif
+  endcapture
+-%}
+<modal-component
+  data-modal="modal-store-locator"
+  data-container="body"
+>
+  <div
+    class="modal modal-component modal-component--store-locator modal-component--centered scheme--{{ section.settings.store_locator_color_scheme }}"
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+    aria-labelledby="modal-store-locator-heading"
+    aria-describedby="modal-store-locator"
+  >
+    <div class="modal-component_spacer">
+      <div class="modal-component_wrapper" id="modal-store-locator">
+        <div class="modal-component_body">
+          <div class="modal-component_head">
+            <modal-component-toggler>
+              <button
+                type="button"
+                data-expanded="true"
+                data-toggle-attribute="false"
+                data-modal-ref="modal-store-locator"
+                class="modal-component_btn-close btn-icn-ixi">
+                <span class="btn-icn-ixi_wrapper">
+                  {%- render 'icons-data', width: 14, height: 14, use_icon: true, icon_reference: 'cross' -%}
+                  <span class="visually-hidden">{{- 'accessibility.close' | t -}}</span>
+                </span>
+              </button>
+            </modal-component-toggler>
+            <div class="logo store-collapsible_logo">
+              <a href="{{ routes.root_url }}" class="logo_link h6 --word-break">
+                {%- liquid
+                  assign logo_alt = section.settings.logo.alt | default: shop.name | escape
+                  capture logo_height
+                    assign height = section.settings.logo_desktop_width | divided_by: section.settings.logo.aspect_ratio
+                    echo height | round
+                  endcapture
+                  capture logo_mob_height
+                    assign height = section.settings.logo_mobile_width | divided_by: section.settings.logo.aspect_ratio
+                    echo height | round
+                  endcapture
+                -%}
+                {%- if section.settings.logo != blank -%}
+                  {%- capture d_sizes -%}
+                    (max-width: {{ section.settings.logo_desktop_width | times: 2 }}px) 50vw, {{ section.settings.logo_desktop_width }}px
+                  {%- endcapture -%}
+                  {%- capture m_sizes -%}
+                    (max-width: {{ section.settings.logo_mobile_width | times: 2 }}px) 50vw, {{ section.settings.logo_mobile_width }}px
+                  {%- endcapture -%}
+                  {%- capture d_widths -%}
+                    {{ section.settings.logo_desktop_width }}, {{ section.settings.logo_desktop_width | times: 1.5 | round }}, {{ section.settings.logo_desktop_width | times: 2 }}
+                  {%- endcapture -%}
+                  {%- capture m_widths -%}
+                    {{ section.settings.logo_mobile_width }}, {{ section.settings.logo_mobile_width | times: 1.5 | round }}, {{ section.settings.logo_mobile_width | times: 2 }}
+                  {%- endcapture -%}
+                  {{- section.settings.logo | image_url: width: 532 | image_tag: class: '--desktop-store-img', widths: d_widths, height: logo_height, width: section.settings.logo_desktop_width, alt: logo_alt, sizes: d_sizes, preload: true -}}
+                  {{- section.settings.logo | image_url: width: 532 | image_tag: class: '--mobile-store-img', widths: m_widths, height: logo_mob_height, width: section.settings.logo_mobile_width, alt: logo_alt, sizes: m_sizes, preload: true -}}
+                  {%- else -%}
+                    {{- shop.name -}}
+                {%- endif -%}
+              </a>
+            </div>
+            <strong id="modal-store-locator-heading" class="store-collapsible_title h6 mty --fw-medium --word-break">
+              {{- section_heading -}}
+            </strong>
+          </div>
+          <div class="modal-component_content">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                capture heading_size
+                  case block.settings.heading_size
+                    when 'heading_small'
+                      echo 'h5'
+                    when 'heading_x_small'
+                      echo 'h6'
+                    else
+                      echo 'h'
+                  endcase
+                endcapture
+
+                capture heading_weight
+                  case block.settings.heading_weight
+                    when 'bold'
+                      echo '--fw-bold'
+                    when 'medium'
+                      echo '--fw-medium'
+                    when 'normal'
+                      echo '--fw-normal'
+                  endcase
+                endcapture
+
+                capture description_weight
+                  case block.settings.description_weight
+                    when 'bold'
+                      echo '--fw-bold'
+                    when 'semi_bold'
+                      echo '--fw-semi-bold'
+                    when 'medium'
+                      echo '--fw-medium'
+                    when 'normal'
+                      echo '--fw-normal'
+                  endcase
+                endcapture
+              -%}
+              <accordion-wrapper class="store-collapsible_row" data-parent="modal-store-locator">
+                <details class="open-close store-collapsible --accordion-view" {% if forloop.index == 1 %}open{% endif %}>
+                  <summary
+                    class="open-close_opener store-collapsible_opener mty {{ heading_size }} {{ heading_weight }}"
+                    aria-controls="sect-{{ section.id }}-{{ block.id }}"
+                    id="{{ section.id }}-{{ block.id }}-accordion"
+                  >
+                    {{- block.settings.heading -}}
+                    <i class="open-close_opener-icn open-close_opener--icn-open">
+                      {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'plus' -%}
+                    </i>
+                    <i class="open-close_opener-icn open-close_opener--icn-close">
+                      {%- render 'icons-data', width: 10, height: 10, use_icon: true, icon_reference: 'minus' -%}
+                    </i>
+                  </summary>
+                  <div
+                    role="region"
+                    id="sect-{{ section.id }}-{{ block.id }}"
+                    class="open-close_slide store-collapsible_slide"
+                    aria-labelledby="{{ section.id }}-{{ block.id }}-accordion"
+                  >
+                    <div class="open-close_slide-wrapper">
+                      <div class="store-collapsible_description-wrap">
+                        {%- unless block.settings.description_text == blank -%}
+                          <div class="--word-break store-collapsible_description {{ description_weight }} text-size--{{ block.settings.description_text_size }}">
+                            {{- block.settings.description_text -}}
+                          </div>
+                        {%- endunless -%}
+                        {%- unless block.settings.button_label == blank -%}
+                          <a
+                            class="button button--primary store-collapsible_btn"
+                            {% if block.settings.button_url != blank %}href="{{- block.settings.button_url -}}" {% if block.settings.open_new_window %}target="_blank"{% endif %}{% else %}aria-disabled="true"{% endif %}
+                          >
+                            {{- block.settings.button_label -}}
+                          </a>
+                        {%- endunless -%}
+                      </div>
+                      <div class="store-collapsible_map-wrap">
+                        {% if block.settings.map_iframe != blank %}
+                          {{ block.settings.map_iframe }}
+                        {% endif %}
+                        {{ 'hero-apparel-2' | placeholder_svg_tag: '' }}
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </accordion-wrapper>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</modal-component>
