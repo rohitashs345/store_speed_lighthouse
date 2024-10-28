@@ -33,7 +33,7 @@
           endif
         endcapture
       -%}
-      {{ figure.preview_image | image_url: width: 430 | image_tag: class: 'object-fit object-fit--cover object-fit--absolute', alt: image_alt, loading: loading_attr, widths: '430, 860', sizes: '(max-width: 767px) 430px, 860px' }}
+      {{ figure.preview_image | image_url: width: 430 | image_tag: class: 'object-fit object-fit--cover object-fit--absolute', alt: image_alt, loading: loading_attr, widths: '430, 860', sizes: '(max-width: 767px) 430px, 860px' | replace: ' src="' , ' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="' | replace: ' srcset="' , ' data-srcset="' }}
       {%- else -%}
         {{- 'product-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
     {%- endif -%}

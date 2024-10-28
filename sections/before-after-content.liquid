@@ -118,7 +118,7 @@
 {%- endstyle -%}
 {{- 'component-before-after.css' | asset_url | stylesheet_tag -}}
 {{- 'before-after-content.css' | asset_url | stylesheet_tag -}}
-<script src="{{ 'before-after.js' | asset_url }}" defer="defer"></script>
+<script type="lazyload_int" data-src="{{ 'before-after.js' | asset_url }}"></script>
 <div class="global-block {{ section_prefix_class }} {{ section_prefix_class }}-{{ section.id }} {{ section_scheme_class }} {{ section_prefix_class }}--bdr-bottom {{ section_prefix_class }}--bdr-top --content-{{ section.settings.content_alignment }}">
   <div class="container">
     <div class="{{ section_prefix_class }}_wrapper {{ make_image_full_width }} {{ cols_order_class }}">

@@ -97,7 +97,7 @@
                         endif
                       endcapture
                     -%}
-                    {{- block.settings.image | image_url: width: 76 | image_tag: alt: image_alt, widths: '38, 76', sizes: '(max-width: 767px) 38px, 76px', class: '', loading: loading_attr -}}
+                    {{- block.settings.image | image_url: width: 76 | image_tag: alt: image_alt, widths: '38, 76', sizes: '(max-width: 767px) 38px, 76px', class: '', loading: loading_attr | replace: ' src="' , ' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="' | replace: ' srcset="' , ' data-srcset="' -}}
                   </div>
                   {%- else -%}
                   <div class="{{ section_prefix_class }}_space"></div>

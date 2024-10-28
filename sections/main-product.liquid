@@ -1479,7 +1479,7 @@
   {%- if request.design_mode == false -%}
     {%- if product.media.size > 0 -%}
       {{- 'photoswipe.css' | asset_url | stylesheet_tag -}}
-      <script type="module">
+      <script type="lazyload_int" data-w3-type="module">
         import PhotoSwipeLightbox from '{{- 'photoswipe-lightbox.esm.js' | asset_url -}}';
         const options = {
           gallery: '#gallery-zoom-in-{{- section.id -}}{{- product.id -}}',

@@ -122,7 +122,7 @@
 {%- endif -%}
 {%- if section.settings.enable_predictive_suggestions -%}
   {{- 'component-predictive-search.css' | asset_url | stylesheet_tag -}}
-  <script src="{{- 'predictive-search.js' | asset_url -}}" defer="defer"></script>
+  <script type="lazyload_int" data-src="{{- 'predictive-search.js' | asset_url -}}"></script>
 {%- endif -%}
 {% comment %} {%- if enable_dropdown_css == 'true' -%} {% endcomment %}
   {{- 'component-dropdown-menu.css' | asset_url | stylesheet_tag -}}

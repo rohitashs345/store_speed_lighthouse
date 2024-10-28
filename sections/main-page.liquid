@@ -36,7 +36,7 @@
   <div class="{{ section_prefix_class }}_wrapper">
     <div class="container">
       <h1 class="{{ section_prefix_class }}_heading {{ section_heading_size }} mty">{{- page.title -}}</h1>
-      {{- page.content -}}
+      {{- page.content | replace: '<script src="' , '<script type="lazyload_int" data-src="' | replace: 'defer' , '' -}}
     </div>
   </div>
 </div>

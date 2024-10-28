@@ -183,7 +183,7 @@
             endif
           endcapture
         -%}
-        {{- card.settings.image | image_url: width: card.settings.image.width | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '768, 1920', sizes: '(max-width: 767px) 50vw, 100vw', alt: image_alt -}}
+        {{- card.settings.image | image_url: width: card.settings.image.width | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '768, 1920', sizes: '(max-width: 767px) 50vw, 100vw', alt: image_alt  -}}
       </div>
       {% else %}
         <div class="carousel-card_image">

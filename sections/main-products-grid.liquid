@@ -128,7 +128,7 @@
     }
   }
 {%- endstyle -%}
-<script src="{{ 'filters.js' | asset_url }}" defer="defer"></script>
+<script type="lazyload_int" data-src="{{ 'filters.js' | asset_url }}"></script>
 {%- unless section.settings.paging_type == 'pagination' -%}
   <script src="{{ 'pagination.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}

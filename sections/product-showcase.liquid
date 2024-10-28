@@ -108,7 +108,7 @@
           <div class="{{ section_prefix_class }}_flex-col grid_col--pair grid_col--first">
             <div class="image">
               {%- if section.settings.image != blank -%}
-                {{- section.settings.image | image_url: width: 850 | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '550, 850', sizes: '(max-width: 767px) 50vw, 850px', alt: image_alt -}}
+                {{- section.settings.image | image_url: width: 850 | image_tag: class: 'object-fit object-fit--absolute', loading: loading_attr, widths: '550, 850', sizes: '(max-width: 767px) 50vw, 850px', alt: image_alt | replace: ' src="' , ' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="' | replace: ' srcset="' , ' data-srcset="' -}}
               {%- else -%}
                 {{- 'hero-apparel-1' | placeholder_svg_tag: 'object-fit object-fit--absolute' -}}
               {%- endif -%}

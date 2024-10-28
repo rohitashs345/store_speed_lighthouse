@@ -26,7 +26,7 @@
       aria-describedby="{{- localPosition -}}-country-heading"
     >
       <span class="dropdown-component_icn dropdown-localization_icn">
-        <img src="{{- localization.country | image_url: width: 32 -}}" width="32" height="32" alt="{{- localization.country.name -}}" loading="{{- loading_attr -}}">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="{{- localization.country | image_url: width: 32 -}}" width="32" height="32" alt="{{- localization.country.name -}}" loading="{{- loading_attr -}}">
       </span>
       {{- localization.country.name | append: ' ' }}
       ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol -}})
@@ -47,7 +47,7 @@
               data-value="{{- country.iso_code -}}"
             >
               <span class="dropdown-component_icn dropdown-localization_icn">
-                <img src="{{- country | image_url: width: 32 -}}" alt="{{- country.name -}}" loading="{{- loading_attr -}}" width="32" height="32">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="{{- country | image_url: width: 32 -}}" alt="{{- country.name -}}" loading="{{- loading_attr -}}" width="32" height="32">
               </span>
               {{- country.name | append: ' ' }}
               ({{ country.currency.iso_code }} {{ country.currency.symbol -}})

@@ -25,7 +25,7 @@
   {%- when 'full' -%}
     {%- capture featured_img_tag -%}
       <img
-        srcset="{%- if media.preview_image.width >= 550 -%}{{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
+        data-srcset="{%- if media.preview_image.width >= 550 -%}{{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
                 {%- if media.preview_image.width >= 1100 -%}{{ media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
                 {%- if media.preview_image.width >= 1445 -%}{{ media.preview_image | image_url: width: 1445 }} 1445w,{%- endif -%}
                 {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
@@ -35,7 +35,7 @@
                 {%- if media.preview_image.width >= 4096 -%}{{ media.preview_image | image_url: width: 4096 }} 4096w,{%- endif -%}
                 {{ media.preview_image | image_url }} {{ media.preview_image.width }}w"
         sizes="(min-width: 750px) calc(100vw - 22rem), 1445px"
-        src="{{- media.preview_image | image_url: width: 1445 -}}"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="{{- media.preview_image | image_url: width: 1445 -}}"
         alt="{{- image_alt -}}"
         loading="{{ loading }}"
         width="1445"
@@ -46,10 +46,10 @@
   {%- when 'thumbnail' -%}
     {%- capture featured_img_tag -%}
       <img
-        srcset="{%- if media.preview_image.width >= 652 -%}{{ media.preview_image | image_url: width: 652 }} 652px,{%- endif -%}
+        data-srcset="{%- if media.preview_image.width >= 652 -%}{{ media.preview_image | image_url: width: 652 }} 652px,{%- endif -%}
                 {{ media.preview_image | image_url }} {{ media.preview_image.width }}w"
         sizes="(max-width: 767px) 326px, 652px"
-        src="{{- media.preview_image | image_url: width: 652 -}}"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="{{- media.preview_image | image_url: width: 652 -}}"
         alt="{{- image_alt -}}"
         loading="{{ loading }}"
         width="652"
@@ -60,10 +60,10 @@
   {%- when 'small' -%}
     {%- capture featured_img_tag -%}
       <img
-        srcset="{%- if media.preview_image.width >= 380 -%}{{ media.preview_image | image_url: width: 380 }} 380px,{%- endif -%}
+        data-srcset="{%- if media.preview_image.width >= 380 -%}{{ media.preview_image | image_url: width: 380 }} 380px,{%- endif -%}
                 {{ media.preview_image | image_url }} {{ media.preview_image.width }}w"
         sizes="(max-width: 767px) 190px, 367px"
-        src="{{- media.preview_image | image_url: width: 380 -}}"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad" data-src="{{- media.preview_image | image_url: width: 380 -}}"
         alt="{{- image_alt -}}"
         loading="{{ loading }}"
         width="380"

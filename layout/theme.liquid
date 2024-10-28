@@ -1,70 +1,88 @@
 <!doctype html>
-<html class="no-js" lang="{{ request.locale.iso_code }}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="">
-    <link rel="canonical" href="{{ canonical_url }}">
-    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    {%- if settings.favicon_icon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon_icon | image_url: width: 32, height: 32 }}">
-    {%- endif -%}
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
-    {%- endif -%}
-    {%- liquid
-      render 'meta-tags'
-      render 'theme-variables'
-    -%}
-    {{- 'splide-core.css' | asset_url | stylesheet_tag -}}
-    {{- 'base.css' | asset_url | stylesheet_tag -}}
-    {{ content_for_header }}
-    <script>
-      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-    </script>
+  <html class="no-js" lang="{{ request.locale.iso_code }}">
+    <head>
+      {% render 'w3_header' %}
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="theme-color" content="">
+      <link rel="canonical" href="{{ canonical_url }}">
+      <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+      {%- if settings.favicon_icon != blank -%}
+        <link rel="icon" type="image/png" href="{{ settings.favicon_icon | image_url: width: 32, height: 32 }}">
+      {%- endif -%}
+      <title>
+        {{ page_title }}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      </title>
+      {%- if page_description -%}
+        <meta name="description" content="{{ page_description | escape }}">
+      {%- endif -%}
+      {%- liquid
+        render 'meta-tags'
+        render 'theme-variables'
+      -%}
+      {{- 'splide-core.css' | asset_url | stylesheet_tag -}}
+      {{- 'base.css' | asset_url | stylesheet_tag -}}
+
+      {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+          {{ content_for_header }}
+      {%- else -%}
+          {% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+          {{ content_for_header2 | replace: ' async="async" ', ' type="lazyload_int" ' | replace: ' defer="defer" ', ' type="lazyload_int" ' | replace: " src=", " data-src="| replace: "DOMContentLoaded", "w3-DOMContentLoaded" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('w3-DOMContentLoaded', asyncLoad, false);" | replace: "addEventListener('load', prefetchAssets);", "addEventListener('w3-DOMContentLoaded', prefetchAssets);" | replace: '<script type="module" data-src="' , '<script type="lazyload_int" data-w3-type="module" data-src="' , | replace: "type='text/javascript' async='' data-src='" , "type='lazyload_int' data-src='" }}
+          <script>var trekkie=[];trekkie.integrations=!0;window.BOOMR={},window.BOOMR.version=true;</script>
+      {%- endif -%}
+      
+      <script>
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      </script>
+      {% if template contains 'cart' %}
     <script src="{{ 'splide-init.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
-  </head>
-  <body>
-    <div id="page-wrapper">
-      <a class="skip-to-content-link visually-hidden" href="#MainContent">
-        {{- 'accessibility.skip_to_content' | t -}}
-      </a>
-      <span class="page-loader hidden" tabindex="-1" data-loader="">
-        <span class="visually-hidden">
-          {{- 'accessibility.loader' | t -}}
+      {% else %}
+      <script type="lazyload_int" data-src="{{ 'splide-init.js' | asset_url }}"></script>
+      <script type="lazyload_int" data-src="{{ 'global.js' | asset_url }}"></script>
+      {% endif %}
+      {% render 'custom-css' %}
+    </head>
+    <body class="template-{{ template.name }}">
+      <div id="page-wrapper">
+        <a class="skip-to-content-link visually-hidden" href="#MainContent">
+          {{- 'accessibility.skip_to_content' | t -}}
+        </a>
+        <span class="page-loader hidden" tabindex="-1" data-loader="">
+          <span class="visually-hidden">
+            {{- 'accessibility.loader' | t -}}
+          </span>
         </span>
-      </span>
+        {%- liquid
+          render 'icons-data', use_ref: true
+          if settings.cart_view == 'drawer'
+            render 'cart-drawer'
+          endif
+          sections 'header-group'
+          sections 'overlay-group'
+        -%}
+        <main id="MainContent" role="main" tabindex="-1">
+          {{ content_for_layout }}
+        </main>
+        {%- sections 'footer-group' -%}
+      </div>
+      {{- 'customization.css' | asset_url | stylesheet_tag -}}
+      {{- 'component-cart-drawer.css' | asset_url | stylesheet_tag -}}
       {%- liquid
-        render 'icons-data', use_ref: true
-        if settings.cart_view == 'drawer'
-          render 'cart-drawer'
-        endif
-        sections 'header-group'
-        sections 'overlay-group'
+        capture check_localization
+          render 'check-localization-drops'
+        endcapture
       -%}
-      <main id="MainContent" role="main" tabindex="-1">
-        {{ content_for_layout }}
-      </main>
-      {%- sections 'footer-group' -%}
-    </div>
-    {{- 'customization.css' | asset_url | stylesheet_tag -}}
-    {{- 'component-cart-drawer.css' | asset_url | stylesheet_tag -}}
-    {%- liquid
-      capture check_localization
-        render 'check-localization-drops'
-      endcapture
-    -%}
-    {%- if check_localization == 'true' -%}
-      {{- 'component-localization.css' | asset_url | stylesheet_tag -}}
-    {%- endif -%}
-    {%- render 'window-strings-script' -%}
-  </body>
-</html>
+      {%- if check_localization == 'true' -%}
+        {{- 'component-localization.css' | asset_url | stylesheet_tag -}}
+      {%- endif -%}
+      {%- render 'window-strings-script' -%}
+
+      {% render 'custom-js' %}
+      {% render 'w3_footer' %}
+    </body>
+  </html>
